@@ -1,7 +1,7 @@
 unit UCVector;
 
 interface
-uses  sysutils,math, Vcl.Dialogs;
+uses  sysutils,math, Vcl.Dialogs, UCNumero ;
 const   MaxE = 3060;
 //var a:byte;
    type
@@ -10,6 +10,8 @@ const   MaxE = 3060;
        Dimension:word;
        Elementos :array [1..MaxE] of real;
     public
+      //polimorfismo
+       constructor Create(dim : word); overload;
     {procesos}
        procedure cargarRandom(a, b, dim:word);
        procedure cargar;
@@ -19,19 +21,31 @@ const   MaxE = 3060;
        Procedure InsertarElemento (p:word; e:real);
        Procedure EliminarElemento (p:word);
        procedure intercambiar(x, y :word);
-    {tipos de ordenamientos}
+    {tipos de ordenamientos}        
+       procedure OrdIntercambio; overload;
+       procedure OrdIntercambio(a, b : word);  overload;
+       procedure OrdSeleccion;  overload;
+       procedure OrdSeleccion(a, b : word);  overload;
+       procedure OrdBurbuja;  overload;
+       procedure OrdBurbuja(a, b : word);  overload;
+       procedure OrdShell;
        Procedure Quicksort;
        Procedure QSort(i,f:word);
-       Procedure MergeSort;
-       Procedure Msort(i,f:word);
+       Procedure OrdMsort;
+       Procedure MergeSort(a, b : vector);
+       procedure SegmentarPrimoNoPrimo(a, b : word);
+       {
+       HeadSort
+        }
     {Funciones}
        Function getDimension :word;
-       Function ObtenerElemento (p:word):real;
+       Function getElemento (p:word):real;
+       function frecuencia(a, b : word; e:real):word;
     //Búsquedas
        Function BusquedaSecuencial (e:real):word;    //Devuelven posición
        Function BusquedaSecuencialOrdenada (e:real):word;
-       Function BusquedaBinaria (e:real):word;
-       Function BusquedaBinaria1 (e:real):boolean;
+       Function BusquedaBinaria (e:real):word;       overload;
+       Function BusquedaBinariaB (e:real):boolean;   overload;
     end;
 
 implementation
@@ -68,7 +82,7 @@ begin
   result := m;
 end;
 
-function Vector.BusquedaBinaria1(e: real): boolean;
+function Vector.BusquedaBinariaB(e: real): boolean;
 begin
   result := BusquedaBinaria(e) > 0;
 end;
@@ -115,6 +129,11 @@ begin
   end;                         //ramdon(100)  //[1..100]
 end;
 
+constructor Vector.Create(dim: word);
+begin
+  Dimension := dim;
+end;
+
 procedure Vector.EliminarElemento(p: word);
 var
   I: Word;
@@ -123,6 +142,20 @@ begin
     for I := p to dimension-1 do
        elementos[p]:=elementos[p+1];
     dec(dimension)
+  end else raise Exception.Create('Posición fuera de rango');
+end;
+
+function Vector.frecuencia(a, b: word; e: real): word;
+var c, i, n:Integer;
+begin
+  n := b - a + 1;
+  if (n > 0) then begin
+    c:=0;
+    for i := a to b do begin
+      if(Elementos[i] = e)then
+        inc(c);
+    end;
+    Result:=c;
   end else raise Exception.Create('Posición fuera de rango');
 end;
 
@@ -152,10 +185,91 @@ begin
   elementos[y] :=z;
 end;
 
-procedure Vector.MergeSort;
+procedure Vector.OrdBurbuja(a, b: word);
+var n, i, j : word;
 begin
-
+  n := b - a + 1;
+  if (n > 0) then begin
+    for i := Dimension downto (2) do
+      for j:= 1 to (i - 1) do
+        if(Elementos[j]>Elementos[j+1])then
+          intercambiar(j, j+1);
+  end else begin
+    raise Exception.Create('Error intercambio: Posición fuera de rango');
+  end;
 end;
+
+procedure Vector.OrdBurbuja;
+begin
+    OrdBurbuja(1, Dimension);
+end;
+                               //3 ..5--3,4,5
+procedure Vector.OrdIntercambio(a, b: word);
+var n, i, j : word;
+begin
+  n := b - a + 1;  //5-3+1
+  if (n > 1) then begin
+    for i:=a to (b-1) do
+      for j:=i+1 to b do
+        if(Elementos[i]>Elementos[j])then
+          intercambiar(i, j);
+  end else begin
+    raise Exception.Create('Error intercambio: Posición fuera de rango');
+  end;
+end;
+
+procedure Vector.OrdSeleccion(a, b: word);
+var n, pos, i, j:word;
+begin
+  n := b - a + 1;
+  if (n > 0) then begin
+    for i:=a to b-1 do  begin
+      pos:=i;
+      for j:= i+1 to b do  begin
+        if(Elementos[pos] > Elementos[j]) then
+         pos:= j;
+      end;
+      if (pos<> i)then
+         intercambiar(pos, i);
+    end;
+  end else begin
+    raise Exception.Create('Error intercambio: Posición fuera de rango');
+  end;
+end;
+
+procedure Vector.OrdShell;
+Var
+   Fact,i : Word;
+   sw : Boolean;
+begin
+     fact:=Dimension div 2;
+     while fact>0 do
+     Begin
+          i:=1;sw:=false;
+          while i<=Dimension-fact do
+          Begin
+              if Elementos[i]>Elementos[i+fact] then
+              Begin
+                 Intercambiar(i,i+fact);
+                 sw:=True;
+              End;
+          End;
+          if sw=false then
+             fact:=fact div 2;
+     End;
+end;
+
+procedure Vector.OrdSeleccion;
+begin
+   OrdSeleccion(1, Dimension);
+end;
+
+procedure Vector.OrdIntercambio;
+begin
+  OrdIntercambio(1, Dimension);
+end;
+
+
 
 procedure Vector.ModElemento(p: word; e: real);
 begin
@@ -164,12 +278,59 @@ begin
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
 
-procedure Vector.Msort(i, f: word);
+procedure Vector.MergeSort(a, b : vector);
+var i, j, k, aDimension, bDimension : word;
 begin
+  aDimension := a.Dimension;
+  bDimension := b.Dimension;
+  i := 1;
+  j := 1;
+  k := 1;
+  while (i <= aDimension) and (j <= bDimension) do begin
+    if (a.Elementos[i] <= b.Elementos[j]) then begin
+      Elementos[k] := a.Elementos[i];      
+      inc(i);    
+    end else begin
+      Elementos[k] := b.Elementos[j];      
+      inc(j);
+    end;
+    inc(k);
+  end;
 
+  while (i <= aDimension) do begin
+    Elementos[k] := a.Elementos[i];      
+    inc(i);
+    inc(k);
+  end;
+
+  while (j <= bDimension) do begin
+     Elementos[k] := b.Elementos[j];      
+     inc(j);
+     inc(k);
+  end;
 end;
 
-function Vector.ObtenerElemento(p: word): real;
+procedure Vector.OrdMsort();
+var a, b : Vector;
+    mitad, i : word;
+begin
+  if Dimension > 1 then begin
+    mitad := Dimension div 2;
+    a := Vector.Create(mitad);
+    b := Vector.Create(Dimension - mitad);
+    for i := 1 to mitad do begin  //cargar vector a
+      a.Elementos[i] := Elementos[i];    //a.ModElemento(i, Elementos[i]);
+    end;
+    for i := mitad+1 to Dimension do begin //cargar vector b
+      b.Elementos[i - mitad] := Elementos[i];
+    end;
+    a.OrdMsort();
+    b.OrdMsort();
+    MergeSort(a, b);
+  end;
+end;
+
+function Vector.getElemento(p: word): real;
 begin
    if (p>=1) and (p<=dimension) then
       result:=elementos[p]
@@ -200,6 +361,26 @@ end;
 procedure Vector.Quicksort;
 begin
     Qsort(1,dimension);
+end;
+
+procedure Vector.SegmentarPrimoNoPrimo(a, b: word);
+var i,j:integer;
+      x, y : Numero;
+begin
+  x := Numero.crear();
+  y := Numero.crear();
+  for i := a to b-1 do begin
+    for j := i+1 to b do begin
+        x.setValor(trunc(elementos[i]));
+        y.setValor(trunc(elementos[j]));
+        if (NOT x.verifPrimo and y.verifPrimo)or
+           (x.verifPrimo and y.verifPrimo and (elementos[i] > elementos[j]))or
+           (NOT x.verifPrimo and NOT y.verifPrimo and (elementos[i] > elementos[j]))
+        then begin
+           intercambiar(i, j);
+        end;
+    end;
+  end;
 end;
 
 procedure Vector.setDimension(d: word);

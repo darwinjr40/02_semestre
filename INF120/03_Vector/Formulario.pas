@@ -18,12 +18,17 @@ type
     Button3: TButton;
     busquedaBinaria1: TMenuItem;
     ordQsort1: TMenuItem;
+    ordMergeSort1: TMenuItem;
+    EJECICIOS1: TMenuItem;
+    SegmentarPriNoPrimo1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure busquedaBinaria1Click(Sender: TObject);
     procedure ordQsort1Click(Sender: TObject);
+    procedure ordMergeSort1Click(Sender: TObject);
+    procedure SegmentarPriNoPrimo1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,7 +80,7 @@ begin
   v.ColCount := obj.getDimension();
   v.RowCount := 2;
   for i := 1 to obj.getDimension do begin
-    v.Cells[i-1, 0] := FloatToStr(obj.ObtenerElemento(i));
+    v.Cells[i-1, 0] := FloatToStr(obj.getElemento(i));
     v.Cells[i-1, 1] := IntToStr(i);
   end;
 end;
@@ -85,9 +90,22 @@ begin
   vec := vector.Create();
 end;
 
+procedure TForm1.ordMergeSort1Click(Sender: TObject);
+begin
+  vec.OrdMsort;
+end;
+
 procedure TForm1.ordQsort1Click(Sender: TObject);
 begin
   vec.Quicksort();
+end;
+
+procedure TForm1.SegmentarPriNoPrimo1Click(Sender: TObject);
+var a, b :word;
+begin
+  a := StrToInt(InputBox('','a',''));
+  b := StrToInt(InputBox('','b',''));
+  vec.SegmentarPrimoNoPrimo(a, b);
 end;
 
 end.

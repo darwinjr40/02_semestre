@@ -19,7 +19,7 @@ object Form1: TForm1
     Left = 48
     Top = 192
     Width = 721
-    Height = 120
+    Height = 209
     TabOrder = 0
   end
   object Edit1: TEdit
@@ -74,6 +74,17 @@ object Form1: TForm1
       object ordQsort1: TMenuItem
         Caption = 'ordQsort'
         OnClick = ordQsort1Click
+      end
+      object ordMergeSort1: TMenuItem
+        Caption = 'ord_MergeSort'
+        OnClick = ordMergeSort1Click
+      end
+    end
+    object EJECICIOS1: TMenuItem
+      Caption = 'EJECICIOS'
+      object SegmentarPriNoPrimo1: TMenuItem
+        Caption = 'SegmentarPriNoPrimo'
+        OnClick = SegmentarPriNoPrimo1Click
       end
     end
   end
