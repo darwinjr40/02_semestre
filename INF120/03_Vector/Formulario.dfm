@@ -86,6 +86,18 @@ object Form1: TForm1
         Caption = 'SegmentarPriNoPrimo'
         OnClick = SegmentarPriNoPrimo1Click
       end
+      object EliminarTodosRepetidos1: TMenuItem
+        Caption = 'EliminarTodosRepetidos'
+        OnClick = EliminarTodosRepetidos1Click
+      end
+      object ejer1: TMenuItem
+        Caption = 'ejer'
+        OnClick = ejer1Click
+      end
+      object mcd1: TMenuItem
+        Caption = 'mcd'
+        OnClick = mcd1Click
+      end
     end
   end
 end

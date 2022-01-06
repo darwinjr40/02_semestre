@@ -21,6 +21,9 @@ type
     ordMergeSort1: TMenuItem;
     EJECICIOS1: TMenuItem;
     SegmentarPriNoPrimo1: TMenuItem;
+    EliminarTodosRepetidos1: TMenuItem;
+    ejer1: TMenuItem;
+    mcd1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -29,6 +32,9 @@ type
     procedure ordQsort1Click(Sender: TObject);
     procedure ordMergeSort1Click(Sender: TObject);
     procedure SegmentarPriNoPrimo1Click(Sender: TObject);
+    procedure EliminarTodosRepetidos1Click(Sender: TObject);
+    procedure ejer1Click(Sender: TObject);
+    procedure mcd1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -85,9 +91,26 @@ begin
   end;
 end;
 
+procedure TForm1.ejer1Click(Sender: TObject);
+var b : Boolean;
+begin
+  b := true;
+  edit1.Text := BoolToStr(b, true);
+end;
+
+procedure TForm1.EliminarTodosRepetidos1Click(Sender: TObject);
+begin
+  vec.elimitarAllRepetidos();
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   vec := vector.Create();
+end;
+
+procedure TForm1.mcd1Click(Sender: TObject);
+begin
+  ShowMessage(IntToStr(vec.mcd));
 end;
 
 procedure TForm1.ordMergeSort1Click(Sender: TObject);

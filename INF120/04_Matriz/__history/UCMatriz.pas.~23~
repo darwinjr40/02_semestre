@@ -1,0 +1,247 @@
+unit UCMatriz;
+
+interface
+uses SysUtils, Vcl.Grids, Vcl.Dialogs;
+Const
+  MaxF = 128;
+  MaxC = 128;
+Type
+    Matriz = class
+      private
+        NFilas, NColumnas : word;
+        celdas : Array[1..MaxF, 1..MaxC] of Real;
+      public
+        procedure cargar(f, c : word); overload;
+        procedure cargar(f, c, a, b:word); overload;
+        procedure Descargar(t : tStringGrid);
+        procedure SetFilas(f : word);
+        procedure SetColumnas(c : word);
+        Function GetFilas : word;
+        Function GetColumnas : word;
+        Function ObtValor(f,c : word) : Real;
+        Procedure ModValor(f,c : word; v:real);
+        Procedure AddFila;
+        Procedure AddColumna;
+        Procedure ElimFila(f:word);
+        Procedure ElimColumna(c:word);
+        Procedure InsFila(f:word);
+        Procedure InsColumna(c:word);
+        procedure cargarPrueba();
+        {cargado caracol}
+        procedure cargarFilDerecha(f, a, b:word; var e : word);
+        procedure cargarFilIzq(f, a, b:word; var e : word);
+        procedure cargarColAbajo(c, a, b:word; var e : word);
+        procedure cargarColArriba(c, a, b:word; var e : word);
+        procedure cargarCaracol();
+        {cargado }
+        procedure triangular();
+    end;
+
+implementation
+
+{ Matriz }
+
+procedure Matriz.AddColumna;
+begin
+  inc(NColumnas);
+end;
+
+procedure Matriz.AddFila;
+begin
+  inc(NFilas);
+end;
+
+procedure Matriz.cargar(f, c : word);
+var  i, j : word;
+begin
+  NFilas := f;
+  NColumnas := c;
+  for i := 1 to NFilas do
+    for j := 1 to NColumnas do  begin
+      celdas[i, j] := StrToFloat(inputbox('1','2','3')) ;
+    end;
+end;
+
+procedure Matriz.cargarPrueba;
+var  i, j, x : word;
+begin
+  x := 0;
+  for i := 1 to NFilas do
+    for j := 1 to NColumnas do  begin
+      x := x + 10;
+      celdas[i, j] := x;
+    end;
+end;
+
+procedure Matriz.cargar(f, c, a, b : word);
+var  i, j : word;
+begin
+  NFilas := f;
+  NColumnas := c;
+  for i := 1 to NFilas do
+    for j := 1 to NColumnas do
+      celdas[i, j] := a+Random(b-a+1);
+end;
+
+procedure Matriz.cargarCaracol;
+var f, c, Nfil, Ncol, cantEleFil, canEleCol, ele :word;
+begin
+  f := 1;
+  c := 1;
+  Nfil := NFilas;
+  Ncol := NColumnas;
+  cantEleFil := Nfil - f + 1;
+  canEleCol := Ncol - c + 1;
+  ele := 1;
+  while (cantEleFil > 1) and (canEleCol > 1 ) do  begin
+    cargarFilDerecha(f, c ,Ncol-1, ele);
+    cargarColArriba(Ncol, f, Nfil-1, ele);
+    cargarFilIzq(Nfil, c+1, Ncol, ele);
+    cargarColAbajo(c, f+1, Nfil, ele);
+    inc(f);
+    inc(c);
+    dec(Nfil);
+    dec(Ncol);
+    cantEleFil := Nfil - f + 1;
+    canEleCol := Ncol - c + 1;
+  end;
+  if (cantEleFil*canEleCol = 1) then
+    celdas[f,c] := ele;
+end;
+
+procedure Matriz.cargarColAbajo(c, a, b: word; var e: word);
+var f : word;
+begin
+  for f := b downto a do begin
+    celdas[f, c] := e;
+    inc(e);
+  end;
+end;
+
+procedure Matriz.cargarColArriba(c, a, b: word; var e: word);
+var f : word;
+begin
+  for f := a to b do begin
+    celdas[f, c] := e;
+    inc(e);
+  end;
+end;
+
+procedure Matriz.cargarFilDerecha(f, a, b: word; var e: word);
+var c : word;
+begin
+  for c := a to b do begin
+    celdas[f, c] := e;
+    inc(e);
+  end;
+end;
+
+procedure Matriz.cargarFilIzq(f, a, b: word; var e: word);
+var c : word;
+begin
+  for c := b downto a do begin
+    celdas[f, c] := e;
+    inc(e);
+  end;
+end;
+
+procedure Matriz.Descargar(t: tStringGrid);
+var i,j : word;
+begin
+   t.RowCount := NFilas;
+   t.ColCount := NColumnas;
+   for i := 1 to t.RowCount do  begin
+    for j := 1 to t.ColCount do begin
+        t.Cells[j-1, i-1] := FloatToStr(celdas[i, j]);
+    end;
+   end;
+end;
+
+procedure Matriz.ElimColumna(c: word);
+var i,j : word;
+begin
+  for j := c to NColumnas-1 do
+    for i := 1 to NFilas do
+      celdas[i, j] := celdas[i, j+1];
+  dec(NColumnas);
+end;
+
+procedure Matriz.ElimFila(f: word);
+begin
+
+end;
+
+function Matriz.GetColumnas: word;
+begin
+  Result := NColumnas;
+end;
+
+function Matriz.GetFilas: word;
+begin
+  Result := NFilas;
+end;
+
+procedure Matriz.InsColumna(c: word);
+var i,j : word;
+begin
+  inc(NColumnas);
+  for j := NColumnas downto c+1 do
+    for i := 1 to NFilas do
+      celdas[i, j] := celdas[i, j-1];
+end;
+
+procedure Matriz.InsFila(f: word);
+var i,j : word;
+begin
+  inc(NFilas);
+  for I := NFilas downto f+1 do
+    for j := 1 to NColumnas do
+      celdas[i, j] := celdas[i-1, j];
+end;
+
+procedure Matriz.ModValor(f, c: word; v: real);
+begin
+  if (f>0)and(f<=NFilas)and(c>0)and(c<=NColumnas) then
+  celdas[f,c] := v
+  else raise Exception.Create('Error Message');
+end;
+
+function Matriz.ObtValor(f, c: word): Real;
+begin
+  if (f>0)and(f<=NFilas)and(c>0)and(c<=NColumnas) then
+    Result := celdas[f,c]
+  else raise Exception.Create('Error Message');
+end;
+
+procedure Matriz.SetColumnas(c: word);
+begin
+  NColumnas := c;
+end;
+
+procedure Matriz.SetFilas(f: word);
+begin
+   NFilas := f;
+end;
+//matriz cuadrada
+procedure Matriz.triangular;
+var k, f, c : word;
+begin
+  k := 0;
+  f := 1;
+  c := 1;
+  for k := 1 to (NFilas*NColumnas) do begin
+    celdas[f, c] := k;
+    if c = NColumnas then begin
+      c := f+1;
+      f := NFilas;
+    end else if f = 1 then begin
+      f := c + 1;
+      c := 1;
+    end else begin
+      dec(f);
+      inc(c);
+    end;
+  end;
+end;
+
+end.

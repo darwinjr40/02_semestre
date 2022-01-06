@@ -21,6 +21,7 @@ const   MaxE = 3060;
        Procedure InsertarElemento (p:word; e:real);
        Procedure EliminarElemento (p:word);
        procedure intercambiar(x, y :word);
+       procedure elimitarAllRepetidos();
     {tipos de ordenamientos}        
        procedure OrdIntercambio; overload;
        procedure OrdIntercambio(a, b : word);  overload;
@@ -41,6 +42,9 @@ const   MaxE = 3060;
        Function getDimension :word;
        Function getElemento (p:word):real;
        function frecuencia(a, b : word; e:real):word;
+       function eleMen() : real;
+       function esDivisor(e : real): Boolean;
+       function mcd(): word;
     //Búsquedas
        Function BusquedaSecuencial (e:real):word;    //Devuelven posición
        Function BusquedaSecuencialOrdenada (e:real):word;
@@ -134,6 +138,18 @@ begin
   Dimension := dim;
 end;
 
+function Vector.eleMen: real;
+var  i : word;
+      m : real;
+begin
+  m := double.MaxValue;
+  for i := 1 to Dimension do begin
+    if elementos[i] < m then
+      m := elementos[i];
+  end;
+  result := m;
+end;
+
 procedure Vector.EliminarElemento(p: word);
 var
   I: Word;
@@ -145,17 +161,45 @@ begin
   end else raise Exception.Create('Posición fuera de rango');
 end;
 
+procedure Vector.elimitarAllRepetidos;
+var i, j, c : word;
+begin
+  j := 0;
+  for i := 1 to Dimension do begin
+    c := frecuencia(1, Dimension, elementos[i] );
+    if c = 1 then begin //es unico
+      inc(j);
+      intercambiar(j, i);
+    end;
+  end;
+  Dimension := j;
+end;
+
+function Vector.esDivisor(e: real): Boolean;
+var i : word;
+    b : Boolean;
+begin
+  b := true;
+  i := 1;
+  while (i <= Dimension)and (b) do begin
+    if ((trunc(Elementos[i]) mod trunc(e)) <> 0) then  //no es divisor
+      b := false;
+    inc(i);
+  end;
+  result := b;
+end;
+
 function Vector.frecuencia(a, b: word; e: real): word;
 var c, i, n:Integer;
 begin
   n := b - a + 1;
   if (n > 0) then begin
     c:=0;
-    for i := a to b do begin
-      if(Elementos[i] = e)then
-        inc(c);
-    end;
-    Result:=c;
+    for i := a to b do begin   //while(a <= b and c < 1)
+      if(Elementos[i] = e)then //
+        inc(c);                //
+    end;                       //a = a +1;
+    Result:=c;                 //result := c>=2  (booleano)
   end else raise Exception.Create('Posición fuera de rango');
 end;
 
@@ -183,6 +227,22 @@ begin
   z := elementos[x];
   elementos[x] := elementos[y];
   elementos[y] :=z;
+end;
+
+function Vector.mcd: word;
+var men : word;
+  I: Real;
+  b : Boolean;
+begin
+  men := trunc(eleMen());
+  b := false;
+  while (men > 0) and (not b) do   begin
+    if (esDivisor(men)) then
+      b := true
+   else
+      dec(men);
+  end;
+  result := men;
 end;
 
 procedure Vector.OrdBurbuja(a, b: word);
