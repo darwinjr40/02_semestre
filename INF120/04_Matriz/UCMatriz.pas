@@ -150,30 +150,29 @@ begin
 end;
 
 procedure Matriz.cargarCaracol;
-var f, c, Nfil, Ncol, cantEleFil, canEleCol, ele :word;
+var fa, ca, fb, cb, cantEleFil, canEleCol, ele :word;
 begin
-  f := 1;
-  c := 1;
-  Nfil := NFilas;
-  Ncol := NColumnas;
-  cantEleFil := Nfil - f + 1;
-  canEleCol := Ncol - c + 1;
+  fa := 1;
+  ca := 1;
+  fb := NFilas;
+  cb := NColumnas;
+  cantEleFil := fb - fa + 1;
+  canEleCol := cb - ca + 1;
   ele := 1;
   while (cantEleFil > 1) and (canEleCol > 1 ) do  begin
-  //                1   1   4       1
-    cargarFilDerecha(f, c ,Ncol-1, ele);
-    cargarColArriba(Ncol, f, Nfil-1, ele);
-    cargarFilIzq(Nfil, c+1, Ncol, ele);
-    cargarColAbajo(c, f+1, Nfil, ele);
-    inc(f);
-    inc(c);
-    dec(Nfil);
-    dec(Ncol);
-    cantEleFil := Nfil - f + 1;
-    canEleCol := Ncol - c + 1;
+    cargarFilDerecha(fa, ca ,cb-1, ele);
+    cargarColArriba(cb, fa, fb-1, ele);
+    cargarFilIzq(fb, ca+1, cb, ele);
+    cargarColAbajo(ca, fa+1, fb, ele);
+    inc(fa);
+    inc(ca);
+    dec(fb);
+    dec(cb);
+    cantEleFil := fb - fa + 1;
+    canEleCol := cb - ca + 1;
   end;
   if (cantEleFil*canEleCol = 1) then
-    celdas[f,c] := ele;
+    celdas[fa,ca] := ele;
 end;
 
 procedure Matriz.cargarColAbajo(c, a, b: word; var e: word);

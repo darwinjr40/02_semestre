@@ -33,7 +33,10 @@ const   MaxE = 3060;
        Procedure Quicksort;
        Procedure QSort(i,f:word);
        Procedure OrdMsort;
-       Procedure MergeSort(a, b : vector);
+       Procedure MergeSort(a, b : vector);  overload;
+       Procedure MSort;  overload;
+       Procedure MSort(a, b : word);   overload;
+       Procedure Mezcla(a, m, b : word);   overload;
        procedure SegmentarPrimoNoPrimo(a, b : word);
        {
        HeadSort
@@ -278,6 +281,7 @@ begin
   end;
 end;
 
+
 procedure Vector.OrdSeleccion(a, b: word);
 var n, pos, i, j:word;
 begin
@@ -338,6 +342,57 @@ begin
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
 
+procedure Vector.MSort;
+begin
+  MSort(1, Dimension);
+end;
+
+procedure Vector.msort(a, b: word);
+var n, m : word;
+begin
+  n := b - a + 1;
+  if (N >= 2 ) then
+  begin
+    m := (a+b) div 2;
+    MSort(a, m);
+    MSort(m+1, b);
+    Mezcla(a, m, b);
+  end;
+end;
+
+procedure Vector.Mezcla(a, m, b: word);
+var i, j, k, aDimension, bDimension : word;
+    v : Vector;
+begin
+  v := Vector.Create();
+  i := a;
+  j := m+1;
+  while (i <= m) and (j <= b) do begin
+    if (Elementos[i] <= Elementos[j]) then begin
+      v.AddElemento(Elementos[i]);
+      inc(i);
+    end else begin
+      v.AddElemento(Elementos[j]);
+      inc(j);
+    end;
+  end;
+
+  while (i <= m) do begin
+    v.AddElemento(Elementos[i]);
+    inc(i);
+  end;
+
+  while (j <= b) do begin
+    v.AddElemento(Elementos[j]);
+    inc(j);
+  end;
+
+  for i := a to b do begin
+    Elementos[i] := v.Elementos[i-a+1];
+  end;
+
+end;
+
 procedure Vector.MergeSort(a, b : vector);
 var i, j, k, aDimension, bDimension : word;
 begin
@@ -348,27 +403,29 @@ begin
   k := 1;
   while (i <= aDimension) and (j <= bDimension) do begin
     if (a.Elementos[i] <= b.Elementos[j]) then begin
-      Elementos[k] := a.Elementos[i];      
-      inc(i);    
+      Elementos[k] := a.Elementos[i];
+      inc(i);
     end else begin
-      Elementos[k] := b.Elementos[j];      
+      Elementos[k] := b.Elementos[j];
       inc(j);
     end;
     inc(k);
   end;
 
   while (i <= aDimension) do begin
-    Elementos[k] := a.Elementos[i];      
+    Elementos[k] := a.Elementos[i];
     inc(i);
     inc(k);
   end;
 
   while (j <= bDimension) do begin
-     Elementos[k] := b.Elementos[j];      
+     Elementos[k] := b.Elementos[j];
      inc(j);
      inc(k);
   end;
 end;
+
+
 
 procedure Vector.OrdMsort();
 var a, b : Vector;
@@ -431,11 +488,11 @@ begin
   y := Numero.crear();
   for i := a to b-1 do begin
     for j := i+1 to b do begin
-        x.setValor(trunc(elementos[i]));
-        y.setValor(trunc(elementos[j]));
+        x.setValor(trunc(elementos[i]));  //x.valor =
+        y.setValor(trunc(elementos[j]));  //y.valor =
         if (NOT x.verifPrimo and y.verifPrimo)or
            (x.verifPrimo and y.verifPrimo and (elementos[i] > elementos[j]))or
-           (NOT x.verifPrimo and NOT y.verifPrimo and (elementos[i] > elementos[j]))
+           (NOT x.verifPrimo and NOT y.verifPrimo and (elementos[i] < elementos[j]))
         then begin
            intercambiar(i, j);
         end;

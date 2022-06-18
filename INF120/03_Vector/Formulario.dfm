@@ -20,6 +20,12 @@ object Form1: TForm1
     Top = 192
     Width = 721
     Height = 209
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 0
   end
   object Edit1: TEdit
@@ -78,6 +84,10 @@ object Form1: TForm1
       object ordMergeSort1: TMenuItem
         Caption = 'ord_MergeSort'
         OnClick = ordMergeSort1Click
+      end
+      object OrdMsortReango1: TMenuItem
+        Caption = 'Ord-MsortRango'
+        OnClick = OrdMsortReango1Click
       end
     end
     object EJECICIOS1: TMenuItem
