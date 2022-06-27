@@ -2,10 +2,10 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2021/12/22 20:14:55.000.400,=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2021/12/22 20:18:26.000.631,G:\12_INF120\01_implementacion\04_Matriz\Form.pas=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2021/12/22 20:18:26.000.631,G:\12_INF120\01_implementacion\04_Matriz\Form.dfm=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2021/12/22 20:18:31.000.395,G:\12_INF120\01_implementacion\04_Matriz\Project.dproj=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2021/12/22 20:18:26.000.631,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.dfm=G:\12_INF120\01_implementacion\04_Matriz\Form.dfm</Transaction>
+    <Transaction>2021/12/22 20:18:26.000.631,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas=G:\12_INF120\01_implementacion\04_Matriz\Form.pas</Transaction>
+    <Transaction>2021/12/22 20:18:31.000.395,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Project1.dproj=G:\12_INF120\01_implementacion\04_Matriz\Project.dproj</Transaction>
     <Transaction>2021/12/22 20:18:36.000.961,=G:\12_INF120\01_implementacion\04_Matriz\Unit1.pas</Transaction>
-    <Transaction>2021/12/22 20:23:32.000.579,G:\12_INF120\01_implementacion\04_Matriz\UCMatriz.pas=G:\12_INF120\01_implementacion\04_Matriz\Unit1.pas</Transaction>
+    <Transaction>2021/12/22 20:23:32.000.579,G:\12_INF120\01_implementacion\04_Matriz\Unit1.pas=G:\12_INF120\01_implementacion\04_Matriz\UCMatriz.pas</Transaction>
   </Transactions>
 </BorlandProject>

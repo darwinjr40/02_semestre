@@ -38,6 +38,7 @@ const   MaxE = 3060;
        Procedure MSort(a, b : word);   overload;
        Procedure Mezcla(a, m, b : word);   overload;
        procedure SegmentarPrimoNoPrimo(a, b : word);
+       procedure sefmentarCerosNoCeros(a, b : word);
        {
        HeadSort
         }
@@ -480,19 +481,40 @@ begin
     Qsort(1,dimension);
 end;
 
+procedure Vector.sefmentarCerosNoCeros(a, b: word);
+var i,j:integer;
+      x, y : Numero;
+      na, nb :boolean;
+begin
+  x := Numero.crear(5);//create
+  y := Numero.crear();
+  for i := a to b-1 do begin  //intercambio
+    for j := i+1 to b do begin
+        x.setValor(trunc(elementos[i]));  //entera
+        y.setValor(trunc(elementos[j]));  //y.valor =
+        if (NOT x.tieneCero and y.tieneCero)
+        or ((x.tieneCero and y.tieneCero) and (elementos[i] > elementos[j]))
+        or ((not x.tieneCero and not y.tieneCero) and (elementos[i] > elementos[j]))
+        then begin
+           intercambiar(i, j);
+        end;
+    end;
+  end;
+end;
+
 procedure Vector.SegmentarPrimoNoPrimo(a, b: word);
 var i,j:integer;
       x, y : Numero;
 begin
-  x := Numero.crear();
+  x := Numero.crear(5);//create
   y := Numero.crear();
-  for i := a to b-1 do begin
+  for i := a to b-1 do begin  //intercambio
     for j := i+1 to b do begin
         x.setValor(trunc(elementos[i]));  //x.valor =
         y.setValor(trunc(elementos[j]));  //y.valor =
-        if (NOT x.verifPrimo and y.verifPrimo)or
-           (x.verifPrimo and y.verifPrimo and (elementos[i] > elementos[j]))or
-           (NOT x.verifPrimo and NOT y.verifPrimo and (elementos[i] < elementos[j]))
+        if (NOT x.verifPrimo and y.verifPrimo)
+        or (x.verifPrimo and y.verifPrimo and (elementos[i] > elementos[j]))or
+           (NOT x.verifPrimo and NOT y.verifPrimo and (elementos[i] > elementos[j]))
         then begin
            intercambiar(i, j);
         end;
