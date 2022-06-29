@@ -25,6 +25,8 @@ type
     ejer1: TMenuItem;
     mcd1: TMenuItem;
     OrdMsortReango1: TMenuItem;
+    segmentarcerosynoceros1: TMenuItem;
+    intercalarcerosynoceros1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -37,6 +39,8 @@ type
     procedure ejer1Click(Sender: TObject);
     procedure mcd1Click(Sender: TObject);
     procedure OrdMsortReango1Click(Sender: TObject);
+    procedure segmentarcerosynoceros1Click(Sender: TObject);
+    procedure intercalarcerosynoceros1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -110,6 +114,11 @@ begin
   vec := vector.Create();
 end;
 
+procedure TForm1.intercalarcerosynoceros1Click(Sender: TObject);
+begin
+   vec.IntercalarCerosNoCeros();
+end;
+
 procedure TForm1.mcd1Click(Sender: TObject);
 begin
   ShowMessage(IntToStr(vec.mcd));
@@ -131,6 +140,14 @@ end;
 procedure TForm1.ordQsort1Click(Sender: TObject);
 begin
   vec.Quicksort();
+end;
+
+procedure TForm1.segmentarcerosynoceros1Click(Sender: TObject);
+var a, b :word;
+begin
+  a := StrToInt(InputBox('','a',''));
+  b := StrToInt(InputBox('','b',''));
+  vec.sefmentarCerosNoCeros(a, b);
 end;
 
 procedure TForm1.SegmentarPriNoPrimo1Click(Sender: TObject);

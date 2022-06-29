@@ -45,6 +45,7 @@ interface
 
         {examen 1-2021}
         procedure intercalarPrimoYnoPrimo();
+        function tieneCero():boolean;
     End;
 implementation
 
@@ -342,6 +343,17 @@ procedure Numero.setValor(x: Cardinal);
 begin
   valor := x;
 end;
+function Numero.tieneCero: boolean;
+var n : cardinal;
+begin
+    n := valor;
+    while (n > 0) and ((n mod 10)<>0) do//10
+    begin
+      n := n div 10;
+    end;
+    result := n > 0;
+end;
+
 function Numero.ToCentenas(n: Cardinal): String;
 Const
       Centenas: array [0..9] of string =('','ciento','doscientos','trescientos','cuatrocientos',

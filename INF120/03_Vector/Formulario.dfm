@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Form1'
   ClientHeight = 666
-  ClientWidth = 883
+  ClientWidth = 1253
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object Form1: TForm1
   object StringGrid1: TStringGrid
     Left = 48
     Top = 192
-    Width = 721
+    Width = 1153
     Height = 209
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -107,6 +107,14 @@ object Form1: TForm1
       object mcd1: TMenuItem
         Caption = 'mcd'
         OnClick = mcd1Click
+      end
+      object segmentarcerosynoceros1: TMenuItem
+        Caption = 'segmentar ceros y no ceros'
+        OnClick = segmentarcerosynoceros1Click
+      end
+      object intercalarcerosynoceros1: TMenuItem
+        Caption = 'intercalar ceros y no ceros'
+        OnClick = intercalarcerosynoceros1Click
       end
     end
   end

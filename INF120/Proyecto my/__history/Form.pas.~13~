@@ -1,0 +1,46 @@
+unit Form;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
+  Vcl.ImgList, UCHelicoptero, UCEscenario;
+
+type
+
+
+  TForm1 = class(TForm)
+    TimerHelicoptero: TTimer;
+    TImageHelicoptero: TImageList;       //TPNGImage
+    procedure FormCreate(Sender: TObject);
+    procedure TimerHelicopteroTimer(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  ObjEscenario : Escenario;
+
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Form1.Width := Screen.Width;
+  ObjEscenario := Escenario.crear(TImageHelicoptero);
+end;
+
+procedure TForm1.TimerHelicopteroTimer(Sender: TObject);
+begin
+ Repaint;
+
+end;
+
+end.

@@ -39,6 +39,8 @@ const   MaxE = 3060;
        Procedure Mezcla(a, m, b : word);   overload;
        procedure SegmentarPrimoNoPrimo(a, b : word);
        procedure sefmentarCerosNoCeros(a, b : word);
+       procedure IntercalarCerosNoCeros(a, b : word);  overload;
+       procedure IntercalarCerosNoCeros(); overload;
        {
        HeadSort
         }
@@ -223,6 +225,40 @@ begin
    elementos[i]:=elementos[i-1];
    ModElemento(p,e)
   end else raise Exception.Create('Posición fuera de rango');
+end;
+
+procedure Vector.IntercalarCerosNoCeros;
+begin
+   IntercalarCerosNoCeros(1, Dimension);
+end;
+
+procedure Vector.IntercalarCerosNoCeros(a, b: word);
+var i,j:integer;
+      x, y : Numero;
+      sw :Boolean;
+begin
+  x := Numero.crear(5);//create
+  y := Numero.crear();
+  sw := true;
+  for i := a to b-1 do begin  //intercambio
+    for j := i+1 to b do begin
+        if (sw) then
+        begin
+          x.setValor(trunc(elementos[i]));
+          y.setValor(trunc(elementos[j]));
+        end else begin
+          y.setValor(trunc(elementos[i]));
+          x.setValor(trunc(elementos[j]));
+        end;
+        if (NOT x.tieneCero and y.tieneCero)
+        or ((x.tieneCero and y.tieneCero) and (elementos[i] > elementos[j]))
+        or ((not x.tieneCero and not y.tieneCero) and (elementos[i] > elementos[j]))
+        then begin
+           intercambiar(i, j);
+        end;
+    end;
+    sw := not sw;
+  end;
 end;
 
 procedure Vector.intercambiar(x, y: word);
@@ -488,7 +524,7 @@ var i,j:integer;
 begin
   x := Numero.crear(5);//create
   y := Numero.crear();
-  for i := a to b-1 do begin  //intercambio
+  for i := a to b-1 do begin  //ord intercambio
     for j := i+1 to b do begin
         x.setValor(trunc(elementos[i]));  //entera
         y.setValor(trunc(elementos[j]));  //y.valor =
