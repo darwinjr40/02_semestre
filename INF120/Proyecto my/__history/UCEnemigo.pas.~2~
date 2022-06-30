@@ -1,0 +1,80 @@
+unit UCEnemigo;
+
+interface
+uses   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
+  Vcl.ImgList, UChelicoptero;
+
+type
+ Pos = Record
+    x : integer;
+    y : integer;
+ End;
+
+  Enemigo = class
+
+    private
+       v1, v2, v3, v4 : Pos;
+       Direccion : Direcciones;
+       enemigoTBit: TBitmap;
+       TImageListCant, velocidad :integer;
+       visible : boolean;
+    public
+    constructor crear; overload;
+    constructor crear( x, y, velocidad : integer; url : string); overload;
+    procedure moverse(key :word);
+    procedure Nomoverse(key :word);
+    procedure teMOviste();
+    procedure dibujar(t:TCanvas);
+    procedure setPos(x, y: integer); overload ;
+    procedure setPos(x, y: integer; vertice:Pos); overload;
+  end;
+implementation
+
+{ Enemigo }
+
+constructor Enemigo.crear;
+begin
+
+end;
+
+constructor Enemigo.crear( x, y, velocidad: integer; url : string);
+begin
+  self.enemigoTBit := TBitmap.Create;
+  self.enemigoTBit.LoadFromFile(url);
+  self.setPos(x, y);
+end;
+
+procedure Enemigo.dibujar(t: TCanvas);
+begin
+
+end;
+
+procedure Enemigo.moverse(key: word);
+begin
+
+end;
+
+procedure Enemigo.Nomoverse(key: word);
+begin
+
+end;
+
+procedure Enemigo.setPos(x, y: integer; vertice: Pos);
+begin
+  vertice.x := x;
+  vertice.y := y;
+end;
+
+procedure Enemigo.setPos(x, y: integer);
+begin
+  v1.x := x;
+  v2.y := y;
+end;
+
+procedure Enemigo.teMOviste;
+begin
+
+end;
+
+end.

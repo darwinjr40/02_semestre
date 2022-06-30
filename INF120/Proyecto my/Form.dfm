@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Form1'
   ClientHeight = 606
-  ClientWidth = 1068
+  ClientWidth = 1044
   Color = clBtnShadow
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,12 +16,6 @@ object Form1: TForm1
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
-  object Image1: TImage
-    Left = 184
-    Top = 120
-    Width = 105
-    Height = 105
-  end
   object TimerHelicoptero: TTimer
     Interval = 50
     OnTimer = TimerHelicopteroTimer
@@ -35,7 +29,7 @@ object Form1: TForm1
     Left = 200
     Top = 56
     Bitmap = {
-      494C010103000800240040004000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010103000800280040004000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000000100004000000001002000000000000000
       0100000000000000000000000000000000000000000700000007000000060000
       0004000000040000000300000001000000010000000100000001000000010000

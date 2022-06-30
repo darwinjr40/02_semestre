@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
-  Vcl.ImgList, UCHelicoptero, UCEscenario, UCControllerGame;
+  Vcl.ImgList, UCHelicoptero, UCEscenario, UCControllerGame, Vcl.StdCtrls;
 
 type
 
@@ -13,8 +13,7 @@ type
   TForm1 = class(TForm)
     TimerHelicoptero: TTimer;
     TImageHelicoptero: TImageList;
-    TimerController: TTimer;
-    Image1: TImage;       //TPNGImage
+    TimerController: TTimer;       //TPNGImage
     procedure FormCreate(Sender: TObject);
     procedure TimerHelicopteroTimer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -36,9 +35,10 @@ implementation
 
 {$R *.dfm}
 
+
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Width := Screen.Width;
   ObjEscenario := Escenario.crear(TImageHelicoptero);
   objController := ControllerGame.crear(ObjEscenario);
 end;

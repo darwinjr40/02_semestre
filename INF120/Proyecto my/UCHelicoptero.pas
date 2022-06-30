@@ -3,9 +3,13 @@ unit UCHelicoptero;
 interface
 uses   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
-  Vcl.ImgList;
+  Vcl.ImgList ;
 
 type
+Pos = Record
+    x : integer;
+    y : integer;
+ End;
 Direcciones = Record
     izquierda : Boolean;
     derecha : Boolean;
@@ -15,12 +19,14 @@ Direcciones = Record
   Helicoptero = class
 
     private
+
        x, y, velocidad : integer;
        Direccion : Direcciones;
        helicopteroTIL: TImageList;
        TImageListCant:integer;
        visible : boolean;
     public
+      v1, v2, v3, v4 : Pos;
     constructor crear; overload;
     constructor crear(Helicoptero: TImageList; x, y, velocidad : integer); overload;
     procedure moverse(key :word);
@@ -29,6 +35,18 @@ Direcciones = Record
     procedure dibujar(t:TCanvas);
     procedure setX(x : integer);
     function getX(): integer;
+    procedure setPos(x, y: integer); overload ;
+    procedure setPos(x, y: integer; var vertice:Pos); overload;
+    procedure SetVisible(visible : boolean);
+    function GetV1X:integer;
+    function GetV2X:integer;
+    function GetV3X:integer;
+    function GetV4X:integer;
+    function GetV1Y:integer;
+    function GetV2Y:integer;
+    function GetV3Y:integer;
+    function GetV4Y:integer;
+
   end;
 
 implementation
@@ -37,8 +55,8 @@ implementation
 
 constructor Helicoptero.crear;
 begin
-   x := 0;
-  y := 0;
+  v1.x := 0;
+  v1.y := 0;
   Direccion.izquierda := false;
   Direccion.superior := false;
   Direccion.derecha := false;
@@ -48,8 +66,11 @@ end;
 constructor Helicoptero.crear(Helicoptero: TImageList; x, y, velocidad: integer);
 begin
   self.helicopteroTIL := Helicoptero;
-  self.x := x; //this.
-  self.y := y;
+  self.setPos(0, 0);
+  self.setPos(x, y, v1);
+  self.setPos(x+Helicoptero.Width, y, v2);
+  self.setPos(x+Helicoptero.Width, y+Helicoptero.Height, v3);
+  self.setPos(x, y+Helicoptero.Height, v4);
   Direccion.izquierda := false;
   Direccion.superior := false;
   Direccion.derecha := false;
@@ -64,15 +85,55 @@ procedure Helicoptero.dibujar(t: TCanvas);
 begin
    if (visible) then
    begin
-    helicopteroTIL.Draw(t, x, y,TImageListCant); //0.1.2
+    helicopteroTIL.Draw(t, v1.x+x, v1.y+y,TImageListCant); //0.1.2
     TImageListCant := (TImageListCant+1) mod 3;
    end;
 
 end;
 
+function Helicoptero.GetV1X: integer;
+begin
+  Result := v1.x + x;
+end;
+
+function Helicoptero.GetV1Y: integer;
+begin
+  Result := v1.Y + Y;
+end;
+
+function Helicoptero.GetV2X: integer;
+begin
+  Result := v2.x + x;
+end;
+
+function Helicoptero.GetV2Y: integer;
+begin
+  Result := v2.y + y;
+end;
+
+function Helicoptero.GetV3X: integer;
+begin
+  Result := v3.x + x;
+end;
+
+function Helicoptero.GetV3Y: integer;
+begin
+  Result := v3.y + y;
+end;
+
+function Helicoptero.GetV4X: integer;
+begin
+  Result := v4.x + x;
+end;
+
+function Helicoptero.GetV4Y: integer;
+begin
+  Result := v4.Y + Y;
+end;
+
 function Helicoptero.getX: integer;
 begin
-  result := Self.x;
+  result := Self.v1.x;
 end;
 
 procedure Helicoptero.moverse(key: word);
@@ -134,28 +195,49 @@ begin
  end;
 end;
 
-procedure Helicoptero.setX(x: integer);
+procedure Helicoptero.setPos(x, y: integer; var vertice: Pos);
+begin
+  vertice.x := x;
+  vertice.y := y;
+
+
+end;
+
+procedure Helicoptero.SetVisible(visible: boolean);
+begin
+  Self.visible := visible;
+end;
+
+procedure Helicoptero.setPos(x, y: integer);
 begin
   self.x := x;
+  self.y := y;
+end;
+
+procedure Helicoptero.setX(x: integer);
+begin
+  x := x;
 end;
 
 procedure Helicoptero.teMOviste;
 begin
 
 
-  if (Direccion.izquierda)and(x > 0) then
+  if (Direccion.izquierda) then
     dec(x, velocidad); //x := x - velocidad
   if (Direccion.derecha) then
     inc(x, velocidad);
-  if (Direccion.superior) and (y > 0) then
+  if (Direccion.superior) then
     dec(y, velocidad);
-  if (Direccion.inferior) then  inc(y, velocidad);
+  if (Direccion.inferior) then
+    inc(y, velocidad);
 
-  if x > 500 then
-  begin
-    visible := false;
-  end else
-  visible := true;
+//
+//  if x > 500 then
+//  begin
+//    visible := false;
+//  end else
+//  visible := true;
 end;
 
 end.
