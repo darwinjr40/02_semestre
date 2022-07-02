@@ -15,6 +15,7 @@ type
     public
     constructor crear(E : Escenario); overload;
     procedure accion();
+    procedure IniciarExplosion();
     function  colisionaron : bool ;
     function  ColisionaronV1 : bool ;
     function  ColisionaronV2 : bool ;
@@ -29,12 +30,21 @@ procedure ControllerGame.accion;
 begin
     objHelicoptero.teMOviste;
 
-   if (ColisionaronV1) then
+   if ((Colisionaron) ) then
    begin
       objHelicoptero.SetVisible(false);
    end else begin
       objHelicoptero.SetVisible(true);
    end;
+
+
+//      objEnemigo.moverseIzquierda;
+//   if objEnemigo.GetV2X < 0 then
+//   begin
+//      objEnemigo.setx(ancho);
+////      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)));
+//      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
+//   end;
 
 //    Application.ProcessMessages;
 //    if ((GetTickCount - time) mod delay = 0) then
@@ -47,30 +57,43 @@ end;
 
 
 function ControllerGame.colisionaron: bool;
-var sw : bool;
 begin
-
+   result := (ColisionaronV1)
+          or (ColisionaronV2)
+          or (ColisionaronV3)
+          or (ColisionaronV4);
 end;
 
 function ControllerGame.ColisionaronV1: bool;
 begin
-  result := (objHelicoptero.GetV3X >= objEnemigo.GetV1X)
-            and (objHelicoptero.GetV3Y >= objEnemigo.GetV1Y) ;
+  result := (objHelicoptero.GetV1X >= objEnemigo.GetV1X)
+            and (objHelicoptero.GetV1Y >= objEnemigo.GetV1Y)
+            and (objHelicoptero.GetV1X <= objEnemigo.GetV3X)
+            and (objHelicoptero.GetV1Y <= objEnemigo.GetV3Y);
 end;
 
 function ControllerGame.ColisionaronV2: bool;
 begin
-
+   result := (objHelicoptero.GetV2X >= objEnemigo.GetV1X)
+            and (objHelicoptero.GetV2Y >= objEnemigo.GetV1Y)
+            and (objHelicoptero.GetV2X <= objEnemigo.GetV3X)
+            and (objHelicoptero.GetV2Y <= objEnemigo.GetV3Y);
 end;
 
 function ControllerGame.ColisionaronV3: bool;
 begin
-
+    result := (objHelicoptero.GetV3X >= objEnemigo.GetV1X)
+            and (objHelicoptero.GetV3Y >= objEnemigo.GetV1Y)
+            and (objHelicoptero.GetV3X <= objEnemigo.GetV3X)
+            and (objHelicoptero.GetV3Y <= objEnemigo.GetV3Y);
 end;
 
 function ControllerGame.ColisionaronV4: bool;
 begin
-
+   result := (objHelicoptero.GetV4X >= objEnemigo.GetV1X)
+            and (objHelicoptero.GetV4Y >= objEnemigo.GetV1Y)
+            and (objHelicoptero.GetV4X <= objEnemigo.GetV3X)
+            and (objHelicoptero.GetV4Y <= objEnemigo.GetV3Y);
 end;
 
 constructor ControllerGame.crear(E: Escenario);
@@ -79,6 +102,14 @@ begin
   Self.objEnemigo := e.GetObjEnemigo;
   time := GetTickCount;
   delay := 1000;
+end;
+
+procedure ControllerGame.IniciarExplosion;
+var ms, timeIni : integer;
+begin
+  ms := 600;
+  timeIni := GetTickCount;
+
 end;
 
 end.

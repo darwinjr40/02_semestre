@@ -13,7 +13,8 @@ type
   TForm1 = class(TForm)
     TimerHelicoptero: TTimer;
     TImageHelicoptero: TImageList;
-    TimerController: TTimer;       //TPNGImage
+    TimerController: TTimer;
+    TImageExplosion: TImageList;       //TPNGImage
     procedure FormCreate(Sender: TObject);
     procedure TimerHelicopteroTimer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -39,7 +40,7 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  ObjEscenario := Escenario.crear(TImageHelicoptero);
+  ObjEscenario := Escenario.crear(TImageHelicoptero,TImageExplosion, Form1.ClientHeight, Form1.ClientWidth);
   objController := ControllerGame.crear(ObjEscenario);
 end;
 
