@@ -3,7 +3,7 @@ unit UCControllerGame;
 interface
  uses   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
-  Vcl.ImgList, UCHelicoptero, UCEscenario, UCENEMIGO;
+  Vcl.ImgList, UCHelicoptero, UCEscenario, UCENEMIGO, UCEXPLOSION;
 
 type
 
@@ -11,7 +11,9 @@ type
     private
         objHelicoptero : Helicoptero;
         objEnemigo : Enemigo;
+        objExplosion : Explosion;
         time, delay: Cardinal;
+        ancho, alto : integer;
     public
     constructor crear(E : Escenario); overload;
     procedure accion();
@@ -30,21 +32,28 @@ procedure ControllerGame.accion;
 begin
     objHelicoptero.teMOviste;
 
-   if ((Colisionaron) ) then
+   if ((Colisionaron)  ) then
    begin
-      objHelicoptero.SetVisible(false);
+      if not objExplosion.GetVisible then
+      begin
+        objHelicoptero.SetVisible(false);
+        IniciarExplosion;
+      end
+
+
    end else begin
+      objEnemigo.moverseIzquierda;
       objHelicoptero.SetVisible(true);
    end;
 
 
-//      objEnemigo.moverseIzquierda;
-//   if objEnemigo.GetV2X < 0 then
-//   begin
-//      objEnemigo.setx(ancho);
-////      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)));
-//      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
-//   end;
+
+   if objEnemigo.GetV2X < 0 then
+   begin
+      objEnemigo.setx(ancho);
+//      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)));
+      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
+   end;
 
 //    Application.ProcessMessages;
 //    if ((GetTickCount - time) mod delay = 0) then
@@ -99,7 +108,10 @@ end;
 constructor ControllerGame.crear(E: Escenario);
 begin
   objHelicoptero := e.getHelicoptero;
+    objExplosion := e.GetExplosion;
   Self.objEnemigo := e.GetObjEnemigo;
+  Self.ancho := e.GetAncho;
+  Self.alto := e.GetAlto;
   time := GetTickCount;
   delay := 1000;
 end;
@@ -109,7 +121,8 @@ var ms, timeIni : integer;
 begin
   ms := 600;
   timeIni := GetTickCount;
-
+  objExplosion.setPos(objHelicoptero.GetV1X, objHelicoptero.GetV1Y);
+  SELF.objExplosion.init(5000, 1000);
 end;
 
 end.

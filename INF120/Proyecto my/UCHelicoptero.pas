@@ -18,7 +18,7 @@ Direcciones = Record
  End;
   Helicoptero = class
 
-    private
+    protected //private
 
        x, y, velocidad : integer;
        Direccion : Direcciones;
@@ -38,6 +38,7 @@ Direcciones = Record
     procedure setPos(x, y: integer); overload ;
     procedure setPos(x, y: integer; var vertice:Pos); overload;
     procedure SetVisible(visible : boolean);
+    function GetVisible:boolean;
     function GetV1X:integer;
     function GetV2X:integer;
     function GetV3X:integer;
@@ -66,11 +67,12 @@ end;
 constructor Helicoptero.crear(Helicoptero: TImageList; x, y, velocidad: integer);
 begin
   self.helicopteroTIL := Helicoptero;
-  self.setPos(0, 0);
-  self.setPos(x, y, v1);
-  self.setPos(x+Helicoptero.Width, y, v2);
-  self.setPos(x+Helicoptero.Width, y+Helicoptero.Height, v3);
-  self.setPos(x, y+Helicoptero.Height, v4);
+  self.setPos(x, y);
+//  self.setPos(x, y, v1);
+//  self.setPos(x+Helicoptero.Width, y, v2);
+//  self.setPos(x+Helicoptero.Width, y+Helicoptero.Height, v3);
+//  self.setPos(x, y+Helicoptero.Height, v4);
+
   Direccion.izquierda := false;
   Direccion.superior := false;
   Direccion.derecha := false;
@@ -86,7 +88,8 @@ begin
    if (visible) then
    begin
     helicopteroTIL.Draw(t, v1.x+x, v1.y+y,TImageListCant); //0.1.2
-    TImageListCant := (TImageListCant+1) mod 3;
+    //ctrl + /
+    TImageListCant := (TImageListCant+1) mod helicopteroTIL.Count;
    end;
 
 end;
@@ -129,6 +132,11 @@ end;
 function Helicoptero.GetV4Y: integer;
 begin
   Result := v4.Y + Y;
+end;
+
+function Helicoptero.GetVisible: boolean;
+begin
+  result := self.visible;
 end;
 
 function Helicoptero.getX: integer;
@@ -208,10 +216,15 @@ begin
   Self.visible := visible;
 end;
 
+//setea todas las posiciones desde el cm y las coordenadas relativas
 procedure Helicoptero.setPos(x, y: integer);
 begin
-  self.x := x;
-  self.y := y;
+  self.setPos(x, y, v1);
+  self.setPos(x+self.helicopteroTIL.Width, y, v2);
+  self.setPos(x+self.helicopteroTIL.Width, y+self.helicopteroTIL.Height, v3);
+  self.setPos(x, y+self.helicopteroTIL.Height, v4);
+  self.x := 0;   //desplazamiento 0
+  self.y := 0;   //desplazamiento 0
 end;
 
 procedure Helicoptero.setX(x: integer);

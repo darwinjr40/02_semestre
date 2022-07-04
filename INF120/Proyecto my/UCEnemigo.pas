@@ -29,7 +29,10 @@ type
     procedure dibujar(t:TCanvas);
     procedure setPos(x, y: integer); overload ;
     procedure setPos(x, y: integer; var vertice:Pos); overload;
+    procedure SetX(x : integer); overload ;
+    procedure SetY(Y : integer); overload ;
     procedure setVisible(sw : boolean);
+    procedure moverseIzquierda();
     function GetV1X:integer;
     function GetV2X:integer;
     function GetV3X:integer;
@@ -52,12 +55,13 @@ constructor Enemigo.crear( x, y, velocidad: integer; url : string);
 begin
   self.enemigoTBit := TBitmap.Create;
   self.enemigoTBit.LoadFromFile(url);
+//  self.enemigoTBit.Transparent := true;
+self.velocidad := velocidad;
   self.setPos(0, 0);
   self.setPos(x, y, v1);
   self.setPos(x+enemigoTBit.Width, y, v2);
   self.setPos(x+enemigoTBit.Width, y+enemigoTBit.Height, v3);
   self.setPos(x, y+enemigoTBit.Height, v4);
-
   self.visible := true;
 end;
 
@@ -117,6 +121,11 @@ begin
 
 end;
 
+procedure Enemigo.moverseIzquierda;
+begin
+  Dec(x, velocidad);
+end;
+
 procedure Enemigo.Nomoverse(key: word);
 begin
 
@@ -131,6 +140,16 @@ end;
 procedure Enemigo.setVisible(sw: boolean);
 begin
   Self.visible := sw;
+end;
+
+procedure Enemigo.SetX(x: integer);
+begin
+ self.x := x;
+end;
+
+procedure Enemigo.SetY(Y: integer);
+begin
+  self.y := y;
 end;
 
 procedure Enemigo.setPos(x, y: integer);

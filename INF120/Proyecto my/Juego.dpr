@@ -6,7 +6,8 @@ uses
   UCHelicoptero in 'UCHelicoptero.pas',
   UCEscenario in 'UCEscenario.pas',
   UCControllerGame in 'UCControllerGame.pas',
-  UCEnemigo in 'UCEnemigo.pas';
+  UCEnemigo in 'UCEnemigo.pas',
+  UCExplosion in 'UCExplosion.pas';
 
 {$R *.res}
 

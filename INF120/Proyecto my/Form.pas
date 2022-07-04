@@ -11,12 +11,12 @@ type
 
 
   TForm1 = class(TForm)
-    TimerHelicoptero: TTimer;
+    TimerDibujar: TTimer;
     TImageHelicoptero: TImageList;
     TimerController: TTimer;
     TImageExplosion: TImageList;       //TPNGImage
     procedure FormCreate(Sender: TObject);
-    procedure TimerHelicopteroTimer(Sender: TObject);
+    procedure TimerDibujarTimer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TimerControllerTimer(Sender: TObject);
@@ -61,7 +61,7 @@ begin
   objController.accion;
 end;
 
-procedure TForm1.TimerHelicopteroTimer(Sender: TObject);
+procedure TForm1.TimerDibujarTimer(Sender: TObject);
 begin
  Repaint;  //50 ms
  ObjEscenario.Dibujar(canvas);
