@@ -13,7 +13,7 @@ type
 
   Enemigo = class
 
-    private
+    protected
        x, y, velocidad :integer;
        Direccion : Direcciones;
        enemigoTBit: TBitmap;
@@ -32,6 +32,7 @@ type
     procedure SetX(x : integer); overload ;
     procedure SetY(Y : integer); overload ;
     procedure setVisible(sw : boolean);
+    procedure setVelocidad(x : byte);
     procedure moverseIzquierda();
     function GetV1X:integer;
     function GetV2X:integer;
@@ -57,11 +58,7 @@ begin
   self.enemigoTBit.LoadFromFile(url);
 //  self.enemigoTBit.Transparent := true;
   self.velocidad := velocidad;
-  self.setPos(0, 0);
-  self.setPos(x, y, v1);
-  self.setPos(x+enemigoTBit.Width, y, v2);
-  self.setPos(x+enemigoTBit.Width, y+enemigoTBit.Height, v3);
-  self.setPos(x, y+enemigoTBit.Height, v4);
+  self.setPos(x, y);
   self.visible := true;
 end;
 
@@ -137,6 +134,11 @@ begin
   vertice.y := y;
 end;
 
+procedure Enemigo.setVelocidad(x: byte);
+begin
+  self.velocidad := x;
+end;
+
 procedure Enemigo.setVisible(sw: boolean);
 begin
   Self.visible := sw;
@@ -154,8 +156,12 @@ end;
 
 procedure Enemigo.setPos(x, y: integer);
 begin
-  self.x := x;
-  self.y := y;
+  self.setPos(x, y, v1);
+  self.setPos(x+enemigoTBit.Width, y, v2);
+  self.setPos(x+enemigoTBit.Width, y+enemigoTBit.Height, v3);
+  self.setPos(x, y+enemigoTBit.Height, v4);
+  self.x := 0;
+  self.y := 0;
 end;
 
 procedure Enemigo.teMOviste;

@@ -3,20 +3,20 @@
 	<Transactions>
     <Transaction>2022/04/12 09:06:26.000.239,=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2022/06/28 13:12:52.000.650,=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2022/06/28 13:16:13.000.537,G:\0\12_INF120\ayuda\javier\Proyecto my\Form.dfm=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2022/06/28 13:16:13.000.537,G:\0\12_INF120\ayuda\javier\Proyecto my\Form.pas=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2022/06/28 13:16:21.000.564,G:\0\12_INF120\ayuda\javier\Proyecto my\Juego.dproj=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/06/28 13:16:13.000.537,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\Form.pas</Transaction>
+    <Transaction>2022/06/28 13:16:13.000.537,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.dfm=G:\0\12_INF120\ayuda\javier\Proyecto my\Form.dfm</Transaction>
+    <Transaction>2022/06/28 13:16:21.000.564,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Project1.dproj=G:\0\12_INF120\ayuda\javier\Proyecto my\Juego.dproj</Transaction>
     <Transaction>2022/06/28 17:05:35.000.654,=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
-    <Transaction>2022/06/28 17:12:18.000.593,G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\UCHelicoptero.pas</Transaction>
+    <Transaction>2022/06/28 17:12:18.000.593,G:\0\12_INF120\ayuda\javier\Proyecto my\UCHelicoptero.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
     <Transaction>2022/06/28 22:30:34.000.369,=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
-    <Transaction>2022/06/28 22:30:43.000.568,G:\0\12_INF120\ayuda\javier\Proyecto my\Escenario.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
+    <Transaction>2022/06/28 22:30:43.000.568,G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\Escenario.pas</Transaction>
     <Transaction>2022/06/28 22:35:00.000.467,G:\0\12_INF120\ayuda\javier\Proyecto my\Escenario.pas=</Transaction>
     <Transaction>2022/06/28 22:35:06.000.744,=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
-    <Transaction>2022/06/28 22:35:34.000.168,G:\0\12_INF120\ayuda\javier\Proyecto my\UCEscenario.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
+    <Transaction>2022/06/28 22:35:34.000.168,G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\UCEscenario.pas</Transaction>
     <Transaction>2022/06/28 23:10:32.000.265,=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
-    <Transaction>2022/06/28 23:10:57.000.984,G:\0\12_INF120\ayuda\javier\Proyecto my\UCControllerGame.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas</Transaction>
+    <Transaction>2022/06/28 23:10:57.000.984,G:\0\12_INF120\ayuda\javier\Proyecto my\Unit1.pas=G:\0\12_INF120\ayuda\javier\Proyecto my\UCControllerGame.pas</Transaction>
     <Transaction>2022/06/30 10:22:16.000.487,=G:\0\12_INF120\02_semestre\INF120\Proyecto my\Unit1.pas</Transaction>
-    <Transaction>2022/06/30 10:23:46.000.051,G:\0\12_INF120\02_semestre\INF120\Proyecto my\Unit1.pas=G:\0\12_INF120\02_semestre\INF120\Proyecto my\UCEnemigo.pas</Transaction>
-    <Transaction>2022/07/02 18:27:04.381,=G:\0\12_INF120\02_semestre\INF120\Proyecto my\UCExplosion.pas</Transaction>
+    <Transaction>2022/06/30 10:23:46.000.051,G:\0\12_INF120\02_semestre\INF120\Proyecto my\UCEnemigo.pas=G:\0\12_INF120\02_semestre\INF120\Proyecto my\Unit1.pas</Transaction>
+    <Transaction>2022/07/02 18:27:04.000.381,=G:\0\12_INF120\02_semestre\INF120\Proyecto my\UCExplosion.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -11,6 +11,8 @@ type
     private
         objHelicoptero : Helicoptero;
         objEnemigo : Enemigo;
+        VectorEnemigos : ListaEnemigos;
+        cantidadEnemigos : byte;
         objExplosion : Explosion;
         time, delay: Cardinal;
         ancho, alto : integer;
@@ -29,31 +31,45 @@ implementation
 { ControllerGame }
 
 procedure ControllerGame.accion;
+var i : byte;
 begin
     objHelicoptero.teMOviste;
+    objHelicoptero.gravedad;
+//   if ((Colisionaron)  ) then
+//   begin
+//      if not objExplosion.GetVisible then
+//      begin
+//        objHelicoptero.SetVisible(false);  //helicoptero invisible
+//        IniciarExplosion;
+//      end
+//
+//
+//   end else begin
+//      objEnemigo.moverseIzquierda;
+//      objHelicoptero.SetVisible(true);
+//   end;
 
-   if ((Colisionaron)  ) then
+  for I := 1 to cantidadEnemigos do
+  begin
+     VectorEnemigos[i].moverseIzquierda;
+     //mover enemigo
+     if VectorEnemigos[i].GetV2X < 0 then  //salio de la pantalla
    begin
-      if not objExplosion.GetVisible then
-      begin
-        objHelicoptero.SetVisible(false);
-        IniciarExplosion;
-      end
-
-
-   end else begin
-      objEnemigo.moverseIzquierda;
-      objHelicoptero.SetVisible(true);
+      VectorEnemigos[i].setPos(ancho, VectorEnemigos[i].v1.y);
+      VectorEnemigos[i].setVelocidad(1+Random(3)); //1..3
+//      VectorEnemigos[i].setx(ancho);
+//      VectorEnemigos[i].setY(Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
    end;
+  end;
 
+   //mover enemigo
 
-
-   if objEnemigo.GetV2X < 0 then
-   begin
-      objEnemigo.setx(ancho);
-//      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)));
-      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
-   end;
+//   if objEnemigo.GetV2X < 0 then  //salio de la pantalla
+//   begin
+//      objEnemigo.setx(ancho);
+////      objEnemigo.setY(0+Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)));
+//      objEnemigo.setY(Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
+//   end;
 
 //    Application.ProcessMessages;
 //    if ((GetTickCount - time) mod delay = 0) then
@@ -105,10 +121,12 @@ begin
             and (objHelicoptero.GetV4Y <= objEnemigo.GetV3Y);
 end;
 
-constructor ControllerGame.crear(E: Escenario);
+constructor ControllerGame.crear(e: Escenario);
 begin
   objHelicoptero := e.getHelicoptero;
     objExplosion := e.GetExplosion;
+  self.VectorEnemigos := e.GetVectorEnemigos;
+  self.cantidadEnemigos := e.GetCantidadEnemigos;
   Self.objEnemigo := e.GetObjEnemigo;
   Self.ancho := e.GetAncho;
   Self.alto := e.GetAlto;

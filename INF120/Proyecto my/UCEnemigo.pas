@@ -56,7 +56,7 @@ begin
   self.enemigoTBit := TBitmap.Create;
   self.enemigoTBit.LoadFromFile(url);
 //  self.enemigoTBit.Transparent := true;
-self.velocidad := velocidad;
+  self.velocidad := velocidad;
   self.setPos(0, 0);
   self.setPos(x, y, v1);
   self.setPos(x+enemigoTBit.Width, y, v2);

@@ -78,14 +78,14 @@ begin
   Direccion.derecha := false;
   Direccion.inferior := false;
   TImageListCant := 0;
-  visible := true;
+  self.visible := true;
   self.velocidad := velocidad;
 //  helicopteroTIL.GetBitmap()
 end;
 
 procedure Helicoptero.dibujar(t: TCanvas);
 begin
-   if (visible) then
+   if (self.visible) then
    begin
     helicopteroTIL.Draw(t, v1.x+x, v1.y+y,TImageListCant); //0.1.2
     //ctrl + /
