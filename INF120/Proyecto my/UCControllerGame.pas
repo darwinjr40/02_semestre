@@ -34,33 +34,34 @@ procedure ControllerGame.accion;
 var i : byte;
 begin
     objHelicoptero.teMOviste;
-    objHelicoptero.gravedad;
-//   if ((Colisionaron)  ) then
-//   begin
+//    objHelicoptero.gravedad;
+
+   if ((ColisionaronV1)  ) then
+   begin
+//     objHelicoptero.SetVisible(false);  //helicoptero invisible
 //      if not objExplosion.GetVisible then
 //      begin
-//        objHelicoptero.SetVisible(false);  //helicoptero invisible
+//
 //        IniciarExplosion;
 //      end
-//
-//
-//   end else begin
-//      objEnemigo.moverseIzquierda;
-//      objHelicoptero.SetVisible(true);
-//   end;
 
-  for I := 1 to cantidadEnemigos do
-  begin
-     VectorEnemigos[i].moverseIzquierda;
-     //mover enemigo
-     if VectorEnemigos[i].GetV2X < 0 then  //salio de la pantalla
-   begin
-      VectorEnemigos[i].setPos(ancho, VectorEnemigos[i].v1.y);
-      VectorEnemigos[i].setVelocidad(1+Random(3)); //1..3
-//      VectorEnemigos[i].setx(ancho);
-//      VectorEnemigos[i].setY(Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
+
+   end else begin
+      objHelicoptero.SetVisible(true);
+      //muevance enemigos
+      for I := 1 to cantidadEnemigos do
+      begin
+         VectorEnemigos[i].moverseIzquierda;  //mover enemigo
+         if VectorEnemigos[i].GetV2X < 0 then  //salio de la pantalla
+       begin
+          VectorEnemigos[i].setPos(ancho, VectorEnemigos[i].v1.y);
+          VectorEnemigos[i].setVelocidad(1+Random(3)); //1..3
+    //      VectorEnemigos[i].setx(ancho);
+    //      VectorEnemigos[i].setY(Random(self.alto-(objEnemigo.v4.y -objEnemigo.v1.y +1)-objEnemigo.v1.y ));
+       end;
+      end;
    end;
-  end;
+
 
    //mover enemigo
 
@@ -90,11 +91,24 @@ begin
 end;
 
 function ControllerGame.ColisionaronV1: bool;
+var i : word;
+    sw : boolean;
 begin
-  result := (objHelicoptero.GetV1X >= objEnemigo.GetV1X)
-            and (objHelicoptero.GetV1Y >= objEnemigo.GetV1Y)
-            and (objHelicoptero.GetV1X <= objEnemigo.GetV3X)
-            and (objHelicoptero.GetV1Y <= objEnemigo.GetV3Y);
+  i := 1;
+  sw := false;
+  while (i <= cantidadEnemigos) and not(sw) do
+  begin
+      if (objHelicoptero.GetV1X >= VectorEnemigos[i].GetV1X)
+          and (objHelicoptero.GetV1Y >= VectorEnemigos[i].GetV1Y)
+          and (objHelicoptero.GetV1X <= VectorEnemigos[i].GetV3X)
+          and (objHelicoptero.GetV1Y <= VectorEnemigos[i].GetV3Y)
+      then
+      begin
+         sw := true;
+      end;
+      inc(i);
+  end;
+  result := sw;
 end;
 
 function ControllerGame.ColisionaronV2: bool;

@@ -6,6 +6,7 @@ uses   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
   Vcl.ImgList, UCHelicoptero, UCEnemigo, UCExplosion ;
 
+
 type
   ListaEnemigos = array of Enemigo;
 
@@ -41,6 +42,8 @@ implementation
 
 constructor Escenario.crear(H, E: TImageList; alto, ancho:integer);
 var i : byte;
+    NombreEnemigos : set of integer;
+//     = ['cubo.bmp', 'fly.bmp', 'zapdo.bmp', 'pajaro.bmp']
 begin
 //  self.
 //  Escenario.
@@ -50,11 +53,11 @@ begin
   objExplosion :=  Explosion.crear(E, 500, 300, 2);
   objEnemigo := Enemigo.crear(200, 200, 2, 'obstacles/pajaro.bmp');
 //  objEnemigo := Enemigo.crear(200, 200, 2, 'obstacles/pajaro.bmp');
-  cantidadEnemigos := 4;
+  cantidadEnemigos := 5;
   SetLength(VectorEnemigos, cantidadEnemigos+1);
   for I := 1 to cantidadEnemigos do
   begin
-     VectorEnemigos[i] := Enemigo.crear(ancho, 105*i, 2, 'obstacles/pajaro.bmp');
+     VectorEnemigos[i] := Enemigo.crear(ancho, 105*(i-1), 2, 'obstacles/pajaro.bmp'); //+NombreEnemigos[(i-1)mod 4]
   end;
 end;
 

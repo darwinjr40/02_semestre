@@ -38,6 +38,7 @@ Direcciones = Record
     procedure setPos(x, y: integer); overload ;
     procedure setPos(x, y: integer; var vertice:Pos); overload;
     procedure SetVisible(visible : boolean);
+    procedure gravedad();
     function GetVisible:boolean;
     function GetV1X:integer;
     function GetV2X:integer;
@@ -142,6 +143,18 @@ end;
 function Helicoptero.getX: integer;
 begin
   result := Self.v1.x;
+end;
+
+procedure Helicoptero.gravedad;
+begin
+    if not Direccion.izquierda
+       and  not Direccion.superior
+       and  not Direccion.derecha
+       and  not Direccion.inferior
+    then
+    begin
+      inc(y, 2);
+    end;
 end;
 
 procedure Helicoptero.moverse(key: word);
