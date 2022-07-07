@@ -20,6 +20,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TimerControllerTimer(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
 
   private
     { Private declarations }
@@ -55,6 +56,11 @@ begin
   ObjEscenario.FormKeyUp(key);
 end;
 
+procedure TForm1.FormPaint(Sender: TObject);
+begin
+  ObjEscenario.Dibujar(canvas);
+end;
+
 procedure TForm1.TimerControllerTimer(Sender: TObject);
 begin
  //controla lac acciones que sucederan
@@ -64,7 +70,6 @@ end;
 procedure TForm1.TimerDibujarTimer(Sender: TObject);
 begin
  Repaint;  //50 ms
- ObjEscenario.Dibujar(canvas);
 end;
 
 end.
