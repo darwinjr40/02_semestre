@@ -4,7 +4,7 @@ interface
 
 uses   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, System.ImageList,
-  Vcl.ImgList, UCHelicoptero, UCEnemigo, UCExplosion ;
+  Vcl.ImgList, UCHelicoptero, UCEnemigo, UCExplosion,Vcl.Imaging.pngimage ;
 
 type
   ListaEnemigos = array of Enemigo;
@@ -17,6 +17,7 @@ type
       cantidadEnemigos : byte;
       objExplosion : Explosion;
       ancho, alto : integer;
+      Fondo : TPNGImage;
     public
     //constructor : por defecto, parametrizado, copia(obj:Escenario)
     constructor crear(H, E: TImageList; alto, ancho:integer); overload;
@@ -56,20 +57,18 @@ begin
   begin
      VectorEnemigos[i] := Enemigo.crear(ancho, 105*(i-1), 2, 'obstacles/pajaro.bmp');
   end;
+  Fondo:=TPNGImage.Create;
+  Fondo.LoadFromFile('fondo.png');
 end;
-
+//dibuja a todos tus objectos
 procedure Escenario.Dibujar(t: TCanvas);
 var i : byte;
 begin
-  //dibuja a todos tus objectos
-
-//  objEnemigo.dibujar(t);
+  T.StretchDraw(RECT(0,0, ANCHO, ALTO),Fondo);
   objHelicoptero.dibujar(t);
-  objExplosion.dibujar(t);
   for I := 1 to cantidadEnemigos do
-  begin
      VectorEnemigos[i].dibujar(t);
-  end;
+  objExplosion.dibujar(t);
 end;
 
 procedure Escenario.FormKeyDown(key: word);

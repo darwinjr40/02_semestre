@@ -14,8 +14,8 @@ type
   Enemigo = class
 
     protected
-       x, y, velocidad :integer;
        Direccion : Direcciones;
+       x, y, ancho, alto, velocidad :integer;
        enemigoTBit: TBitmap;
        TImageListCant : integer ;
        visible : boolean;
@@ -56,8 +56,10 @@ constructor Enemigo.crear( x, y, velocidad: integer; url : string);
 begin
   self.enemigoTBit := TBitmap.Create;
   self.enemigoTBit.LoadFromFile(url);
-//  self.enemigoTBit.Transparent := true;
+  self.enemigoTBit.Transparent := true;
   self.velocidad := velocidad;
+  self.ancho := enemigoTBit.Width;
+  self.alto :=  enemigoTBit.Height;
   self.setPos(x, y);
   self.visible := true;
 end;
@@ -67,6 +69,7 @@ var a : byte;
 begin
   if visible then
   begin
+//    t.StretchDraw(RECT(v1.x+x, v1.y+y, 20, 20), enemigoTBit);
     t.Draw(v1.x+x, v1.y+y, enemigoTBit);
   end;
 
@@ -157,9 +160,9 @@ end;
 procedure Enemigo.setPos(x, y: integer);
 begin
   self.setPos(x, y, v1);
-  self.setPos(x+enemigoTBit.Width, y, v2);
-  self.setPos(x+enemigoTBit.Width, y+enemigoTBit.Height, v3);
-  self.setPos(x, y+enemigoTBit.Height, v4);
+  self.setPos(x+self.ancho, y, v2);
+  self.setPos(x+self.ancho, y+self.alto, v3);
+  self.setPos(x, y+self.alto, v4);
   self.x := 0;
   self.y := 0;
 end;

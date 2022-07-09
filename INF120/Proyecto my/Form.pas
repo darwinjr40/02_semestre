@@ -60,10 +60,9 @@ procedure TForm1.FormPaint(Sender: TObject);
 begin
   ObjEscenario.Dibujar(canvas);
 end;
-
+//controla lac acciones que sucederan
 procedure TForm1.TimerControllerTimer(Sender: TObject);
 begin
- //controla lac acciones que sucederan
   objController.accion;
 end;
 
