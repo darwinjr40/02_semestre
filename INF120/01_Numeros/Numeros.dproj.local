@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/05/22 16:28:46.000.679,=C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/06/03 22:54:40.000.731,=C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/06/03 22:55:49.000.118,=C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2021/06/03 22:56:39.000.247,C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Unit2.pas=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\UCNumeros.pas</Transaction>
+    <Transaction>2021/06/03 22:56:50.000.088,C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\UFPrincipal.dfm</Transaction>
+    <Transaction>2021/06/03 22:56:50.000.088,C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\UFPrincipal.pas</Transaction>
+    <Transaction>2021/06/03 22:57:02.000.800,C:\Users\TOSHIBA\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\Numeros.dproj</Transaction>
+    <Transaction>2021/06/10 18:37:24.000.687,=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\Unit1.pas</Transaction>
+    <Transaction>2021/06/10 18:37:49.000.756,D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\Unit1.pas=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\Números\UCCadenas.pas</Transaction>
+    <Transaction>2021/07/07 16:07:12.230,=D:\UNIVESIDAD MAYKOL\I-2021\Programación I\DELPHI\UCNatural.pas</Transaction>
+  </Transactions>
+</BorlandProject>
