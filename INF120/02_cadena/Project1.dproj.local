@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/11/11 20:07:17.000.232,=C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2021/11/11 20:08:54.000.455,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.dfm=G:\12_INF120\01_implementacion\02_Cadena\FormularioCadena.dfm</Transaction>
+    <Transaction>2021/11/11 20:08:54.000.455,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Unit1.pas=G:\12_INF120\01_implementacion\02_Cadena\FormularioCadena.pas</Transaction>
+    <Transaction>2021/11/11 20:08:59.000.242,C:\Users\darwin\Documents\Embarcadero\Studio\Projects\Project1.dproj=G:\12_INF120\01_implementacion\02_Cadena\Project1.dproj</Transaction>
+    <Transaction>2021/11/15 22:48:35.000.376,=G:\12_INF120\01_implementacion\02_Cadena\UCCadena.pas</Transaction>
+  </Transactions>
+</BorlandProject>

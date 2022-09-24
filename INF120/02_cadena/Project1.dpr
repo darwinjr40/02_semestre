@@ -1,8 +1,9 @@
-program Project;
+program Project1;
 
 uses
   Vcl.Forms,
-  Form in 'Form.pas' {Form1};
+  FormularioCadena in 'FormularioCadena.pas' {Form1},
+  UCCadena in 'UCCadena.pas';
 
 {$R *.res}
 

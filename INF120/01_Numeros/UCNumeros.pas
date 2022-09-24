@@ -4,7 +4,7 @@ unit UCNumeros;
 interface
 uses math,sysutils ;
 const
-decenamil :array [2..9] of string = ('veintiún','treinta y un','cuarenta y un',
+decenamil :array [2..9] of string = ('veintiï¿½n','treinta y un','cuarenta y un',
  'cincuenta y un','sesenta y un',' setenta y un','ochenta y un','noventa y un');
  Maxc = 1024;
  primo = [2,3,5,7];
@@ -17,7 +17,7 @@ decenamil :array [2..9] of string = ('veintiún','treinta y un','cuarenta y un',
      public
      function ObtValor:cardinal;
      procedure CambValor (v:cardinal);
-     function DigitoN (p:byte):byte;  //digito en posición N
+     function DigitoN (p:byte):byte;  //digito en posiciï¿½n N
      function CantDigitos :byte;     //cantidad de digitos
      procedure InserDigito (p,d:byte);
 
@@ -99,7 +99,7 @@ begin
        valor:=n1 *k + n2;
      end
      else
-     raise Exception.Create('Posición fuera de rango');
+     raise Exception.Create('Posiciï¿½n fuera de rango');
 
 end;
 
@@ -114,7 +114,7 @@ if (p>0) and (p<= CantDigitos) then
   n1:= n1 div 10;
   valor:= n1 * k + n2;
  end
- else raise Exception.Create('Posición fuera de rango');
+ else raise Exception.Create('Posiciï¿½n fuera de rango');
 
 end;
 
@@ -124,7 +124,7 @@ begin
   begin
 
   end
-  else raise Exception.Create('Posición fuera de rango');
+  else raise Exception.Create('Posiciï¿½n fuera de rango');
 end;
 
 procedure Numero.DeleteDig(d: byte);
@@ -327,7 +327,7 @@ end;
 function Numero.Literal6D(n: cardinal): string;
 Const
 UMil : array [1..4] of string = ('mil','millones','billones','trillones');
- decenamil :array [2..9] of string = ('veintiún','treinta y un','cuarenta y un',
+ decenamil :array [2..9] of string = ('veintiï¿½n','treinta y un','cuarenta y un',
  'cincuenta y un','sesenta y un',' setenta y un','ochenta y un','noventa y un');
  var x:string;
 begin

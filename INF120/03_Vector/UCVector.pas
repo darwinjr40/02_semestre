@@ -79,7 +79,7 @@ begin
   m:=0;
   hallado := false;     //1 2 3 4 5
  while(a<=b)and(not hallado)do begin
-   m:=(a+b) div 2;
+   m := (a+b) div 2;
   if(e = Elementos[m])then
     hallado := true
   else if(e < Elementos[m])then

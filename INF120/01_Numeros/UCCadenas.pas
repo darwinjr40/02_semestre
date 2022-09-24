@@ -62,7 +62,7 @@ begin
     for i := longitud downto p+1 do
          caracteres[i]:=caracteres[i-1];
     caracteres[p]:=c;
- end else raise Exception.Create('Posición fuera de rango');
+ end else raise Exception.Create('Posiciï¿½n fuera de rango');
 end;
 
 procedure Cadena.EliminarCaracter(p: byte);
@@ -73,7 +73,7 @@ begin
     for i := p to longitud-1 do
          caracteres[i]:=caracteres[i+1];
      longitud:=longitud-1;
- end else raise Exception.Create('Posición fuera de rango');
+ end else raise Exception.Create('Posiciï¿½n fuera de rango');
 
 end;
 
@@ -81,7 +81,7 @@ procedure Cadena.ModificarCaracter(p: byte; c: char);
 begin
 if (p>0) and (p<=longitud) then  begin
 caracteres[p]:=c;
-end else raise Exception.Create('Posición fuera de Rango')
+end else raise Exception.Create('Posiciï¿½n fuera de Rango')
 end;
 
 
@@ -89,7 +89,7 @@ function Cadena.ObtenerCaracter(p: word): char;
 begin
 if (p>0) and (p<=longitud) then
   result:= caracteres[p];
-  raise Exception.Create('Posición fuera de rango');
+  raise Exception.Create('Posiciï¿½n fuera de rango');
 end;
 
  //----------------------------------------------
@@ -161,14 +161,14 @@ begin
        begin
          caracteres[i]:= chr(ord(caracteres[i])+32)       //(chr(ord(caracteres[i]))+32);
        end;
-       //if caracteres[i] = 'Ñ' then caracteres[i]:= 'ñ';
+       //if caracteres[i] = 'ï¿½' then caracteres[i]:= 'ï¿½';
        case caracteres[i] of
-         'Ñ':caracteres[i]:='ñ';
-         'Á':caracteres[i]:='á';
-         'É':caracteres[i]:='é';
-         'Í':caracteres[i]:='í';
-         'Ó':caracteres[i]:='ó';
-         'Ú':caracteres[i]:='ú';
+         'ï¿½':caracteres[i]:='ï¿½';
+         'ï¿½':caracteres[i]:='ï¿½';
+         'ï¿½':caracteres[i]:='ï¿½';
+         'ï¿½':caracteres[i]:='ï¿½';
+         'ï¿½':caracteres[i]:='ï¿½';
+         'ï¿½':caracteres[i]:='ï¿½';
          end;
     end;
 end;
