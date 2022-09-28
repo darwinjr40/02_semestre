@@ -106,6 +106,10 @@ object Form1: TForm1
         Caption = 'ToRomano'
         OnClick = oRomano1Click
       end
+      object ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem
+        Caption = 'ElimDigPrimoTieneVecinoDigPrimo'
+        OnClick = ElimDigPrimoTieneVecinoDigPrimo1Click
+      end
     end
   end
   object MainMenu2: TMainMenu

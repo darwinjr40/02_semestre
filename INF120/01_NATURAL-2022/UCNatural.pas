@@ -23,7 +23,8 @@ uses math, sysutils;
     function    VerifCapicua : boolean;
     function    unidad(n : cardinal) : String;
     function    toBase(b : cardinal) : String;
-    function    ToRomano() : String; 
+    function    ToRomano() : String;
+    function    GetFrc(e:cardinal): byte;
     class function pot(b,e: Cardinal):Cardinal; static;    
     {procedure}
     procedure   SetValor(x : cardinal);
@@ -37,11 +38,32 @@ uses math, sysutils;
     procedure   ElimPrimerNumero(e : Cardinal);
     procedure   ElimCantDigIzq(cant : byte);
     procedure   ElimCantDigDer(cant : byte);
+    procedure   ElimDigPrimoTieneVecinoDigPrimo;
+    procedure   MovDigMayIni();
+    procedure   MovDigMayFrcIni();
+    procedure   MovDigMenFrcIni();
+    procedure   SegFrcDesc();
+
     
   end;
 implementation
 
 { Natural }
+
+procedure Natural.SegFrcDesc;
+var d : byte;
+    n : cardinal;
+begin
+  n := 0;
+  while valor > 0 do
+  begin
+    self.MovDigMenFrcIni;
+//    d := self.GetDigito(self.GetCantDig);
+//    self.ElimPosDigito(self.GetCantDig);
+//    n := n * 10 + d;
+  end;
+  valor := n;
+end;
 
 procedure Natural.SetValor(x: cardinal);
 begin
@@ -54,12 +76,15 @@ begin
 end;
 
 constructor Natural.crear(x: cardinal);
+var obj : Natural;
 begin
-  crear(0, Natural.crear);
+  obj := Natural.crear();
+  obj.aux := Natural.crear();
+  crear(x, obj);
 end;
 
 constructor Natural.crear(x: Natural);
-begin
+begin;
   crear(x.GetValor, Natural.crear);
 end;
 
@@ -124,6 +149,26 @@ begin
   end;
   valor := n;
 end;
+//22.Eliminar todos los dígitos primos que estén al lado de un dígito primo
+//Ejemplo: 2472835 => 24783
+procedure Natural.ElimDigPrimoTieneVecinoDigPrimo;
+var b : Natural;
+    n, p : Cardinal;
+begin
+  b := Natural.crear(0);  
+  p := 1;  n := 0;
+  while (valor > 9) do begin
+    aux.valor := (valor mod 10);
+    valor := valor div 10;
+    b.valor := (valor mod 10);
+    if not(aux.VerficarPrimo and b.VerficarPrimo) then
+    begin
+      n := aux.valor * p + n;    
+      p := p * 10;
+    end;  
+  end;
+  valor := (valor mod 10) * p + n;
+end;
 
 procedure Natural.ElimPrimerNumero(e: Cardinal);
 var p, c : byte;
@@ -144,6 +189,28 @@ begin
     valor := valor div pot(10,p);
     UnirNumDerecha(n); 
   end;
+end;
+
+
+
+function Natural.GetFrc(e: cardinal): byte;
+var cd, r : byte;
+    n, d : cardinal;
+begin
+  aux.valor := e;
+  cd := aux.GetCantDig;
+  n := valor;
+  r := 0;
+  while (n > 0) do
+  begin
+    d := n mod pot(10,cd);
+    n := n div 10;
+    if e = d then begin
+      r := r + 1;
+      n := n div pot(10,cd-1);
+    end;
+  end;
+  GetFrc := r;
 end;
 
 procedure Natural.ElimPosDigito(p: byte);
@@ -200,6 +267,70 @@ begin
    valor := valor div 10;
  end;
  valor := copia;
+end;
+//222555508
+procedure Natural.MovDigMayFrcIni;
+var d : byte;
+    n, a, p : cardinal;
+begin
+  n := valor; p := 1; a := 0;
+  while (n > 9) do
+  begin
+    d := (n mod 10);
+    n := n div 10;
+    if (GetFrc(n mod 10) < GetFrc(d)) then begin
+      a := (n mod 10) * p + a;
+      n := (n div 10)*10+d;
+    end else begin
+      a := d * p + a;
+    end;
+    p := p *10;
+  end;
+  valor := n;
+  UnirNumDerecha(a);
+end;
+
+procedure Natural.MovDigMayIni;
+var d : byte;
+    n, p : cardinal;
+begin
+  n := 0; p := 1;
+  while (valor > 9) do
+  begin
+    d := (valor mod 10);
+    valor := valor div 10;
+    if ((valor mod 10) < d) then begin
+      n := (valor mod 10) * p + n;
+      p := p *10;
+      valor := (valor div 10)*10+d;
+    end;
+  end;
+  UnirNumDerecha(n);
+end;
+
+procedure Natural.MovDigMenFrcIni;
+var a, b, fa, fb : byte;
+    n, c, p : cardinal;
+begin
+  n := valor; p := 1; c := 0;
+  while (n > 9) do
+  begin
+    b := (n mod 10);
+    n := n div 10;
+    a := (n mod 10);
+    fa := GetFrc(a);
+    fb := GetFrc(b);
+    if (( fa > fb ) or
+       ((fa = fb) and  (a < b))) then begin
+      c := (n mod 10) * p + c;
+      n := (n div 10)*10+b;
+    end else begin
+      c := b * p + c;
+    end;
+    p := p *10;
+  end;
+  valor := n;
+  UnirNumDerecha(c);
 end;
 
 class function Natural.pot(b, e: Cardinal): Cardinal;

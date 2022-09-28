@@ -21,6 +21,7 @@ type
     oRomano1: TMenuItem;
     Edit3: TEdit;
     Edit4: TEdit;
+    ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Button1SetValor(Sender: TObject);
     procedure Button2GetValor(Sender: TObject);
@@ -28,6 +29,7 @@ type
     procedure unidad1Click(Sender: TObject);
     procedure toBase1Click(Sender: TObject);
     procedure oRomano1Click(Sender: TObject);
+    procedure ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,6 +57,12 @@ procedure TForm1.Button2GetValor(Sender: TObject);
 begin
   resultado := IntToStr(objeto.GetValor);//123 => '123'
   edit4.Text := resultado;
+end;
+
+procedure TForm1.ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
+begin
+//  Edit3.Text := IntToStr(objeto.GetFrc(StrtoInt(Edit2.Text)));
+objeto.SegFrcDesc;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
