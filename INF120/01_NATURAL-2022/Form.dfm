@@ -30,7 +30,7 @@ object Form1: TForm1
   end
   object Edit2: TEdit
     Left = 200
-    Top = 88
+    Top = 79
     Width = 345
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -43,7 +43,7 @@ object Form1: TForm1
   end
   object Button1: TButton
     Left = 96
-    Top = 104
+    Top = 40
     Width = 75
     Height = 25
     Caption = 'cargar'
@@ -52,7 +52,7 @@ object Form1: TForm1
   end
   object Button2: TButton
     Left = 96
-    Top = 150
+    Top = 71
     Width = 75
     Height = 25
     Caption = 'descargar'
@@ -61,7 +61,7 @@ object Form1: TForm1
   end
   object Edit3: TEdit
     Left = 200
-    Top = 144
+    Top = 124
     Width = 345
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -74,7 +74,7 @@ object Form1: TForm1
   end
   object Edit4: TEdit
     Left = 200
-    Top = 192
+    Top = 169
     Width = 345
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -86,8 +86,6 @@ object Form1: TForm1
     TabOrder = 5
   end
   object MainMenu1: TMainMenu
-    Left = 24
-    Top = 16
     object objeto11: TMenuItem
       Caption = 'Numero'
       object invertir1: TMenuItem
@@ -109,6 +107,10 @@ object Form1: TForm1
       object ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem
         Caption = 'ElimDigPrimoTieneVecinoDigPrimo'
         OnClick = ElimDigPrimoTieneVecinoDigPrimo1Click
+      end
+      object segmentarfrecuenciaDesc1: TMenuItem
+        Caption = 'segmentar frecuencia Desc'
+        OnClick = segmentarfrecuenciaDesc1Click
       end
     end
   end

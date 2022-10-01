@@ -22,6 +22,7 @@ type
     Edit3: TEdit;
     Edit4: TEdit;
     ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem;
+    segmentarfrecuenciaDesc1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Button1SetValor(Sender: TObject);
     procedure Button2GetValor(Sender: TObject);
@@ -30,6 +31,7 @@ type
     procedure toBase1Click(Sender: TObject);
     procedure oRomano1Click(Sender: TObject);
     procedure ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
+    procedure segmentarfrecuenciaDesc1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,8 +63,7 @@ end;
 
 procedure TForm1.ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
 begin
-//  Edit3.Text := IntToStr(objeto.GetFrc(StrtoInt(Edit2.Text)));
-objeto.SegFrcDesc;
+objeto.ElimDigPrimoTieneVecinoDigPrimo;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -88,6 +89,11 @@ end;
 procedure TForm1.oRomano1Click(Sender: TObject);
 begin
   Edit2.Text := objeto.ToRomano;
+end;
+
+procedure TForm1.segmentarfrecuenciaDesc1Click(Sender: TObject);
+begin
+ objeto.SegFrcDesc;
 end;
 
 procedure TForm1.toBase1Click(Sender: TObject);

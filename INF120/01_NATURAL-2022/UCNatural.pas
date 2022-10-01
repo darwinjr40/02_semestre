@@ -14,7 +14,7 @@ uses math, sysutils;
     { Public declarations }     //ctrl + shift + c
     constructor crear; overload;
     constructor crear(x : cardinal); overload;
-    constructor crear(x : Natural);overload;   
+    constructor crear(x : Natural);overload;
     {function}
     function    GetValor : cardinal;
     function    GetDigito(p : byte) : byte;
@@ -25,11 +25,12 @@ uses math, sysutils;
     function    toBase(b : cardinal) : String;
     function    ToRomano() : String;
     function    GetFrc(e:cardinal): byte;
-    class function pot(b,e: Cardinal):Cardinal; static;    
+    class function pot(b,e: Cardinal):Cardinal; static;
+    function    GetPosDigMenFre(n : Cardinal): byte;
     {procedure}
     procedure   SetValor(x : cardinal);
     procedure   InserDigito(p,d:byte);
-    procedure   Invertir;  
+    procedure   Invertir;
     procedure   UnirNumDerecha(e : Cardinal);
     procedure   UnirNumIzquierda(e : Cardinal);
     procedure   ElimPosDigito(p: byte);
@@ -38,31 +39,27 @@ uses math, sysutils;
     procedure   ElimPrimerNumero(e : Cardinal);
     procedure   ElimCantDigIzq(cant : byte);
     procedure   ElimCantDigDer(cant : byte);
-    procedure   ElimDigPrimoTieneVecinoDigPrimo;
+    {opcional}
     procedure   MovDigMayIni();
     procedure   MovDigMayFrcIni();
     procedure   MovDigMenFrcIni();
+    {modelos de examen}
+    procedure   ElimDigPrimoTieneVecinoDigPrimo;
     procedure   SegFrcDesc();
 
-    
+
   end;
 implementation
 
 { Natural }
 
 procedure Natural.SegFrcDesc;
-var d : byte;
-    n : cardinal;
+var n : cardinal;
 begin
-  n := 0;
-  while valor > 0 do
-  begin
-    self.MovDigMenFrcIni;
-//    d := self.GetDigito(self.GetCantDig);
-//    self.ElimPosDigito(self.GetCantDig);
-//    n := n * 10 + d;
-  end;
-  valor := n;
+  repeat
+    n := valor;
+    self.MovDigMenFrcIni();
+  until (N = VALOR);
 end;
 
 procedure Natural.SetValor(x: cardinal);
@@ -104,9 +101,9 @@ begin
     inc(p);
     valor := valor div 10;
   end;
-  if valor = 0 then 
+  if valor = 0 then
     valor := n
-  else begin    
+  else begin
     valor := (valor div 10);
     UnirNumDerecha(n);
   end;
@@ -145,7 +142,7 @@ begin
       n := (valor mod 10) * pot(10,p) + n;
       p := p + 1;
     end;
-    valor := valor div 10;   
+    valor := valor div 10;
   end;
   valor := n;
 end;
@@ -155,7 +152,7 @@ procedure Natural.ElimDigPrimoTieneVecinoDigPrimo;
 var b : Natural;
     n, p : Cardinal;
 begin
-  b := Natural.crear(0);  
+  b := Natural.crear(0);
   p := 1;  n := 0;
   while (valor > 9) do begin
     aux.valor := (valor mod 10);
@@ -163,9 +160,9 @@ begin
     b.valor := (valor mod 10);
     if not(aux.VerficarPrimo and b.VerficarPrimo) then
     begin
-      n := aux.valor * p + n;    
+      n := aux.valor * p + n;
       p := p * 10;
-    end;  
+    end;
   end;
   valor := (valor mod 10) * p + n;
 end;
@@ -179,7 +176,7 @@ begin
   c := 0;
   n := 0;
   while (valor > 0) and (valor mod pot(10,p) <> e) do  begin
-    n := (valor mod 10) * pot(10,c) + n;      
+    n := (valor mod 10) * pot(10,c) + n;
     c := c + 1;
     valor := valor div 10;
   end;
@@ -187,7 +184,7 @@ begin
     valor := n
   else begin
     valor := valor div pot(10,p);
-    UnirNumDerecha(n); 
+    UnirNumDerecha(n);
   end;
 end;
 
@@ -211,6 +208,31 @@ begin
     end;
   end;
   GetFrc := r;
+end;
+
+function Natural.GetPosDigMenFre(n : Cardinal): byte;
+var er, p, fr, f, fa, fb, a, b : byte;
+    cant : cardinal;
+begin
+  if valor = 0 then
+    raise Exception.Create('No hay digitos: procedure GetPosDigMenFre')
+  else begin
+    er:= n mod 10;
+    fr := GetFrc(er);
+    n := n div 10;
+    while n > 0 do
+    begin
+      f := GetFrc(n mod 10);
+      if ((f < fr)or ((f = fr) and  (n mod 10 > er))) then
+      begin
+        fr := f;
+        er := n mod 10;
+      end;
+      n := n div 10;
+    end;
+    result := er;
+  end
+
 end;
 
 procedure Natural.ElimPosDigito(p: byte);
@@ -308,31 +330,33 @@ begin
   UnirNumDerecha(n);
 end;
 
-procedure Natural.MovDigMenFrcIni;
-var a, b, fa, fb : byte;
+
+procedure Natural.MovDigMenFrcIni();
+var a, b, fa, fb, i : byte;
     n, c, p : cardinal;
 begin
   n := valor; p := 1; c := 0;
-  while (n > 9) do
-  begin
-    b := (n mod 10);
+  i := 1;
+  while ((n > 9)) do begin
+    b := n mod 10;
     n := n div 10;
-    a := (n mod 10);
+    a := n mod 10;
     fa := GetFrc(a);
     fb := GetFrc(b);
     if (( fa > fb ) or
        ((fa = fb) and  (a < b))) then begin
-      c := (n mod 10) * p + c;
-      n := (n div 10)*10+b;
+      c := a * p + c;
+      n := (n div 10) * 10 + b;
     end else begin
       c := b * p + c;
     end;
     p := p *10;
+    inc(i);
   end;
   valor := n;
   UnirNumDerecha(c);
 end;
-
+//pot(2,4) <=> 2^4 => 16
 class function Natural.pot(b, e: Cardinal): Cardinal;
 begin
   pot := trunc(power(b, e));
@@ -404,7 +428,7 @@ begin
   if e > 0 then begin
     aux.valor := e;
     valor := valor * (pot(10, aux.GetCantDig)) + e;
-  end;  
+  end;
 end;
 
 procedure Natural.UnirNumIzquierda(e: Cardinal);
