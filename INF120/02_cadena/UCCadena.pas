@@ -3,7 +3,7 @@ unit UCCadena;
 interface
  uses sysutils,math,Vcl.Dialogs;
  Const MaxC = 1024;
-       separadores= [' ','.',',',';',':'];
+       separadores= [' ','.',',',';',':', '-'];
        letras = ['A'..'Z','a'..'z'];
        CONSONANTES = ['B','C','D','F','G','H','J','N', 'P'..'T', 'V'..'Z',
                       'b','c','d','f','g','h','j','n', 'p'..'t', 'v'..'z'];
@@ -554,17 +554,17 @@ end;
 function cadena.nextWord(var i: word): string;
 var p:string;  a:word;
 begin                                 //
-if (i>0) and (i<=longitud) then begin //---hola-
-  while (i<=longitud) and (caracteres[i] in separadores) do
+if (i>=1) and (i<=longitud) then begin //---hola-
+  while (i<=longitud) and not (caracteres[i] in letras) do
       inc(i);
   p:='';
-  while (i<=longitud) and not (caracteres[i] in separadores) do
+  while (i<=longitud) and (caracteres[i] in letras) do
   begin
-      p:=p+caracteres[i];
-      inc(i);
+      p := p + caracteres[i];
+      inc(i); //i := i + 1;   dec(i)
   end;
-   result:=p;
-end else raise Exception.Create('fin')
+  result:=p;
+end else raise Exception.Create('error!, fuera de rango "nextWord" ')
 end;
 
 //-----------------------------------------------------------------------
@@ -796,7 +796,7 @@ procedure Cadena.DeletePos(posicion, cantidad : word);
 var i: word;
 begin
   if not ((posicion >= 1)and(posicion <= longitud)) then begin
-    raise Exception.Create('Posicion Fuera de rango');
+    raise Exception.Create('Posicion Fuera de rango, DeletePos()');
   end else begin
     if (posicion+cantidad) > longitud then begin
       longitud := posicion - 1;
@@ -1566,15 +1566,13 @@ begin
    begin
      SigNumeroReal(i, num, dnum);
      if ((dnum <> '')) then begin //existe parte decimal
-        d:=StrToInt(dnum);
-         if (d > dmay) then
+         if (StrToInt(dnum) > dmay) then
          begin
-            dmay:=d;
-            r:=StrTofloat(num+','+dnum);
+            dmay:=StrToInt(dnum);
+            aux :=num+'.'+dnum;
+            r:=StrTofloat(aux);
          end;
-
      end;
-
    end;
    if r = 0 then 
    begin
@@ -1585,7 +1583,6 @@ begin
         r:=StrTofloat(num);
      end;
    end;
-   
    result:=r;
 end;
 

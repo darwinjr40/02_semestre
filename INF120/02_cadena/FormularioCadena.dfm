@@ -73,8 +73,8 @@ object Form1: TForm1
     TabOrder = 2
   end
   object Button1: TButton
-    Left = 8
-    Top = 68
+    Left = 16
+    Top = 59
     Width = 106
     Height = 25
     Caption = 'cargar'

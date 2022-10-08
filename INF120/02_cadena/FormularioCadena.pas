@@ -117,9 +117,11 @@ begin
 end;
 
 procedure TForm1.DelSubCadena1Click(Sender: TObject);
+var cad : string;
 begin
  // cadena1.DelSubCadena(Edit1.Text);
- cadena1.DeleteAllSubPalabra3(Edit2.Text);
+ cad := Edit2.Text;
+ cadena1.DeleteAllSubPalabra3(cad);
 end;
 
 procedure TForm1.descargar1Click(Sender: TObject);
@@ -180,8 +182,11 @@ begin
 end;
 
 procedure TForm1.N202211Click(Sender: TObject);
+var a : real;
 begin
   Edit3.Text := FloatToStr(cadena1.DevolverNumDecimalMayor());
+//  a := StrToFloat('12.13');
+
 end;
 
 procedure TForm1.prueba1Click(Sender: TObject);
