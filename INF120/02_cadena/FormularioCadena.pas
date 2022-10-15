@@ -37,6 +37,8 @@ type
     EsRepectidoabchar1: TMenuItem;
     N20212DelPalabraConsonanteRepetida1: TMenuItem;
     N202211: TMenuItem;
+    InvertircadaPalabra220221: TMenuItem;
+    Label2: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure AdicionarPalabra1Click(Sender: TObject);
     procedure descargar1Click(Sender: TObject);
@@ -59,6 +61,7 @@ type
     procedure EsRepectidoabchar1Click(Sender: TObject);
     procedure N20212DelPalabraConsonanteRepetida1Click(Sender: TObject);
     procedure N202211Click(Sender: TObject);
+    procedure InvertircadaPalabra220221Click(Sender: TObject);
   private
     { Private declarations }
     cadena1 : Cadena;
@@ -109,6 +112,7 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   ShowMessage(cadena1.ToStr());
+  Label2.Caption := cadena1.ToStr();
 end;
 
 procedure TForm1.Delete1Click(Sender: TObject);
@@ -157,6 +161,11 @@ end;
 procedure TForm1.GetLongitud1Click(Sender: TObject);
 begin
   Edit2.Text := IntToStr(cadena1.GetLongitud);
+end;
+
+procedure TForm1.InvertircadaPalabra220221Click(Sender: TObject);
+begin
+  cadena1.InvertirCadaPalabra;
 end;
 
 procedure TForm1.InvertirPalabras1Click(Sender: TObject);

@@ -36,7 +36,8 @@ interface
        procedure DeleteAllPalabra(palabraBusc : String);
        procedure Remplazar(var pos:word; palabraRempl:String);
        procedure Mover(var pos:word; a, b :word);
-
+       procedure Invertir(a, b : byte);
+       procedure InvertirCadaPalabra();
        {funciones}
        function GetLongitud : word;
        function nextWord (var i:word):string; overload;
@@ -202,6 +203,7 @@ end else raise Exception.Create('Posición fuera de rango');
 
 end;
 
+
 procedure Cadena.EliminarCaracter(p: byte);
 var i:byte;
 begin
@@ -306,6 +308,31 @@ end;
 
 
 
+procedure Cadena.Invertir(a, b: byte);
+begin
+  while a < b  do
+  begin
+    Self.Intercambiar(a, b);
+    inc(a);
+    dec(b);
+  end;
+end;
+
+procedure Cadena.InvertirCadaPalabra;
+var  posIni, posfin  :byte;
+    i: word;
+    pal : string;
+begin
+  i := 1;
+  while i <= longitud do
+  begin
+    pal := nextWord(i);
+    posIni := i - Length(pal);
+    posfin := i - 1;
+    self.Invertir(posIni, posfin);
+  end;
+end;
+
 procedure Cadena.InvertirCadena;
 var i,r:word;
 begin
@@ -347,7 +374,7 @@ begin
 end;
 
 procedure Cadena.Intercambiar(a, b: word);
-var aux:char;
+var aux : char;
 begin
   aux:=caracteres[a];
   caracteres[a]:=caracteres[b];

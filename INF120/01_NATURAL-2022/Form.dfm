@@ -17,7 +17,7 @@ object Form1: TForm1
   TextHeight = 13
   object Edit1: TEdit
     Left = 200
-    Top = 34
+    Top = 42
     Width = 345
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -61,7 +61,7 @@ object Form1: TForm1
   end
   object Edit3: TEdit
     Left = 200
-    Top = 124
+    Top = 132
     Width = 345
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -111,6 +111,10 @@ object Form1: TForm1
       object segmentarfrecuenciaDesc1: TMenuItem
         Caption = 'segmentar frecuencia Desc'
         OnClick = segmentarfrecuenciaDesc1Click
+      end
+      object verificarcapicua1: TMenuItem
+        Caption = 'verificar capicua'
+        OnClick = verificarcapicua1Click
       end
     end
   end

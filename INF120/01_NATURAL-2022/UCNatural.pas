@@ -450,9 +450,15 @@ end;
 
 function Natural.VerifCapicua: boolean;
 begin
-  aux.valor := valor;
-  aux.Invertir;
-  VerifCapicua := (valor = aux.valor);
+  if valor = 0 then
+  begin
+   result:= false;
+  end else begin
+    aux.valor := valor;
+    aux.Invertir;
+    VerifCapicua := (valor = aux.valor);
+  end;
+
 end;
 
 end.

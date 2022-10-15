@@ -23,6 +23,7 @@ type
     Edit4: TEdit;
     ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem;
     segmentarfrecuenciaDesc1: TMenuItem;
+    verificarcapicua1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Button1SetValor(Sender: TObject);
     procedure Button2GetValor(Sender: TObject);
@@ -32,6 +33,7 @@ type
     procedure oRomano1Click(Sender: TObject);
     procedure ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
     procedure segmentarfrecuenciaDesc1Click(Sender: TObject);
+    procedure verificarcapicua1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -105,6 +107,11 @@ procedure TForm1.unidad1Click(Sender: TObject);
 var n : cardinal;
 begin
   Edit2.Text :=  objeto.unidad(objeto.GetValor);
+end;
+
+procedure TForm1.verificarcapicua1Click(Sender: TObject);
+begin
+  edit2.Text := BoolToStr(objeto.VerifCapicua, true);
 end;
 
 end.

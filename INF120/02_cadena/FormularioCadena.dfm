@@ -27,6 +27,13 @@ object Form1: TForm1
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object Label2: TLabel
+    Left = 59
+    Top = 264
+    Width = 102
+    Height = 41
+    Caption = 'Label2'
+  end
   object StringGrid1: TStringGrid
     Left = 32
     Top = 168
@@ -61,7 +68,7 @@ object Form1: TForm1
   end
   object Edit2: TEdit
     Left = 128
-    Top = 64
+    Top = 45
     Width = 721
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -104,7 +111,7 @@ object Form1: TForm1
   end
   object Edit3: TEdit
     Left = 128
-    Top = 115
+    Top = 90
     Width = 721
     Height = 31
     Font.Charset = DEFAULT_CHARSET
@@ -116,7 +123,7 @@ object Form1: TForm1
     TabOrder = 5
   end
   object Button3: TButton
-    Left = 23
+    Left = 8
     Top = 121
     Width = 75
     Height = 25
@@ -184,6 +191,10 @@ object Form1: TForm1
       object EsRepectidoabchar1: TMenuItem
         Caption = 'EsRepectido(a,b,char)'
         OnClick = EsRepectidoabchar1Click
+      end
+      object InvertircadaPalabra220221: TMenuItem
+        Caption = 'Invertir cada Palabra  2-2022'
+        OnClick = InvertircadaPalabra220221Click
       end
     end
     object Examenes1: TMenuItem
