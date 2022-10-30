@@ -2,11 +2,10 @@ program snake;
 
 uses
   Vcl.Forms,
-  Formulario in 'Formulario.pas' {Form1},
-  Model in 'models\Model.pas',
-  ModelStage in 'models\ModelStage.pas',
-  URecord in 'models\URecord.pas' ,
-  UControllerGame in 'controllers\UControllerGame.pas';
+  form in 'form.pas' {Form1},
+  UCEscenario in 'models\UCEscenario.pas',
+  UCMatriz in 'models\estructuras\UCMatriz.pas',
+  UCCesped in 'models\UCCesped.pas';
 
 {$R *.res}
 

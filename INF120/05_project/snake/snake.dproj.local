@@ -1,19 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-	<Transactions>
-    <Transaction>2022/10/26 02:12:29.000.135,=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2022/10/26 02:14:03.000.950,C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Formulario.pas=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2022/10/26 02:14:03.000.950,C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Formulario.dfm=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2022/10/26 02:14:29.000.026,C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\snake.dproj=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>2022/10/26 07:17:01.000.477,=D:\materia\auxiliar\02_semestre\INF120\05_snake\models\Model.pas</Transaction>
-    <Transaction>2022/10/26 07:17:01.000.488,=D:\materia\auxiliar\02_semestre\INF120\05_snake\models\ModelStage.pas</Transaction>
-    <Transaction>2022/10/26 08:45:19.000.825,=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
-    <Transaction>2022/10/26 08:46:01.000.435,D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\URecord.pas=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
-    <Transaction>2022/10/26 08:58:57.000.670,=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
-    <Transaction>2022/10/26 08:59:13.000.353,D:\materia\auxiliar\02_semestre\INF120\05_project\snake\controllers\UControllerGame.pas=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
-    <Transaction>2022/10/26 09:01:34.000.206,D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\UModelo.pas=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\Model.pas</Transaction>
-    <Transaction>2022/10/26 09:05:12.000.217,D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\UModelo.pas=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\Model.pas</Transaction>
-    <Transaction>2022/10/26 09:05:35.000.868,D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\Model.pas=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\UModel.pas</Transaction>
-    <Transaction>2022/10/26 09:06:06.000.696,D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\UModel.pas=D:\materia\auxiliar\02_semestre\INF120\05_project\snake\models\Model.pas</Transaction>
+  <Transactions>
+    <Transaction>2022/10/29 09:36:25.690,=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/10/29 09:38:18.047,D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\form.pas=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/10/29 09:38:18.047,D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\form.dfm=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/10/29 09:38:23.564,D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\snake.dproj=C:\Users\Usuario\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/10/29 09:39:25.354,=D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
+    <Transaction>2022/10/29 09:40:17.525,D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\models\UCEscenario.pas=D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
+    <Transaction>2022/10/29 09:48:09.937,=D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\models\estructuras\UCMatriz.pas</Transaction>
+    <Transaction>2022/10/29 09:56:56.970,=D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
+    <Transaction>2022/10/29 09:57:33.067,D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\models\UCCesped.pas=D:\00_materia\auxiliar\02_semestre\INF120\05_project\snake\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
