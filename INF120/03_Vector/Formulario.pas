@@ -111,7 +111,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  vec := vector.Create();
+  vec := vector.Create;
 end;
 
 procedure TForm1.intercalarcerosynoceros1Click(Sender: TObject);

@@ -22,7 +22,7 @@ const   MaxE = 3060;
        Procedure EliminarElemento (p:word);
        procedure intercambiar(x, y :word);
        procedure elimitarAllRepetidos();
-    {tipos de ordenamientos}        
+    {tipos de ordenamientos}
        procedure OrdIntercambio; overload;
        procedure OrdIntercambio(a, b : word);  overload;
        procedure OrdSeleccion;  overload;
@@ -31,12 +31,15 @@ const   MaxE = 3060;
        procedure OrdBurbuja(a, b : word);  overload;
        procedure OrdShell;
        Procedure Quicksort;
-       Procedure QSort(i,f:word);
+       Procedure QSort(i,f:word);                     //el 2do mejor
+
        Procedure OrdMsort;
        Procedure MergeSort(a, b : vector);  overload;
-       Procedure MSort;  overload;
+
+       Procedure MSort;  overload;                     //el mejor
        Procedure MSort(a, b : word);   overload;
        Procedure Mezcla(a, m, b : word);   overload;
+
        procedure SegmentarPrimoNoPrimo(a, b : word);
        procedure sefmentarCerosNoCeros(a, b : word);
        procedure IntercalarCerosNoCeros(a, b : word);  overload;
@@ -67,16 +70,15 @@ begin
   inc(dimension);
   elementos[dimension] := e;
 end;
-
+//retorna la posicion del elemento a buscar
+//requisito tiene que estar ordenado el vector ascendenetemente
 function Vector.BusquedaBinaria(e: real): word;
 var
   a,b,m:word;
   hallado : boolean;
 begin
-  //requisito tiene que estar ordenado
   a:=1;
   b:= Dimension;
-  m:=0;
   hallado := false;     //1 2 3 4 5
  while(a<=b)and(not hallado)do begin
    m := (a+b) div 2;
@@ -88,16 +90,17 @@ begin
     a := m + 1;
  end;
  if not hallado then
-  m := 0;
+    m := 0;
   result := m;
 end;
-
+//Retorna true o false si es que lo encuentra
 function Vector.BusquedaBinariaB(e: real): boolean;
 begin
-  result := BusquedaBinaria(e) > 0;
+  result := self.BusquedaBinaria(e) > 0;
 end;
 
 //vector puede estar como sea
+//v[10,20,30,40]    e = 21
 function Vector.BusquedaSecuencial(e: real): word;
 var i : word;
 begin                      //v-> [10, 20, 30]   e =10
@@ -109,7 +112,8 @@ begin                      //v-> [10, 20, 30]   e =10
  result:= i;
 end;
 
-//vector ordenado
+//requisito tener el vector ordenado
+//v[10,20,30,40]    e = 21
 function Vector.BusquedaSecuencialOrdenada(e: real): word;
 var i : word;
 begin
@@ -384,7 +388,7 @@ begin
   MSort(1, Dimension);
 end;
 
-procedure Vector.msort(a, b: word);
+procedure Vector.Msort(a, b: word);
 var n, m : word;
 begin
   n := b - a + 1;
