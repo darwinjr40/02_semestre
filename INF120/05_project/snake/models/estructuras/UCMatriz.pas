@@ -63,7 +63,7 @@ end;
 procedure Matriz.ModValor(f, c: word; valor: byte; d: direction);
 begin
    celdas[f,c].valor := valor;
-      celdas[f,c].valor := d;
+      celdas[f,c].direccion := d;
 end;
 
 procedure Matriz.ModValor(f, c: word; v: dato);

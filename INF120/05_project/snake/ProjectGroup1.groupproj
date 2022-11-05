@@ -1,0 +1,39 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{6B633A86-A18A-425D-B406-9C4E3EA618B7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="snake.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\snakePrueba\snake.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="snake">
+        <MSBuild Projects="..\snakePrueba\snake.dproj"/>
+    </Target>
+    <Target Name="snake:Clean">
+        <MSBuild Projects="..\snakePrueba\snake.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="snake:Make">
+        <MSBuild Projects="..\snakePrueba\snake.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="snake;snake"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="snake:Clean;snake:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="snake:Make;snake:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

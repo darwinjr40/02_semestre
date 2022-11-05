@@ -16,7 +16,7 @@ interface
       Bmp1, Bmp2: TBitmap;
       newImage : TImage;
     public
-      constructor Crear(width, height : integer); //virtual ;abstract;
+      constructor Crear(); //virtual ;abstract;
       procedure Dibujar(t:TCanvas);  virtual ;//abstract;
       procedure SetFil(f :word);
       procedure SetCol(c :word);
@@ -30,20 +30,20 @@ implementation
 
 { Snake }
 
-constructor Snake.Crear(width, height : integer);
+constructor Snake.Crear;
 begin
   Bmp1 := TBitmap.Create;
   Bmp1.LoadFromFile('images/snake.bmp');
 
   dir := Direction.derecha;
-  Self.imageWidth := width;
-  Self.imageHeight := height;
+  Self.imageWidth := 350;
+  Self.imageHeight := 350;  //Modelo.c
 
   Bmp2 := TBitmap.Create;
   Bmp2.Width := imageWidth;
   Bmp2.Height := imageHeight;
   Bmp2.Canvas.CopyRect(Rect(1, 1, imageWidth, imageHeight),
-   Bmp1.Canvas, Rect(547, 2088,547+384,2088+384));
+   Bmp1.Canvas, Rect(547,3246,547+384,3246+384));
   Bmp2.Transparent := true;
 end;
 

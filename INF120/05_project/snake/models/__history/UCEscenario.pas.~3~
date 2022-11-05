@@ -52,7 +52,7 @@ begin
       begin
         //dibujar obstaculo
       end else if e = 2 then begin
-          if (cabeza.GetFil = i) and (cabeza.Getcol = j) then //es la cabeza
+          if (cabeza.GetFil = i) and (cabeza.Getcol = j) then
           begin
 //            cabeza.Dibujar(t);
           end

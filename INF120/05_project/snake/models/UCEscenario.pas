@@ -26,11 +26,11 @@ begin
   self.imageHeight := height div m.GetFilas;
   Self.cesp := Cesped.Crear(Self.imageWidth, self.imageHeight);
 
-  self.cabeza := Snake.Crear;
+  self.cabeza := Snake.Crear(Self.imageWidth, self.imageHeight);
   self.cabeza.SetFilCol(1, 3);
-    self.cuerpo := Snake.Crear;
+    self.cuerpo := Snake.Crear(Self.imageWidth, self.imageHeight);
     self.cuerpo.SetFilCol(1, 2);
-  self.cola := Snake.Crear;
+  self.cola := Snake.Crear(Self.imageWidth, self.imageHeight);
     self.cola.SetFilCol(1, 1);
   m.ModValor(1, 3, 2, Direction.derecha);
   m.ModValor(1, 2, 2, Direction.derecha);
@@ -52,11 +52,13 @@ begin
       begin
         //dibujar obstaculo
       end else if e = 2 then begin
-          if (cabeza.GetFil = i) and (cabeza.Getcol = j) then
-          begin
-//            cabeza.Dibujar(t);
-          end
-          else
+//          if (cabeza.GetFil = i) and (cabeza.Getcol = j) then //es la cabeza
+//          begin
+            cabeza.Dibujar(t);
+            cuerpo.Dibujar(t);
+            cola.Dibujar(t);
+//          end
+//          else
       end else if e = 3 then
          //pared
     end;
