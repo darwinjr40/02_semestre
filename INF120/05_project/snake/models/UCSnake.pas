@@ -16,15 +16,18 @@ interface
       Bmp1, Bmp2: TBitmap;
       newImage : TImage;
     public
+      const value = 2;
       constructor Crear(width, height : integer); //virtual ;abstract;
       procedure Dibujar(t:TCanvas);  virtual ;//abstract;
       procedure SetFil(f :word);
       procedure SetCol(c :word);
       procedure SetFilCol(f, c : word);
       procedure SetNextPos(Nfil, Ncol : word);
+      procedure SetDirection(x : Direction);
       procedure Moverse(k : word);
       function GetFil():word;
       function GetCOl():word;
+      function GetDirection(): Direction;
    end;
 implementation
 
@@ -59,6 +62,11 @@ begin
    Result := Self.c;
 end;
 
+function Snake.GetDirection: Direction;
+begin
+  Result := self.dir;
+end;
+
 function Snake.GetFil: word;
 begin
    Result := Self.f;
@@ -66,7 +74,7 @@ end;
 
 procedure Snake.Moverse(k: word);
 begin
-  if k = 37 then  //izquierda
+  if k = 37  then  //izquierda
     Self.dir := Direction.izquierda
   else if k = 38 then  //superior
     Self.dir := Direction.superior
@@ -75,12 +83,16 @@ begin
   else if k = 40 then  //inferior
     Self.dir := Direction.inferior;
 
-  SetNextPos(4,4);
 end;
 
 procedure Snake.SetCol(c: word);
 begin
   Self.c := c;
+end;
+
+procedure Snake.SetDirection(x: Direction);
+begin
+  Self.dir := x;
 end;
 
 procedure Snake.SetFil(f: word);

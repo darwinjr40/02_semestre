@@ -1,0 +1,46 @@
+unit UCController;
+
+interface
+
+uses UCEscenario;
+
+   type
+    Controller = class
+      private
+        objEscenario : Escenario;
+      public
+        constructor crear(x : Escenario);
+        procedure moverse(k : Word);
+//      constructor crear();  overload;
+//      procedure accion();
+
+    end;
+implementation
+
+{ Controller }
+
+constructor Controller.crear(x: Escenario);
+begin
+  Self.objEscenario := x;
+end;
+
+//procedure Controller.accion;
+//begin
+//  self.objEscenario.getCabeza.SetNextPos(
+//     self.objEscenario.getMatriz.GetFilas,
+//     self.objEscenario.getMatriz.GetColumnas
+//  );
+//end;
+
+//
+//constructor Controller.crear;
+//begin
+//
+//end;
+
+procedure Controller.moverse(k: Word);
+begin
+  self.objEscenario.getCabeza.Moverse(k);
+end;
+
+end.

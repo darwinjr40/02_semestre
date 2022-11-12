@@ -4,16 +4,20 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, UCEscenario;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, UCEscenario, UCController;
 
 type
   TForm1 = class(TForm)
-    Timer1: TTimer;
+    dibujar: TTimer;
+    TimerController: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormOnPaint(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure dibujarTimer(Sender: TObject);
+    procedure OnKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure TimerControllerTimer(Sender: TObject);
   private
-    esc :  Escenario;
+    objEsc :  Escenario;
+    objControlador : Controller;
   public
     { Public declarations }
   end;
@@ -29,18 +33,30 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
 //  Self.Width;
 //  Self.Height;
-  self.esc := Escenario.Crear(Self.Width, Self.Height);
+  self.objEsc := Escenario.Crear(Self.Width, Self.Height);
+  self.objControlador := Controller.crear(self.objEsc);
+
 //  ShowMessage(inttostr(Width));
 end;
 
 procedure TForm1.FormOnPaint(Sender: TObject);
 begin
-  esc.Dibujar(self.Canvas);
+  objEsc.Dibujar(self.Canvas);
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
+procedure TForm1.OnKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  Self.objControlador.moverse(Key);
+end;
+
+procedure TForm1.dibujarTimer(Sender: TObject);
 begin
   Self.Repaint;
+end;
+
+procedure TForm1.TimerControllerTimer(Sender: TObject);
+begin
+  Self.objControlador.accion;
 end;
 
 end.

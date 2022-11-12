@@ -10,6 +10,7 @@ type
     url : String;
     bmp1, bmp2: TBitmap;
     public
+    const value = 0;
     constructor Crear(width, height : integer);
     procedure Dibujar(t : Tcanvas);
     procedure SetFilCol(f, c : word);
@@ -31,9 +32,9 @@ Self.imageWidth := width;
   Bmp2 := TBitmap.Create;
   Bmp2.Width := imageWidth;
   Bmp2.Height := imageHeight;
-  Bmp2.Canvas.CopyRect(Rect(1, 1, imageWidth, imageHeight),
+  Bmp2.Canvas.CopyRect(Rect(0, 0, imageWidth, imageHeight),
    Bmp1.Canvas, Rect(547,3246,547+384,3246+384));
-  Bmp2.Transparent := true;
+//  Bmp2.Transparent := true;
 end;
 
 procedure Cesped.Dibujar(t: Tcanvas);

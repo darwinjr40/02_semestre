@@ -5,12 +5,20 @@ uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.C
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,UCMatriz, UCCesped, UCSnake, URecord;
 type
     Escenario = class
+      private
+
       imageWidth, imageHeight : Cardinal;
       m : Matriz;
       cesp : Cesped;
       cabeza, cola, cuerpo : Snake;
+
+      public
+
       constructor Crear(width, height : integer);
       procedure Dibujar(t : Tcanvas);
+      function getCabeza(): Snake;
+      function getCola(): Snake;
+      function getMatriz(): Matriz;
     end;
 implementation
 
@@ -32,9 +40,9 @@ begin
     self.cuerpo.SetFilCol(1, 2);
   self.cola := Snake.Crear(Self.imageWidth, self.imageHeight);
     self.cola.SetFilCol(1, 1);
-  m.ModValor(1, 3, 2, Direction.derecha);
-  m.ModValor(1, 2, 2, Direction.derecha);
-  m.ModValor(1, 1, 2, Direction.derecha);
+  m.ModValor(1, 3, Snake.value, Direction.derecha);
+  m.ModValor(1, 2, Snake.value, Direction.derecha);
+  m.ModValor(1, 1, Snake.value, Direction.derecha);
 end;
 
 procedure Escenario.Dibujar(t: Tcanvas);
@@ -48,22 +56,35 @@ begin
       cesp.SetFilCol(i, j);
       cesp.Dibujar(t);
       e := m.ObtValor(i,j).valor;
-      if e = 1 then
-      begin
-        //dibujar obstaculo
-      end else if e = 2 then begin
-//          if (cabeza.GetFil = i) and (cabeza.Getcol = j) then //es la cabeza
-//          begin
-            cabeza.Dibujar(t);
-            cuerpo.Dibujar(t);
-            cola.Dibujar(t);
-//          end
-//          else
+      cabeza.Dibujar(t);
+      cola.Dibujar(t);
+     if e = Snake.value then begin
+       if not ((cabeza.GetFil = i) and (cabeza.Getcol = j) or
+          (cola.GetFil = i) and (cola.Getcol = j)) then //es la cabeza
+       begin
+         cuerpo.SetFilCol(i,j);
+         cuerpo.Dibujar(t);
+       end;
       end else if e = 3 then
          //pared
     end;
 
   end;
+end;
+
+function Escenario.getCabeza: Snake;
+begin
+  Result := Self.cabeza;
+end;
+
+function Escenario.getCola: Snake;
+begin
+  Result := Self.cola;
+end;
+
+function Escenario.getMatriz: Matriz;
+begin
+  Result := Self.m;
 end;
 
 end.

@@ -1,0 +1,25 @@
+unit UCController;
+
+interface
+
+uses UCEscenario;
+
+   type
+    Controller = class
+      private
+        objEscenario : Escenario;
+      public
+      constructor crear(x : Escenario);
+
+
+    end;
+implementation
+
+{ Controller }
+
+constructor Controller.crear(x: Escenario);
+begin
+  Self.objEscenario := x;
+end;
+
+end.

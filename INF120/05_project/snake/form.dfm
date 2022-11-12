@@ -13,13 +13,19 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnKeyDown = OnKeyDown
   OnPaint = FormOnPaint
   PixelsPerInch = 96
   TextHeight = 13
-  object Timer1: TTimer
+  object dibujar: TTimer
     Interval = 50
-    OnTimer = Timer1Timer
-    Left = 32
-    Top = 16
+    OnTimer = dibujarTimer
+    Left = 24
+    Top = 40
+  end
+  object TimerController: TTimer
+    OnTimer = TimerControllerTimer
+    Left = 24
+    Top = 96
   end
 end

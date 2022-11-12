@@ -7,7 +7,8 @@ uses
   UCMatriz in 'models\estructuras\UCMatriz.pas',
   UCCesped in 'models\UCCesped.pas',
   URecord in 'models\estructuras\URecord.pas',
-  UCSnake in 'models\UCSnake.pas';
+  UCSnake in 'models\UCSnake.pas',
+  UCController in 'models\controller\UCController.pas';
 
 {$R *.res}
 
