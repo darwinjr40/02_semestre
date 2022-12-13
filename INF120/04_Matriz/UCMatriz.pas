@@ -41,6 +41,16 @@ Type
         procedure cargarTriInfIzqui;
         procedure cargarTriInfIzqui1;
         procedure cargarTriInfIzquiEspecial;
+        {examen}
+        function buscIzqui(i, j:byte; e : Cardinal): boolean;
+        function buscIzquiSup(i, j:byte; e : Cardinal): boolean;
+        function buscSup(i, j:byte; e : Cardinal): boolean;
+        function buscDerSup(i, j:byte; e : Cardinal): boolean;
+        function buscDer(i, j:byte; e : Cardinal): boolean;
+        function buscDerInf(i, j:byte; e : Cardinal): boolean;        
+        function buscInf(i, j:byte; e : Cardinal): boolean;        
+        function buscIzquiInf(i, j:byte; e : Cardinal): boolean;        
+        function existe(e : cardinal): boolean;
     end;
 
 implementation
@@ -55,6 +65,100 @@ end;
 procedure Matriz.AddFila;
 begin
   inc(NFilas);
+end;
+
+function Matriz.buscDer(i, j: byte; e: Cardinal): boolean;
+begin
+  while ((j <= NColumnas)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin
+    e := e div 10;
+    j := j + 1;
+  end;
+  result := (e = 0);
+end;
+
+function Matriz.buscDerInf(i, j: byte; e: Cardinal): boolean;
+begin
+  while ((j <= NColumnas)and (i <= NFilas)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin
+    e := e div 10;
+    j := j + 1;
+    i := i + 1;
+  end;
+  result := (e = 0);
+end;
+
+function Matriz.buscDerSup(i, j: byte; e: Cardinal): boolean;
+begin
+  while ((j <= NColumnas)and (i >= 1)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin    
+    e := e div 10;
+    j := j + 1;
+    i := i - 1;
+  end;
+  result := (e = 0);
+end;
+
+function Matriz.buscInf(i, j: byte; e: Cardinal): boolean;
+begin
+  while ((i <= NFilas)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin
+    e := e div 10;
+    i := i + 1;
+  end;
+  result := (e = 0);
+end;
+
+function Matriz.buscIzqui(i, j : byte; e : Cardinal): boolean;
+begin
+  while ((j >= 1)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin    
+    e := e div 10; 
+    j := j - 1;
+  end;
+  result := (e = 0);
+end;
+
+
+
+function Matriz.buscIzquiInf(i, j: byte; e: Cardinal): boolean;
+begin
+    while ((j >= 1)and (i <= NFilas)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin    
+    e := e div 10;
+    j := j - 1;
+    i := i + 1;
+  end;
+  result := (e = 0);
+end;
+
+function Matriz.buscIzquiSup(i, j: byte; e: Cardinal): boolean;
+begin
+    while ((j >= 1)and (i >= 1)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin    
+    e := e div 10;
+    j := j - 1;
+    i := i - 1;
+  end;
+  result := (e = 0);
+end;
+
+function Matriz.buscSup(i, j: byte; e: Cardinal): boolean;
+begin
+  while ( (i >= 1)and (e > 0) and((e mod 10) = Self.celdas[i,j])) do
+  //{se cabaron las celdas}||(ya no hay digitos)||{un elemento no coincide}
+  begin
+    e := e div 10;
+    i := i - 1;
+  end;
+  result := (e = 0);
 end;
 
 procedure Matriz.cargar(f, c : word);
@@ -235,6 +339,33 @@ end;
 procedure Matriz.ElimFila(f: word);
 begin
 
+end;
+
+function Matriz.existe(e: cardinal): boolean;
+var
+  i: Integer;
+  j: Integer;
+  sw : boolean;  
+begin
+  sw := false;
+  i := 1;  
+  while (i<= Self.NFilas) and (not sw) do
+  begin
+    j := 1;
+    while (j <= self.NColumnas) and (not sw) do
+    begin
+      if (self.celdas[i,j] = (e mod 10)) then 
+      begin
+        if (self.buscIzqui(i, j, e)) then begin
+          sw := true;
+//          ShowMessage(inttostr(i) + '-' +inttostr(j));
+        end;           
+      end;
+      j := j + 1;
+    end;
+    i := i + 1;
+  end;
+  result := sw;
 end;
 
 function Matriz.GetColumnas: word;

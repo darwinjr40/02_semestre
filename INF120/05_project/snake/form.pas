@@ -34,7 +34,7 @@ begin
 //  Self.Width;
 //  Self.Height;
   self.objEsc := Escenario.Crear(Self.Width, Self.Height);
-  self.objControlador := Controller.crear(self.objEsc);
+  self.objControlador := Controller.crear(self.objEsc, TimerController );
 
 //  ShowMessage(inttostr(Width));
 end;

@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   Formulario in 'Formulario.pas' {Form1},
   UCVector in 'UCVector.pas',
-  UCNumero in 'UCNumero.pas';
+  UCNumero in 'UCNumero.pas',
+  UCCadena in '..\02_cadena\UCCadena.pas';
 
 {$R *.res}
 
