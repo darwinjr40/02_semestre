@@ -1,7 +1,7 @@
 unit UCVector;
 
 interface
-uses  sysutils,math, Vcl.Dialogs, UCNumero ;
+uses  sysutils,math, Vcl.Dialogs, UCNumero, UCCadena ;
 const   MaxE = 3060;
 //var a:byte;
    type
@@ -61,7 +61,11 @@ const   MaxE = 3060;
        Function BusquedaBinariaB (e:real):boolean;   overload;
     {Examenes}
        {2022-1}
-      procedure CargarAsc(cadena : String);
+      procedure CargarAsc(cad : String);
+      procedure insertAsc(x : real);
+
+//      Procedure MSortParImpar(a, b : word);   overload;
+      Procedure MezclaParImpar(a, m, b : word);   overload;
     end;
 
 implementation
@@ -137,10 +141,23 @@ begin
   end;
 end;
 
-procedure Vector.CargarAsc(cadena: String);
-
+procedure Vector.CargarAsc(cad: String);
+var objetoCadena : Cadena;
+    i : word;
+    num : String;
 begin
- ShowMessage('');
+  objetoCadena := Cadena.Create();
+  objetoCadena.CargarCadena(cad);
+  i := 1;
+  while (i <= objetoCadena.GetLongitud()) do
+  begin
+    num := objetoCadena.NextNumero(i);
+    if (num <> '') then  //tiene un numero
+    begin
+      self.insertAsc(StrToFloat(num));        
+    end;
+//    ShowMessage(num);
+  end;
 end;
 
 procedure Vector.cargarRandom(a, b, dim: word);
@@ -231,13 +248,28 @@ procedure Vector.InsertarElemento(p: word; e: real);
 var
   i: Word;
 begin
- if (p>0) and (p<=dimension) then
+ if (p>=1) and (p<=dimension) then
   begin
    inc(dimension);
-   for I := dimension downto p+1 do
-   elementos[i]:=elementos[i-1];
+   for I := dimension downto p+1 do  begin
+     elementos[i] := elementos[i-1];
+   end;
    ModElemento(p,e)
   end else raise Exception.Create('Posición fuera de rango');
+end;
+
+{[1,3,5] x=4 => [1,2,4,5] }
+procedure Vector.insertAsc(x: real);
+var i : byte;
+begin
+    i := Dimension;        
+    while ((i >= 1) and (x < Elementos[i])) do
+    begin
+      elementos[i+1] := elementos[i];
+      i := i - 1;
+    end;
+    dimension := dimension + 1;
+    ModElemento(i+1, x);    
 end;
 
 procedure Vector.IntercalarCerosNoCeros;
@@ -418,7 +450,40 @@ begin
   i := a;
   j := m+1;
   while (i <= m) and (j <= b) do begin
-    if (Elementos[i] <= Elementos[j]) then begin
+    if (Elementos[i] <= Elementos[j]) then begin  //desc  (Elementos[i] > Elementos[j])
+      v.AddElemento(Elementos[i]);
+      inc(i);
+    end else begin
+      v.AddElemento(Elementos[j]);
+      inc(j);
+    end;
+  end;
+
+  while (i <= m) do begin
+    v.AddElemento(Elementos[i]);
+    inc(i);
+  end;
+
+  while (j <= b) do begin
+    v.AddElemento(Elementos[j]);
+    inc(j);
+  end;
+
+  for i := a to b do begin
+    Elementos[i] := v.Elementos[i-a+1];
+  end;
+
+end;
+{[3] [4] => [4,3]}
+procedure Vector.MezclaParImpar(a, m, b: word);
+var i, j, k, aDimension, bDimension : word;
+    v : Vector;
+begin
+  v := Vector.Create();
+  i := a;
+  j := m+1;
+  while (i <= m) and (j <= b) do begin
+    if (Elementos[i] <= Elementos[j]) then begin  //desc  (Elementos[i] > Elementos[j])
       v.AddElemento(Elementos[i]);
       inc(i);
     end else begin
@@ -503,16 +568,17 @@ begin
       result:=elementos[p]
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
-
+ //ord asc
 procedure Vector.QSort(i, f: word);
 var der,izq,m:word;
 begin
   izq:=i; der:=f;
   m:=trunc(elementos[i]+ elementos[f])div 2;
+  ShowMessage(inttostr(m));
   repeat
-     while (elementos[i] < m) do
+     while (elementos[i] < m) do   //busca [i] < m   //desc  [i] > m
        inc(i);
-     while elementos[f] > m do
+     while elementos[f] > m do     //busca [f] > m   //desc  [f] < m
          dec(f);
      if i<=f then
       begin
@@ -521,6 +587,8 @@ begin
          f:=f-1;
       end;
   until i>f ;
+  ShowMessage(inttostr(i));
+  ShowMessage(inttostr(f));
    if izq <f then Qsort(izq,f);
    if i < der then Qsort(i,der);
 end;
@@ -550,7 +618,15 @@ begin
     end;
   end;
 end;
-
+{[1,2,3,4,5] => [2,3,5,1,4]}
+{[2,1,3,4,5]}
+//--------------
+{[2,3,1,4,5]}
+//----------
+{[2,3,5,4,1]}
+//-------------
+{[2,3,5,4,1]}
+{[2,3,5,1,4]}
 procedure Vector.SegmentarPrimoNoPrimo(a, b: word);
 var i,j:integer;
       x, y : Numero;

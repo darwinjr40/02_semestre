@@ -1,13 +1,13 @@
 unit UCVector;
 
 interface
-uses  sysutils,math, Vcl.Dialogs, UCNumero ;
+uses  sysutils,math, Vcl.Dialogs, UCNumero, UCCadena ;
 const   MaxE = 3060;
 //var a:byte;
    type
     Vector = class
     private
-       Dimension:word;
+       Dimension:word;                               //nombre, fecha, ci, foto
        Elementos :array [1..MaxE] of real;
     public
       //polimorfismo
@@ -59,6 +59,10 @@ const   MaxE = 3060;
        Function BusquedaSecuencialOrdenada (e:real):word;
        Function BusquedaBinaria (e:real):word;       overload;
        Function BusquedaBinariaB (e:real):boolean;   overload;
+    {Examenes}
+       {2022-1}
+      procedure CargarAsc(cad : String);
+      procedure insertAsc(x : real);
     end;
 
 implementation
@@ -131,6 +135,25 @@ begin
   Dimension:=StrToInt(InputBox('','cantidad de elementos',''));
   for i:=1 to Dimension do begin
     Elementos[i]:=StrToInt(InputBox('Elemento','v ['+IntToStr(i)+'] =',''));
+  end;
+end;
+
+procedure Vector.CargarAsc(cad: String);
+var objetoCadena : Cadena;
+    i : word;
+    num : String;
+begin
+  objetoCadena := Cadena.Create();
+  objetoCadena.CargarCadena(cad);
+  i := 1;
+  while (i <= objetoCadena.GetLongitud()) do
+  begin
+    num := objetoCadena.NextNumero(i);
+    if (num <> '') then  //tiene un numero
+    begin
+      self.insertAsc(StrToFloat(num));        
+    end;
+//    ShowMessage(num);
   end;
 end;
 
@@ -222,13 +245,28 @@ procedure Vector.InsertarElemento(p: word; e: real);
 var
   i: Word;
 begin
- if (p>0) and (p<=dimension) then
+ if (p>=1) and (p<=dimension) then
   begin
    inc(dimension);
-   for I := dimension downto p+1 do
-   elementos[i]:=elementos[i-1];
+   for I := dimension downto p+1 do  begin
+     elementos[i] := elementos[i-1];
+   end;
    ModElemento(p,e)
   end else raise Exception.Create('Posición fuera de rango');
+end;
+
+{[1,3,5] x=4 => [1,2,4,5] }
+procedure Vector.insertAsc(x: real);
+var i : byte;
+begin
+    i := Dimension;        
+    while ((i >= 1) and (x < Elementos[i])) do
+    begin
+      elementos[i+1] := elementos[i];
+      i := i - 1;
+    end;
+    dimension := dimension + 1;
+    ModElemento(i+1, x);    
 end;
 
 procedure Vector.IntercalarCerosNoCeros;
@@ -409,7 +447,7 @@ begin
   i := a;
   j := m+1;
   while (i <= m) and (j <= b) do begin
-    if (Elementos[i] <= Elementos[j]) then begin
+    if (Elementos[i] <= Elementos[j]) then begin  //desc  (Elementos[i] > Elementos[j])
       v.AddElemento(Elementos[i]);
       inc(i);
     end else begin
@@ -494,7 +532,7 @@ begin
       result:=elementos[p]
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
-
+ //ord asc
 procedure Vector.QSort(i, f: word);
 var der,izq,m:word;
 begin

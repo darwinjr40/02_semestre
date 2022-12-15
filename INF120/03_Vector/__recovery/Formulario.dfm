@@ -93,10 +93,6 @@ object Form1: TForm1
         Caption = '2022-2-cargarCadenaNume'
         OnClick = N20222cargarCadenaNume1Click
       end
-      object prueba1: TMenuItem
-        Caption = 'prueba'
-        OnClick = prueba1Click
-      end
     end
     object EJECICIOS1: TMenuItem
       Caption = 'EJECICIOS'

@@ -63,6 +63,8 @@ const   MaxE = 3060;
        {2022-1}
       procedure CargarAsc(cad : String);
       procedure insertAsc(x : real);
+
+      Procedure MezclaParImpar(a, m, b : word);   overload;
     end;
 
 implementation
@@ -435,7 +437,8 @@ begin
     m := (a+b) div 2;
     MSort(a, m);
     MSort(m+1, b);
-    Mezcla(a, m, b);
+//    Mezcla(a, m, b);
+    MezclaParImpar(a, m, b);
   end;
 end;
 
@@ -456,6 +459,83 @@ begin
     end;
   end;
 
+  while (i <= m) do begin
+    v.AddElemento(Elementos[i]);
+    inc(i);
+  end;
+
+  while (j <= b) do begin
+    v.AddElemento(Elementos[j]);
+    inc(j);
+  end;
+
+  for i := a to b do begin
+    Elementos[i] := v.Elementos[i-a+1];
+  end;
+
+end;
+
+{[1,2,3,4,5] => [2,3,5,1,4]}
+{[2,1,3,4,5]}
+//--------------
+{[2,3,1,4,5]}
+//----------
+{[2,3,5,4,1]}
+//-------------
+{[2,3,5,4,1]}
+{[2,3,5,1,4]}
+//mezcla
+{[3,4,5] [4] => [4,3]} {par asc[men..may], impar desc[may..men]}
+
+procedure Vector.MezclaParImpar(a, m, b: word);
+var i, j, k, aDimension, bDimension, x, y : word;
+    v : Vector;
+    //[2][3] => [2]
+    //[3][2] => [2]
+
+    //[3][5] => [5]
+    //[5][3] => [5]
+    
+    //[4][2] => [2]
+    //[2][4] => [2]
+begin
+  v := Vector.Create();
+  i := a;
+  j := m+1;
+  while (i <= m) and (j <= b) do begin
+    x := trunc(Elementos[i]);
+    y := trunc(Elementos[j]);
+    if ((x mod 2 = 0)and (y mod 2 = 1) ) then
+    begin
+      v.AddElemento(x);
+      inc(i);
+    end else if ((x mod 2 = 1)and (y mod 2 = 0) ) then
+    begin
+      v.AddElemento(y);
+      inc(j);
+    end else if ((x mod 2 = 0)and (y mod 2 = 0)) then begin  //desc  (Elementos[i] > Elementos[j])
+      if (x <= y) then begin
+        v.AddElemento(x);
+        inc(i);
+      end else begin
+        v.AddElemento(y);
+        inc(j);
+      end;      
+    end else if ((x mod 2 = 1)and (y mod 2 = 1) ) then begin
+        if (x > y) then
+        begin
+          v.AddElemento(x);
+          inc(i);
+        end
+        else
+        begin
+          v.AddElemento(y);
+          inc(j);
+        end;        
+    end;
+ 
+  end;
+//  []
   while (i <= m) do begin
     v.AddElemento(Elementos[i]);
     inc(i);
@@ -582,7 +662,15 @@ begin
     end;
   end;
 end;
-
+{[1,2,3,4,5] => [2,3,5,1,4]}
+{[2,1,3,4,5]}
+//--------------
+{[2,3,1,4,5]}
+//----------
+{[2,3,5,4,1]}
+//-------------
+{[2,3,5,4,1]}
+{[2,3,5,1,4]}
 procedure Vector.SegmentarPrimoNoPrimo(a, b: word);
 var i,j:integer;
       x, y : Numero;
