@@ -437,8 +437,7 @@ begin
     m := (a+b) div 2;
     MSort(a, m);
     MSort(m+1, b);
-//    Mezcla(a, m, b);
-    MezclaParImpar(a, m, b);
+    Mezcla(a, m, b);
   end;
 end;
 
@@ -483,7 +482,7 @@ end;
 {[2,3,5,4,1]}
 //-------------
 {[2,3,5,4,1]}
-{[2,3,5,1,4]}
+{[2,3,5,1,4]   => [par ...impares]}
 //mezcla
 {[3,4,5] [4] => [4,3]} {par asc[men..may], impar desc[may..men]}
 
@@ -612,18 +611,24 @@ begin
       result:=elementos[p]
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
- //ord asc
+//ord asc
+{
+  [1,8,4, 5]  m =3
+   f i    
+}
 procedure Vector.QSort(i, f: word);
-var der,izq,m:word;
+var der,izq,m, n:word;
 begin
   izq:=i; der:=f;
   m:=trunc(elementos[i]+ elementos[f])div 2;
+//  n := f - i + 1;
+//  m := elementos[n div 2];  
   ShowMessage(inttostr(m));
   repeat
      while (elementos[i] < m) do   //busca [i] < m   //desc  [i] > m
        inc(i);
      while elementos[f] > m do     //busca [f] > m   //desc  [f] < m
-         dec(f);
+       dec(f);
      if i<=f then
       begin
          intercambiar(i,f);
