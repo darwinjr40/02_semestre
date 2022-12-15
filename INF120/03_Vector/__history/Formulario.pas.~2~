@@ -126,7 +126,7 @@ end;
 
 procedure TForm1.ordMergeSort1Click(Sender: TObject);
 begin
-  vec.MSort;
+  vec.OrdMsort;
 end;
 
 procedure TForm1.OrdMsortReango1Click(Sender: TObject);
