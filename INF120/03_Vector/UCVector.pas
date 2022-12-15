@@ -447,7 +447,7 @@ begin
   i := a;
   j := m+1;
   while (i <= m) and (j <= b) do begin
-    if (Elementos[i] <= Elementos[j]) then begin
+    if (Elementos[i] <= Elementos[j]) then begin  //desc  (Elementos[i] > Elementos[j])
       v.AddElemento(Elementos[i]);
       inc(i);
     end else begin
@@ -532,16 +532,17 @@ begin
       result:=elementos[p]
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
-
+ //ord asc
 procedure Vector.QSort(i, f: word);
 var der,izq,m:word;
 begin
   izq:=i; der:=f;
   m:=trunc(elementos[i]+ elementos[f])div 2;
+  ShowMessage(inttostr(m));
   repeat
-     while (elementos[i] < m) do
+     while (elementos[i] < m) do   //busca [i] < m   //desc  [i] > m
        inc(i);
-     while elementos[f] > m do
+     while elementos[f] > m do     //busca [f] > m   //desc  [f] < m
          dec(f);
      if i<=f then
       begin
@@ -550,6 +551,8 @@ begin
          f:=f-1;
       end;
   until i>f ;
+  ShowMessage(inttostr(i));
+  ShowMessage(inttostr(f));
    if izq <f then Qsort(izq,f);
    if i < der then Qsort(i,der);
 end;

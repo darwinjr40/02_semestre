@@ -1,10 +1,31 @@
 [Stats]
+<<<<<<< HEAD
 EditorSecs=13443
 DesignerSecs=97
 InspectorSecs=53
 CompileSecs=87855
 OtherSecs=193
+=======
+<<<<<<< HEAD
+EditorSecs=11984
+DesignerSecs=55
+InspectorSecs=39
+CompileSecs=78718
+OtherSecs=55
+StartTime=5/11/2022 9:10:54 AM
+=======
+EditorSecs=11299
+DesignerSecs=54
+InspectorSecs=39
+CompileSecs=72429
+OtherSecs=42
+>>>>>>> fd3c70de1b9b2a55f3901cf6797e417faf0ad948
 StartTime=5/11/2022 09:10:54
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
 RealKeys=0
 EffectiveKeys=0
+<<<<<<< HEAD
 DebugSecs=1651
+=======
+DebugSecs=2110
+>>>>>>> fd3c70de1b9b2a55f3901cf6797e417faf0ad948

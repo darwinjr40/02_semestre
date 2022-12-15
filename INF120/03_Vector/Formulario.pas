@@ -133,7 +133,7 @@ end;
 
 procedure TForm1.ordMergeSort1Click(Sender: TObject);
 begin
-  vec.OrdMsort;
+  vec.MSort;
 end;
 
 procedure TForm1.OrdMsortReango1Click(Sender: TObject);

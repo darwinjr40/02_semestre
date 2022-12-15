@@ -1,13 +1,21 @@
 unit UCVector;
 
 interface
+<<<<<<< HEAD
+uses  sysutils,math, Vcl.Dialogs, UCNumero ;
+=======
 uses  sysutils,math, Vcl.Dialogs, UCNumero, UCCadena ;
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
 const   MaxE = 3060;
 //var a:byte;
    type
     Vector = class
     private
+<<<<<<< HEAD
+       Dimension:word;
+=======
        Dimension:word;                               //nombre, fecha, ci, foto
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
        Elementos :array [1..MaxE] of real;
     public
       //polimorfismo
@@ -59,9 +67,12 @@ const   MaxE = 3060;
        Function BusquedaSecuencialOrdenada (e:real):word;
        Function BusquedaBinaria (e:real):word;       overload;
        Function BusquedaBinariaB (e:real):boolean;   overload;
+<<<<<<< HEAD
+=======
     {Examenes}
        {2022-1}
       procedure CargarAsc(cadena : String);
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
     end;
 
 implementation
@@ -137,12 +148,15 @@ begin
   end;
 end;
 
+<<<<<<< HEAD
+=======
 procedure Vector.CargarAsc(cadena: String);
 
 begin
  ShowMessage('');
 end;
 
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
 procedure Vector.cargarRandom(a, b, dim: word);
 var i:word;
 begin
@@ -418,14 +432,22 @@ begin
   i := a;
   j := m+1;
   while (i <= m) and (j <= b) do begin
+<<<<<<< HEAD
+    if (Elementos[i] <= Elementos[j]) then begin  //desc => Elementos[i] > Elementos[j]
+=======
     if (Elementos[i] <= Elementos[j]) then begin
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
       v.AddElemento(Elementos[i]);
       inc(i);
     end else begin
       v.AddElemento(Elementos[j]);
       inc(j);
     end;
+<<<<<<< HEAD
+
+=======
   end;
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
 
   while (i <= m) do begin
     v.AddElemento(Elementos[i]);
@@ -503,16 +525,28 @@ begin
       result:=elementos[p]
    else raise Exception.Create('Error: ObtenerElemento Posición fuera de rango');
 end;
+<<<<<<< HEAD
+ //ord asc
+=======
 
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
 procedure Vector.QSort(i, f: word);
 var der,izq,m:word;
 begin
   izq:=i; der:=f;
   m:=trunc(elementos[i]+ elementos[f])div 2;
+<<<<<<< HEAD
+  ShowMessage(inttostr(m));
+  repeat
+     while (elementos[i] < m) do   //busca [i] < m   //desc  [i] > m
+       inc(i);
+     while elementos[f] > m do     //busca [f] > m   //desc  [f] < m
+=======
   repeat
      while (elementos[i] < m) do
        inc(i);
      while elementos[f] > m do
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
          dec(f);
      if i<=f then
       begin
@@ -521,6 +555,11 @@ begin
          f:=f-1;
       end;
   until i>f ;
+<<<<<<< HEAD
+  ShowMessage(inttostr(i));
+  ShowMessage(inttostr(f));
+=======
+>>>>>>> 0bcc67b6ed359a1ea319c776657d287dcbfee798
    if izq <f then Qsort(izq,f);
    if i < der then Qsort(i,der);
 end;
