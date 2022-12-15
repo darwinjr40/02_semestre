@@ -28,8 +28,6 @@ type
     riSecundaria1: TMenuItem;
     riInfIzqui1: TMenuItem;
     riInfIzquierdaEspecial1: TMenuItem;
-    examenes1: TMenuItem;
-    existeNum1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure descargar(obj:Matriz; t : tStringGrid);
@@ -44,7 +42,6 @@ type
     procedure riSecundaria1Click(Sender: TObject);
     procedure riInfIzqui1Click(Sender: TObject);
     procedure riInfIzquierdaEspecial1Click(Sender: TObject);
-    procedure existeNum1Click(Sender: TObject);
   private
     { Private declarations }
     m, m3,m4 : Matriz;
@@ -119,14 +116,6 @@ var col : word;
 begin
   col := StrToInt(Edit3.Text);
   m.ElimColumna(col);
-end;
-
-procedure TForm1.existeNum1Click(Sender: TObject);
-var sw : boolean;
-begin
- sw := m.existe(StrToInt(Edit3.Text));
- ShowMessage(BoolToStr(sw, true));
-
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

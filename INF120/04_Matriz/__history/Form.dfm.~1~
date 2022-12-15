@@ -152,12 +152,5 @@ object Form1: TForm1
         OnClick = riInfIzquierdaEspecial1Click
       end
     end
-    object examenes1: TMenuItem
-      Caption = 'examenes'
-      object existeNum1: TMenuItem
-        Caption = 'existeNum'
-        OnClick = existeNum1Click
-      end
-    end
   end
 end

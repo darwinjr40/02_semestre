@@ -356,10 +356,7 @@ begin
     begin
       if (self.celdas[i,j] = (e mod 10)) then 
       begin
-        if (buscIzqui(i, j, e) or buscIzquiSup(i, j, e) 
-        or buscSup(i, j, e) or buscDerSup(i, j, e) 
-        or buscDer(i, j, e) or buscDerInf(i, j, e) 
-        or buscInf(i, j, e) or buscIzquiInf(i, j, e)) then begin
+        if (self.buscIzqui(i, j, e)) then begin
           sw := true;
 //          ShowMessage(inttostr(i) + '-' +inttostr(j));
         end;           
