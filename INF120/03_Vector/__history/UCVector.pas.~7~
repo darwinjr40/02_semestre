@@ -7,7 +7,7 @@ const   MaxE = 3060;
    type
     Vector = class
     private
-       Dimension:word;
+       Dimension:word;                               //nombre, fecha, ci, foto
        Elementos :array [1..MaxE] of real;
     public
       //polimorfismo
@@ -59,6 +59,9 @@ const   MaxE = 3060;
        Function BusquedaSecuencialOrdenada (e:real):word;
        Function BusquedaBinaria (e:real):word;       overload;
        Function BusquedaBinariaB (e:real):boolean;   overload;
+    {Examenes}
+       {2022-1}
+      procedure CargarAsc(cadena : String);
     end;
 
 implementation
@@ -132,6 +135,12 @@ begin
   for i:=1 to Dimension do begin
     Elementos[i]:=StrToInt(InputBox('Elemento','v ['+IntToStr(i)+'] =',''));
   end;
+end;
+
+procedure Vector.CargarAsc(cadena: String);
+
+begin
+ ShowMessage('');
 end;
 
 procedure Vector.cargarRandom(a, b, dim: word);

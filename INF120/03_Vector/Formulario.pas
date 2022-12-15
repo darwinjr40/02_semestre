@@ -27,6 +27,7 @@ type
     OrdMsortReango1: TMenuItem;
     segmentarcerosynoceros1: TMenuItem;
     intercalarcerosynoceros1: TMenuItem;
+    N20222cargarCadenaNume1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -41,6 +42,7 @@ type
     procedure OrdMsortReango1Click(Sender: TObject);
     procedure segmentarcerosynoceros1Click(Sender: TObject);
     procedure intercalarcerosynoceros1Click(Sender: TObject);
+    procedure N20222cargarCadenaNume1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -122,6 +124,11 @@ end;
 procedure TForm1.mcd1Click(Sender: TObject);
 begin
   ShowMessage(IntToStr(vec.mcd));
+end;
+
+procedure TForm1.N20222cargarCadenaNume1Click(Sender: TObject);
+begin
+  vec.CargarAsc(Edit2.Text);
 end;
 
 procedure TForm1.ordMergeSort1Click(Sender: TObject);

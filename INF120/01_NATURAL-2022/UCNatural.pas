@@ -6,10 +6,11 @@ uses math, sysutils;
   Natural = class
     private
     { Private declarations }
-       //0...(2^32)-1
-       valor : Cardinal;
+       valor : Cardinal;     //0...(2^32)-1
        aux : Natural;
+
        constructor crear(x : Cardinal; o : Natural);overload;
+
     public
     { Public declarations }     //ctrl + shift + c
     constructor crear; overload;

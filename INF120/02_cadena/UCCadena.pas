@@ -7,7 +7,7 @@ interface
        letras = ['A'..'Z','a'..'z'];
        CONSONANTES = ['B','C','D','F','G','H','J','N', 'P'..'T', 'V'..'Z',
                       'b','c','d','f','g','h','j','n', 'p'..'t', 'v'..'z'];
-       numeros = ['1','2','3','4','5','6','7','8','9', '0'];
+       DIGITOS = ['1','2','3','4','5','6','7','8','9', '0'];
  type
    Cadena = class
      private
@@ -42,7 +42,7 @@ interface
        function GetLongitud : word;
        function nextWord (var i:word):string; overload;
        function nextWord (var a:word; b: word ):string; overload;
-
+       function NextNumero (var i :word):string;
        function BuscarPalabra(p:string):word;overload; //Devuelve posición
        function BuscarPalabra(a, b :word; palabraBusc: String):word;overload;
        function Posicion( buscPalabra: String): word; overload;
@@ -96,7 +96,6 @@ interface
 
 //----------------------------------------------------------------
         Function Suma:Integer;
-        function NextNumero(var i :word):string;
         function Polinomio(x:integer):integer;
         Function CantidadNumeros:byte;
         procedure Prueba();
@@ -104,7 +103,7 @@ interface
 //-----------------------------------------------------------------
        Function ConvertirHora(c:string):string;
        function Literal2D(n: byte): String;
-       function Nextnum (var i :word):string;
+
 
        Function FechaMenor :string;      //Sin Terminar
        Function FechaNum (cad:string):cardinal;
@@ -683,26 +682,7 @@ begin
   result := p;
 end;
 
-function Cadena.NextNumero(var i: word): string;   // revisar
-var p:string;  a:word;
-begin
 
-  p:=caracteres[i];
-  inc(i);
-if (i>0) and (i<=longitud) then
-begin
-  while (i<=longitud) and not (caracteres[i] in [' ',',','.']) do
-  begin
-      p:=p+caracteres[i];
-      inc(i);
-  end;
-  a:=length(p);
-  if p[a]=' ' then delete(p,a,1);
-   if p[1]=' ' then delete(p,1,1);
-
-   result:=p;
-end else raise Exception.Create('Fin')
-end;
 
 
 
@@ -769,9 +749,9 @@ var i:word; hora,minuto,segundos:byte;
     reloj,lithora,litminuto,litsegundo:string;
 begin
 i:=1;
-  hora:= StrToInt(nextnum(i));      lithora:=literal2d(hora);
-  minuto:= StrToInt(nextnum(i));    litminuto:=literal2d(minuto);
-  segundos:= StrToInt(nextnum(i));   litsegundo:=literal2d(segundos);
+  hora:= StrToInt(NextNumero(i));      lithora:=literal2d(hora);
+  minuto:= StrToInt(NextNumero(i));    litminuto:=literal2d(minuto);
+  segundos:= StrToInt(NextNumero(i));   litsegundo:=literal2d(segundos);
 
   reloj:= lithora+' horas con '+ litminuto+' minutos y '+litsegundo+' segundos';
 
@@ -1416,11 +1396,11 @@ function Cadena.BinarioMayor: string;
 var mayor,siguiente:cardinal ; i:word;
 begin
 i:=1;
- mayor:=ADecimal(NextNum(i)); //1001
+ mayor:=ADecimal(NextNumero(i)); //1001
  //showMessage (IntToStr(i));
  while i<=longitud do  //i=5
    begin
-     siguiente:=ADecimal(nextNum(i));  //1110
+     siguiente:=ADecimal(NextNumero(i));  //1110
      //showMessage (IntToStr(siguiente));
     //      14     >    9
      if siguiente > mayor then
@@ -1457,7 +1437,7 @@ dec:=0; ent:=0;
 real := 0;
  while i<= longitud do
  begin
- num:=StrToInt(nextnum(i));
+ num:=StrToInt(NextNumero(i));
    if (caracteres[i] = '.') or (b) then
      begin
        real:=num;
@@ -1503,14 +1483,14 @@ begin
   b:='';
   while (i<=longitud) and (caracteres[i] in separadores) do
       i:= i+1;
-     while (i<=longitud) and (caracteres[i] in numeros) do
+     while (i<=longitud) and (caracteres[i] in DIGITOS) do
      begin
       a:= a+caracteres[i];
       i:= i+1;
      end;
      if(caracteres[i] = '.')then begin
         inc(i);
-        while (i<=longitud) and (caracteres[i] in numeros) do
+        while (i<=longitud) and (caracteres[i] in DIGITOS) do
          begin
           b:= b+caracteres[i];
           i:= i+1;
@@ -1534,24 +1514,25 @@ result:=suma;
 end;
 
 
-function Cadena.Nextnum(var i: word): string;
+function Cadena.NextNumero(var i: word): string;
 var p:string;
 begin
-if (i>0) and (i<=longitud) then begin
-  while (i<=longitud) and (caracteres[i] in separadores) do
+  if not ((i>=1) and (i<=longitud)) then begin
+     raise Exception.Create('fin');
+  end else begin
+    while (i<=longitud) and not(caracteres[i] in  DIGITOS) do
+    begin
       inc(i);
-  p:='';
-  while (i<=longitud) and not (caracteres[i] in separadores) do
-  begin
-      p:=p+caracteres[i];
-      inc(i);
+    end;
+    p:='';
+    while (i<=longitud) and (caracteres[i] in  DIGITOS) do
+    begin
+        p:= p + caracteres[i];
+        inc(i);
+    end;
+    result:=p;
   end;
-  //a:=length(p);
-  //if p[a]=' ' then delete(p,a,1);
-  // if not ( p[1] in ['a'..'z','A'..'Z']) then delete(p,1,1);
 
-   result:=p;
-end else raise Exception.Create('fin')
 end;
 {
 

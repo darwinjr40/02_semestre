@@ -2,14 +2,17 @@ unit UCController;
 
 interface
 
-uses UCEscenario, URecord, UCSnake, UCCesped;
+uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,UCEscenario, URecord, UCSnake, UCCesped;
 
 type
     Controller = class
       private
         objEscenario : Escenario;
+        t : TTimer;
       public
-        constructor crear(x : Escenario);
+        constructor crear(x : Escenario); overload;
+        constructor crear(x : Escenario; timer : TTimer); overload;
         procedure moverse(k : Word);
         procedure accion();
 
@@ -22,12 +25,22 @@ constructor Controller.crear(x: Escenario);
 begin
   Self.objEscenario := x;
 end;
+
+constructor Controller.crear(x: Escenario; timer: TTimer);
+begin
+   Self.t := timer;
+   Self.objEscenario := x;
+end;
 // ctrl + /
 procedure Controller.accion;
 var  f, c : byte;
      d: Direction;
      dat : dato;
 begin
+  if Self.t.Interval > 100 then
+  begin
+   Self.t.Interval := Self.t.Interval - 100;
+  end;
 
 //dat-> lo que hay en la matriz
   dat := self.objEscenario.getMatriz.ObtValor(
@@ -70,6 +83,8 @@ begin
 
 
 end;
+
+
 
 procedure Controller.moverse(k: Word);
 begin

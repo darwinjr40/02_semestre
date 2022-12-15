@@ -89,6 +89,10 @@ object Form1: TForm1
         Caption = 'Ord-MsortRango'
         OnClick = OrdMsortReango1Click
       end
+      object N20222cargarCadenaNume1: TMenuItem
+        Caption = '2022-2-cargarCadenaNume'
+        OnClick = N20222cargarCadenaNume1Click
+      end
     end
     object EJECICIOS1: TMenuItem
       Caption = 'EJECICIOS'

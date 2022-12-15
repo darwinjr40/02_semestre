@@ -43,8 +43,6 @@ begin
       celdas[i, j].valor := 0;
       celdas[i, j].direccion := Direction.null;
     end;
-
-
 end;
 
 function Matriz.GetColumnas: word;
