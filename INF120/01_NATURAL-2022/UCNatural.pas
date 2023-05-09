@@ -1,15 +1,14 @@
-unit UCNatural;
+ï»¿unit UCNatural;
 
 interface
-uses math, sysutils;
+uses math, sysutils,Dialogs;
   type
   Natural = class
     private
     { Private declarations }
        valor : Cardinal;     //0...(2^32)-1
-       aux : Natural;
-
-       constructor crear(x : Cardinal; o : Natural);overload;
+//       aux : Natural;
+    constructor crear(x : Cardinal; o : Natural);overload;
 
     public
     { Public declarations }     //ctrl + shift + c
@@ -17,17 +16,22 @@ uses math, sysutils;
     constructor crear(x : cardinal); overload;
     constructor crear(x : Natural);overload;
     {function}
+    class function Pot(b,e: Cardinal):Cardinal; static;
+    class procedure IntercamParteFraccionaria(var n: real); static;
     function    GetValor : cardinal;
     function    GetDigito(p : byte) : byte;
     function    VerficarPrimo : boolean;
     function    GetCantDig : byte;
     function    VerifCapicua : boolean;
-    function    unidad(n : cardinal) : String;
+    function    ToLiteral() : String;  overload;
+    class function    ToUnidad(n : byte) : String; static;
+    class function    ToDecenas(n : byte) : String; static;
+    class function    ToLiteral(n : cardinal) : String; overload; static;
     function    toBase(b : cardinal) : String;
     function    ToRomano() : String;
     function    GetFrc(e:cardinal): byte;
-    class function pot(b,e: Cardinal):Cardinal; static;
     function    GetPosDigMenFre(n : Cardinal): byte;
+    function    GetPosDigMenor(): byte;
     {procedure}
     procedure   SetValor(x : cardinal);
     procedure   InserDigito(p,d:byte);
@@ -40,6 +44,7 @@ uses math, sysutils;
     procedure   ElimPrimerNumero(e : Cardinal);
     procedure   ElimCantDigIzq(cant : byte);
     procedure   ElimCantDigDer(cant : byte);
+    procedure   ToCardinal(n: real; var cantDigFrac: byte);
     {opcional}
     procedure   MovDigMayIni();
     procedure   MovDigMayFrcIni();
@@ -47,7 +52,7 @@ uses math, sysutils;
     {modelos de examen}
     procedure   ElimDigPrimoTieneVecinoDigPrimo;
     procedure   SegFrcDesc();
-
+    procedure   OrdIzdToDerAsc();
 
   end;
 implementation
@@ -70,26 +75,29 @@ end;
 
 constructor Natural.crear;
 begin
-  valor := 0;
+//  valor := 0;
+   self.crear(0)
 end;
 
 constructor Natural.crear(x: cardinal);
-var obj : Natural;
+//var obj : Natural;
 begin
-  obj := Natural.crear();
-  obj.aux := Natural.crear();
-  crear(x, obj);
+//  obj := Natural.crear();
+//  obj.aux := Natural.crear();
+//  crear(x, obj);
+  self.valor := x;
 end;
 
 constructor Natural.crear(x: Natural);
 begin;
-  crear(x.GetValor, Natural.crear);
+  valor := x.GetValor;
+//  crear(x.GetValor, Natural.crear);
 end;
 
 constructor Natural.crear(x: Cardinal; o: Natural);
 begin
   valor := x;
-  aux := o;
+//  aux := o;
 end;
 
 procedure Natural.ElimPrimerDigito(e: byte);
@@ -147,13 +155,14 @@ begin
   end;
   valor := n;
 end;
-//22.Eliminar todos los dígitos primos que estén al lado de un dígito primo
+//22.Eliminar todos los dï¿½gitos primos que estï¿½n al lado de un dï¿½gito primo
 //Ejemplo: 2472835 => 24783
 procedure Natural.ElimDigPrimoTieneVecinoDigPrimo;
-var b : Natural;
+var b, aux : Natural;
     n, p : Cardinal;
 begin
   b := Natural.crear(0);
+  aux := Natural.crear(0);
   p := 1;  n := 0;
   while (valor > 9) do begin
     aux.valor := (valor mod 10);
@@ -171,8 +180,10 @@ end;
 procedure Natural.ElimPrimerNumero(e: Cardinal);
 var p, c : byte;
     n : Cardinal;
+    aux : Natural;
 begin
-  self.aux.valor := e;
+  aux := Natural.crear(0);
+  aux.valor := e;
   p := aux.GetCantDig;
   c := 0;
   n := 0;
@@ -194,7 +205,9 @@ end;
 function Natural.GetFrc(e: cardinal): byte;
 var cd, r : byte;
     n, d : cardinal;
+    aux : Natural;
 begin
+  aux := Natural.crear(0);
   aux.valor := e;
   cd := aux.GetCantDig;
   n := valor;
@@ -236,6 +249,30 @@ begin
 
 end;
 
+function Natural.GetPosDigMenor: byte;
+var d, i, men, p : byte;
+    x, dim : cardinal;
+begin
+  x := valor;
+  men := x mod 10;
+  if x  = 0 then
+  begin
+    p := 0;
+  end else begin
+    p := 1;
+    dim := trunc(Log10(x) + 1);  //get posicion
+    for i := 1 to dim do begin
+      d := self.GetDigito(i);
+      if d < men then
+      begin
+        men := d;
+        p := i;
+      end;
+    end;
+  end;
+  result := p;
+end;
+
 procedure Natural.ElimPosDigito(p: byte);
 var k : cardinal;
 begin
@@ -267,8 +304,10 @@ begin
     GetDigito := (self.valor div pot(10, p-1)) mod 10;
 end;
 
+//N=9876   p=3 d=5   => N= 98576
+//mitad = cantDigitos / 2 + 1
 procedure Natural.InserDigito(p, d: byte);
-var a, b, k:cardinal;
+var a, b, k : cardinal;
 begin
   if not((p >= 1) and (p <= self.GetCantDig+1)) then
     raise Exception.Create('Posicion fuera de rango: function InserDigito')
@@ -280,11 +319,31 @@ begin
   end;
 end;
 
+//falta acabar
+class procedure Natural.IntercamParteFraccionaria(var n: real);
+var b, cantDigEntero : byte;
+    a, copia : cardinal;
+    resultado : real;
+    aux : Natural;
+begin
+  aux := Natural.crear(0);
+  copia := aux.valor;
+  aux.valor := trunc(n);
+  cantDigEntero := aux.GetCantDig();
+  aux.ToCardinal(n, b);
+//  a := GetDigIzq(b);
+//  EliminarDigIzq(b);
+  aux.UnirNumIzquierda(a);
+  resultado := aux.valor;
+  aux.valor := copia;
+  n := resultado;
+end;
+
 procedure Natural.Invertir;
 var copia : cardinal;
 begin
  copia := 0;
- while valor > 0 do
+ while valor >= 0 do
  begin
    copia := copia *10 + (valor mod 10);
    valor := valor div 10;
@@ -357,6 +416,46 @@ begin
   valor := n;
   UnirNumDerecha(c);
 end;
+
+//valor=1652043  =>  valor=5310246
+//valor=220001111 => valor=211000112
+procedure Natural.OrdIzdToDerAsc;
+var sw : Boolean;
+    pos, d, c : byte;
+    m : Natural;
+begin
+  sw := false;
+  m := Natural.crear(0);
+  c := 0;
+  while valor >= 1 do
+  begin
+    pos := self.GetPosDigMenor();
+    d := self.GetDigito(pos);
+    self.ElimPosDigito(pos);     //
+    if d = 0 then
+    begin
+      c := c + 1;
+    end
+    else
+    begin
+      if c > 0 then
+      begin
+        m.valor :=  d * self.pot(10,c);  //m.setValor(d * self.potencia(10,c))
+        c := 0;
+      end
+      else
+      begin
+        if sw then
+          m.UnirNumDerecha(d)
+        else
+          m.UnirNumIzquierda(d);
+      end;
+      sw := not(sw);
+    end;
+  end;
+  valor := m.valor
+end;
+
 //pot(2,4) <=> 2^4 => 16
 class function Natural.pot(b, e: Cardinal): Cardinal;
 begin
@@ -378,6 +477,92 @@ begin
     R := VECTOR[d] + r;
   end;
   result := r
+end;
+
+procedure Natural.ToCardinal(n: real; var cantDigFrac: byte);
+begin
+  cantDigFrac := 0;
+//  while (EsReal(n)) do
+//  begin
+//    n := n * 10;
+//    cantDigFrac := cantDigFrac + 1;
+//  end;
+  valor := trunc(n)
+end;
+
+class function Natural.ToDecenas(n : byte): String;
+const
+  DECENAS: array[1..9] of string = ('diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa');
+  ESPECIALES: array[1..9] of string = ('once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve');
+var
+  r : String;
+begin
+  if (n < 10) then
+    r := Natural.ToUnidad(n)
+  else if((n mod 10) = 0) then   //decena completa
+    r := DECENAS[n div 10]
+  else if ((n div 10) = 2) then  //23= veintitres
+    r := 'veinti' + Natural.ToUnidad(n mod 10)
+  else
+    r := DECENAS[n div 10] + ' y ' + Natural.ToUnidad(n mod 10);
+  Result := r;
+end;
+
+class function Natural.ToLiteral(n: cardinal): String;
+const
+  NUM:Array[1..27] of string =(
+   'uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve',
+   'diez','veinte', 'treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa',
+   'ciento','doscientos','trescientos','cuatrocientos','quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
+  );
+  ESPECIALES: array[1..9] of string =
+  ('once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve');
+
+var r, cad : string;
+    c, d, d2  : byte;
+begin
+  r := '';
+  c := 0;
+  while (n > 0) do begin
+    d := n mod 10;
+    n := n div 10;
+    if d > 0 then begin
+      d2 := n mod 10;
+      if ((d2 = 1)and(c mod 3 = 0)) then  begin  // procesar 2 dig
+        cad := ESPECIALES[d];
+        n := n div 10;
+        inc(c);
+      end else begin    //1 dig
+        cad :=  NUM[d + ((c mod 3)*10-(c mod 3))] + ' ';
+        if (c mod 3 = 1) then  cad := cad + 'y ' 
+      end;
+      if c = 3 then cad := cad + 'mil ';
+      r := cad + r;
+    end;
+    inc(c);
+  end;
+  result := r;
+end;
+
+function Natural.ToLiteral: String;
+const UNIDADES:Array[0..19] of string =
+('','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez',
+'once','doce','trece','catorce','quince', 'dieciseis', 'diecisiete', 'dieciocho','diecinueve');
+const DECENAS:Array[2..9] of string = ('veinte', 'treinta',
+'cuarenta','cincuenta','sesenta','setenta','ochenta','noventa');
+VAR  r : string;
+     n : Cardinal;
+begin
+  n := valor;
+  if (n < 20) then
+    r := UNIDADES[n]            //2
+  else if((n mod 10) = 0) then //decena completa
+    r := DECENAS[n div 10]
+  else if ((n div 10) = 2) then    //23= veintitres
+    r := 'veinti'+ unidades[n mod 10]
+  else      //31..99                       //cuarenta y uno
+    r := DECENAS[n div 10] + ' y ' + UNIDADES[n mod 10];
+  result := r;
 end;
 
 function Natural.ToRomano: String;
@@ -405,36 +590,29 @@ end;
 //n = 41  mod 10 => 1
 //n = 41  div 10 => 4
 //987451  mil    unidad(987451 mod 100)
-function Natural.unidad(n: cardinal): String;
-const UNIDADES:Array[0..19] of string = ('','uno','dos','tres','cuatro','cinco',
-'seis','siete','ocho','nueve','diez',
-'once','doce','trece','catorce','quince', 'dieciseis', 'diecisiete', 'dieciocho','diecinueve');
-const DECENAS:Array[2..9] of string = ('veinte', 'treinta',
-'cuarenta','cincuenta','sesenta','setenta','ochenta','noventa');
-VAR  r : string;
+class function Natural.ToUnidad(n : byte): String;
+const UNIDADES:Array[0..9] of string =
+('','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve');
 begin
-  if (n < 20) then
-    r := UNIDADES[n]            //2
-  else if((n mod 10) = 0) then //decena completa
-    r := DECENAS[n div 10]
-  else if ((n div 10) = 2) then    //23= veintitres
-    r := 'veinti'+ unidades[n mod 10]
-  else      //31..99                       //cuarenta y uno
-    r := DECENAS[n div 10] + ' y ' + UNIDADES[n mod 10];
-  result := r;
+  if (n > 9) then begin
+    raise Exception.Create('Numero fuera de rango: function ToUnidad')
+  end;
+  result := UNIDADES[n];
 end;
 
 procedure Natural.UnirNumDerecha(e: Cardinal);
+var aux : Natural;
 begin
   if e > 0 then begin
-    aux.valor := e;
+    aux := Natural.crear(e);
     valor := valor * (pot(10, aux.GetCantDig)) + e;
   end;
 end;
 
 procedure Natural.UnirNumIzquierda(e: Cardinal);
+var aux : Natural;
 begin
-  aux.valor := e;
+  aux := Natural.crear(e);
   valor := e * (pot(10, GetCantDig)) + valor;
 end;
 
@@ -450,12 +628,13 @@ begin
 end;
 
 function Natural.VerifCapicua: boolean;
+var aux : Natural;
 begin
   if valor = 0 then
   begin
    result:= false;
   end else begin
-    aux.valor := valor;
+    aux := Natural.crear(self.valor);
     aux.Invertir;
     VerifCapicua := (valor = aux.valor);
   end;
@@ -463,3 +642,4 @@ begin
 end;
 
 end.
+

@@ -529,7 +529,13 @@ begin
    i := 1; pos := 0;
   repeat
     palabra:= nextWord(i);
-  until (not(i <= longitud)) or (palabra = p);
+  until (not(i <= longitud)) or (palabra = p);  //F o V ==> v
+
+//  palabra:= nextWord(i);
+//  while (i <= longitud) and(palabra <> p) do begin
+//    palabra:= nextWord(i);
+//  end;
+
   if palabra = p then
     pos:=i-length(p);
   result:=pos;
@@ -540,6 +546,7 @@ var pos : word;
 begin
   if verifRango(a, b, 'BuscarCaracter') then begin
     pos := 0;
+
     while (a <= b) and (caracteres[a] <> buscCaracter) do
       inc(a);
     if a <= b then
@@ -1202,7 +1209,7 @@ begin
     begin
       if caracteres[a] = caracter then
        inc(c);
-       inc(a);
+      inc(a);
     end;
   end;
   result := c >= 2;  
@@ -1256,15 +1263,16 @@ begin
    begin
      c := 0;
      while (  (a <= b) and (c <=1) )  do begin
-       if ((caracteres[a] in CONSONANTES) and 
+
+       if ((caracteres[a] in CONSONANTES) and
            ( EsRepetido(a, b, caracteres[a]) )
           ) then
        begin
-         c := c + 1; 
+         c := c + 1;
        end;
        a := a + 1;
      end;
-     result := c >= 2
+     result := (c >= 2)
    end;
 end;
 

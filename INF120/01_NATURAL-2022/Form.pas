@@ -79,13 +79,14 @@ begin
 
 //  aux := Natural.pot(Strtoint(Edit1.Text), Strtoint(Edit2.Text));
 //  aux := StrToInt(Edit2.Text);
-  Button1SetValor(Sender);
-  objeto.ElimPrimerNumero(Strtoint(Edit2.Text));
+//  Button1SetValor(Sender);
+//  objeto.ElimPrimerNumero(Strtoint(Edit2.Text));
 //  objeto.ElimPosDigito(Strtoint(Edit2.Text));
 //  Edit3.Text := BoolToStr(objeto.VerficarPrimo, true);
 //  Edit3.Text := IntToStr(objeto.GetCantDig());
-  Button2GetValor(Sender);
+//  Button2GetValor(Sender);
 //  Edit3.Text := IntToStr(aux);
+  objeto.Invertir;
 end;
 
 procedure TForm1.oRomano1Click(Sender: TObject);
@@ -99,19 +100,21 @@ begin
 end;
 
 procedure TForm1.toBase1Click(Sender: TObject);
+
 begin
-  Edit2.Text := objeto.toBase(StrToInt(Edit1.Text));
+  Edit2.Text := objeto.toBase(StrToInt(InputBox('Ingrese la base a convertir','','')));
 end;
 
 procedure TForm1.unidad1Click(Sender: TObject);
 var n : cardinal;
 begin
-  Edit2.Text :=  objeto.unidad(objeto.GetValor);
+  Edit2.Text :=  Natural.ToLiteral(objeto.GetValor);
 end;
 
 procedure TForm1.verificarcapicua1Click(Sender: TObject);
 begin
   edit2.Text := BoolToStr(objeto.VerifCapicua, true);
+//  objeto.OrdIzdToDerAsc
 end;
 
 end.
