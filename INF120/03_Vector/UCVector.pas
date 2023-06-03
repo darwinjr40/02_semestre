@@ -106,7 +106,7 @@ begin
 end;
 
 //vector puede estar como sea
-//v[10,20,30,40]    e = 21
+//v[40,20,30,10]    e = 21
 function Vector.BusquedaSecuencial(e: real): word;
 var i : word;
 begin                      //v-> [10, 20, 30]   e =10
