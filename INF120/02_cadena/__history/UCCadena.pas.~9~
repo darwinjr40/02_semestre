@@ -1524,21 +1524,24 @@ end;
 
 
 function Cadena.NextNumero(var i: word): string;
-var  p:string;
+var p:string;
 begin
   if not ((i>=1) and (i<=longitud)) then begin
      raise Exception.Create('fin');
-  end;
-
-    while (i<=longitud) and not(caracteres[i] in  DIGITOS) do begin
+  end else begin
+    while (i<=longitud) and not(caracteres[i] in  DIGITOS) do
+    begin
       inc(i);
     end;
     p:='';
-    while (i<=longitud) and (caracteres[i] in  DIGITOS) do begin
-      p:= p + caracteres[i];
-      inc(i);
+    while (i<=longitud) and (caracteres[i] in  DIGITOS) do
+    begin
+        p:= p + caracteres[i];
+        inc(i);
     end;
     result:=p;
+  end;
+
 end;
 {
 

@@ -1138,19 +1138,18 @@ end;
 function Cadena.nextWord(var a: word; b: word): string;
 var p:string;
 begin
-  if not ((a>=1) and (b<=longitud)) then begin
-      raise Exception.Create('nextWord: Fuera de rango');
-  end;
-
-  while (a<=b) and (caracteres[a] in separadores) do begin
-    inc(a);
-  end;
-  p:='';
-  while (a<=b) and not (caracteres[a] in separadores) do begin
-    p:=p+caracteres[a];
-    inc(a);
-  end;
+  if (a>=1) and (b<=longitud) then begin
+    while (a<=b) and (caracteres[a] in separadores) do
+        inc(a);
+    p:='';
+    while (a<=b) and not (caracteres[a] in separadores) do
+    begin
+        p:=p+caracteres[a];
+        inc(a);
+    end;
      result:=p;
+  end else raise Exception.Create('nextWord: Fuera de rango')
+
 end;
 
 procedure Cadena.EliminarNombre(nom: string);
@@ -1524,21 +1523,24 @@ end;
 
 
 function Cadena.NextNumero(var i: word): string;
-var  p:string;
+var p:string;
 begin
   if not ((i>=1) and (i<=longitud)) then begin
      raise Exception.Create('fin');
-  end;
-
-    while (i<=longitud) and not(caracteres[i] in  DIGITOS) do begin
+  end else begin
+    while (i<=longitud) and not(caracteres[i] in  DIGITOS) do
+    begin
       inc(i);
     end;
     p:='';
-    while (i<=longitud) and (caracteres[i] in  DIGITOS) do begin
-      p:= p + caracteres[i];
-      inc(i);
+    while (i<=longitud) and (caracteres[i] in  DIGITOS) do
+    begin
+        p:= p + caracteres[i];
+        inc(i);
     end;
     result:=p;
+  end;
+
 end;
 {
 

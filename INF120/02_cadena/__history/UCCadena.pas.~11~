@@ -1534,9 +1534,10 @@ begin
       inc(i);
     end;
     p:='';
-    while (i<=longitud) and (caracteres[i] in  DIGITOS) do begin
-      p:= p + caracteres[i];
-      inc(i);
+    while (i<=longitud) and (caracteres[i] in  DIGITOS) do
+    begin
+        p:= p + caracteres[i];
+        inc(i);
     end;
     result:=p;
 end;
