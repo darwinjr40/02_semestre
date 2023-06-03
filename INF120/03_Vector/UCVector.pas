@@ -89,7 +89,7 @@ begin
  while(a<=b)and(not hallado)do begin
    m := (a+b) div 2;
   if(e = Elementos[m])then
-    hallado := true
+    hallado := true //result := m;
   else if(e < Elementos[m])then
     b := m - 1
   else
@@ -97,7 +97,7 @@ begin
  end;
  if not hallado then
     m := 0;
-  result := m;
+  result := m;   //result = 0; -1
 end;
 //Retorna true o false si es que lo encuentra
 function Vector.BusquedaBinariaB(e: real): boolean;
@@ -268,7 +268,20 @@ begin
       i := i - 1;
     end;
     dimension := dimension + 1;
-    ModElemento(i+1, x);    
+    self.ModElemento(i+1, x);    // elementos[i+1] = x
+     //otra forma
+//    i := Dimension;
+//    while ((i >= 1)and (not ban)) do
+//    begin
+//      if (x >= Elementos[i]) then  begin
+//         ban = false;
+//         dimension := dimension + 1;
+//         self.ModElemento(i+1, x);
+//      end else begin
+//        elementos[i+1] := elementos[i];
+//      end;
+//      i := i - 1;
+//    end;
 end;
 
 procedure Vector.IntercalarCerosNoCeros;
