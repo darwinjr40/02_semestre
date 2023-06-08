@@ -116,10 +116,10 @@ object Form1: TForm1
         Caption = 'verificar capicua'
         OnClick = verificarcapicua1Click
       end
-      object staticprocesointerFraccionn1: TMenuItem
-        Caption = 'static proceso: interFraccion(n)'
-        OnClick = staticprocesointerFraccionn1Click
-      end
     end
+  end
+  object MainMenu2: TMainMenu
+    Left = 24
+    Top = 592
   end
 end

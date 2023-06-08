@@ -9,6 +9,7 @@ uses
 type
   TForm1 = class(TForm)
     MainMenu1: TMainMenu;
+    MainMenu2: TMainMenu;
     Edit1: TEdit;
     Edit2: TEdit;
     Button1: TButton;
@@ -23,7 +24,6 @@ type
     ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem;
     segmentarfrecuenciaDesc1: TMenuItem;
     verificarcapicua1: TMenuItem;
-    staticprocesointerFraccionn1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Button1SetValor(Sender: TObject);
     procedure Button2GetValor(Sender: TObject);
@@ -34,7 +34,6 @@ type
     procedure ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
     procedure segmentarfrecuenciaDesc1Click(Sender: TObject);
     procedure verificarcapicua1Click(Sender: TObject);
-    procedure staticprocesointerFraccionn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,16 +97,6 @@ end;
 procedure TForm1.segmentarfrecuenciaDesc1Click(Sender: TObject);
 begin
  objeto.SegFrcDesc;
-end;
-
-procedure TForm1.staticprocesointerFraccionn1Click(Sender: TObject);
-var n : extended;
-begin
- n := StrToFloat(InputBox('','Ingrese Numero real:','3,25'));
- Natural.IntercamParteFraccionaria(n);
- edit2.Text := FloatToStr(n);
-//  n := trunc(123456);
-//  n := 1;
 end;
 
 procedure TForm1.toBase1Click(Sender: TObject);

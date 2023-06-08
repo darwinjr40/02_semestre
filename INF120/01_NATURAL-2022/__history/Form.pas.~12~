@@ -9,7 +9,6 @@ uses
 type
   TForm1 = class(TForm)
     MainMenu1: TMainMenu;
-    MainMenu2: TMainMenu;
     Edit1: TEdit;
     Edit2: TEdit;
     Button1: TButton;
@@ -24,6 +23,7 @@ type
     ElimDigPrimoTieneVecinoDigPrimo1: TMenuItem;
     segmentarfrecuenciaDesc1: TMenuItem;
     verificarcapicua1: TMenuItem;
+    staticprocesointerFraccionn1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Button1SetValor(Sender: TObject);
     procedure Button2GetValor(Sender: TObject);
@@ -34,6 +34,7 @@ type
     procedure ElimDigPrimoTieneVecinoDigPrimo1Click(Sender: TObject);
     procedure segmentarfrecuenciaDesc1Click(Sender: TObject);
     procedure verificarcapicua1Click(Sender: TObject);
+    procedure staticprocesointerFraccionn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,20 +100,30 @@ begin
  objeto.SegFrcDesc;
 end;
 
-procedure TForm1.toBase1Click(Sender: TObject);
+procedure TForm1.staticprocesointerFraccionn1Click(Sender: TObject);
+var n : real;
 begin
-  Edit2.Text := objeto.toBase(StrToInt(Edit1.Text));
+ n := StrToFloat(InputBox('','Ingrese Numero real:','3,25'));
+ Natural.IntercamParteFraccionaria(n);
+
+end;
+
+procedure TForm1.toBase1Click(Sender: TObject);
+
+begin
+  Edit2.Text := objeto.toBase(StrToInt(InputBox('Ingrese la base a convertir','','')));
 end;
 
 procedure TForm1.unidad1Click(Sender: TObject);
 var n : cardinal;
 begin
-  Edit2.Text :=  objeto.unidad(objeto.GetValor);
+  Edit2.Text :=  Natural.ToLiteral(objeto.GetValor);
 end;
 
 procedure TForm1.verificarcapicua1Click(Sender: TObject);
 begin
   edit2.Text := BoolToStr(objeto.VerifCapicua, true);
+//  objeto.OrdIzdToDerAsc
 end;
 
 end.

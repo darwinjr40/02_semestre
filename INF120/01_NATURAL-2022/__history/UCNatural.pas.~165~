@@ -14,14 +14,6 @@ uses math, sysutils,Dialogs;
     constructor crear; overload;
     constructor crear(x : cardinal); overload;
     constructor crear(x : Natural);overload;
-    {metodos estaticos, pertenecen a la clase}
-    class function  Pot(b,e: Cardinal):Cardinal; static;
-    class function  ToUnidad(n : byte) : String; static;
-    class function  ToDecenas(n : byte) : String; static;
-    class function  ToCentenas(n : word) : String; static;
-    class function  ToLiteral(n : cardinal) : String; overload; static;
-    class function  ToLiteral1(n : cardinal) : String; static;
-    class procedure IntercamParteFraccionaria(var n: real); static;
     {function}
     function    GetValor : cardinal;
     function    GetDigito(p : byte) : byte;
@@ -46,7 +38,7 @@ uses math, sysutils,Dialogs;
     procedure   ElimPrimerNumero(e : Cardinal);
     procedure   ElimCantDigIzq(cant : byte);
     procedure   ElimCantDigDer(cant : byte);
-    procedure   ToCardinal(n: real; var cantDigFrac: byte);
+    procedure   ToCardinal(n: extended; var cantDigFrac: byte);
     {opcional}
     procedure   MovDigMayIni();
     procedure   MovDigMayFrcIni();
@@ -55,6 +47,14 @@ uses math, sysutils,Dialogs;
     procedure   ElimDigPrimoTieneVecinoDigPrimo;
     procedure   SegFrcDesc();
     procedure   OrdIzdToDerAsc();
+    {metodos estaticos, pertenecen a la clase}
+    class function  Pot(b,e: Cardinal):Cardinal; static;
+    class function  ToUnidad(n : byte) : String; static;
+    class function  ToDecenas(n : byte) : String; static;
+    class function  ToCentenas(n : word) : String; static;
+    class function  ToLiteral(n : cardinal) : String; overload; static;
+    class function  VerifPartFracc(x:extended):boolean; static;
+    class procedure IntercamParteFraccionaria(var n: extended); static;
 
   end;
 
@@ -322,23 +322,20 @@ begin
   end;
 end;
 
-//falta acabar
-class procedure Natural.IntercamParteFraccionaria(var n: real);
+
+class procedure Natural.IntercamParteFraccionaria(var n: extended);
 var b, cantDigEntero : byte;
-    a, copia : cardinal;
+    a : cardinal;
     resultado : real;
     aux : Natural;
 begin
-  aux := Natural.crear(0);
-  copia := aux.valor;
-  aux.valor := trunc(n);
+  aux := Natural.crear(trunc(n));
   cantDigEntero := aux.GetCantDig();
   aux.ToCardinal(n, b);
-//  a := GetDigIzq(b);
-//  EliminarDigIzq(b);
+  a := aux.valor mod (Natural.Pot(10,b));
+  aux.valor := aux.valor div (Natural.Pot(10,b));
   aux.UnirNumIzquierda(a);
-  resultado := aux.valor;
-  aux.valor := copia;
+  resultado := aux.valor / (Natural.Pot(10,cantDigEntero));
   n := resultado;
 end;
 
@@ -346,8 +343,7 @@ procedure Natural.Invertir;
 var copia : cardinal;
 begin
  copia := 0;
- while valor >= 0 do
- begin
+ while valor >= 0 do begin
    copia := copia *10 + (valor mod 10);
    valor := valor div 10;
  end;
@@ -482,17 +478,18 @@ begin
   result := r
 end;
 
-procedure Natural.ToCardinal(n: real; var cantDigFrac: byte);
+
+
+procedure Natural.ToCardinal(n: extended; var cantDigFrac: byte);
 begin
   cantDigFrac := 0;
-//  while (EsReal(n)) do
-//  begin
-//    n := n * 10;
-//    cantDigFrac := cantDigFrac + 1;
-//  end;
+  while (Natural.VerifPartFracc(n)) do
+  begin
+    n := n * 10;
+    cantDigFrac := cantDigFrac + 1;
+  end;
   valor := trunc(n)
 end;
-
 class function Natural.ToCentenas(n: word): String;
 const  CEN: array[0..9] of string = ('','cien','doscientos','trescientos','cuatrocientos','quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos');
 var r : String;
@@ -521,41 +518,6 @@ begin
   end;    
 end;
 
-class function Natural.ToLiteral(n: cardinal): String;
-const
-  NUM:Array[1..27] of string =(
-   'uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve',
-   'diez','veinte', 'treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa',
-   'ciento','doscientos','trescientos','cuatrocientos','quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
-  );
-  ESPECIALES: array[1..9] of string =
-  ('once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve');
-
-var r, cad : string;
-    c, d, d2  : byte;
-begin
-  r := '';
-  c := 0;
-  while (n > 0) do begin
-    d := n mod 10;
-    n := n div 10;
-    if d > 0 then begin
-      d2 := n mod 10;
-      if ((d2 = 1)and(c mod 3 = 0)) then  begin  // procesar 2 dig
-        cad := ESPECIALES[d];
-        n := n div 10;
-        inc(c);
-      end else begin    //1 dig
-        cad :=  NUM[d + ((c mod 3)*10-(c mod 3))] + ' ';
-        if (c mod 3 = 1) then  cad := cad + 'y ' 
-      end;
-      if c = 3 then cad := cad + 'mil ';
-      r := cad + r;
-    end;
-    inc(c);
-  end;
-  result := r;
-end;
 
 function Natural.ToLiteral: String;
 const UNIDADES:Array[0..19] of string =
@@ -578,17 +540,20 @@ begin
   result := r;
 end;
 
-class function Natural.ToLiteral1(n: cardinal): String;
-const VEC:Array[0..3] of string = ('', 'mil','millon','billon');
+class function Natural.ToLiteral(n: cardinal): String;
+const VEC:Array[0..3] of string = ('', ' mil ',' millon ',' billon ');
 var r, cad : string;
-    p, d  : byte;
+    p, d  : word;
 begin
-  p := 1;
+  r := '';
+  p := 0;
   while n > 0 do  begin
     d := n mod 1000;
     n := n div 1000;
-       
+    r := Natural.ToCentenas(d) + VEC[p] + r;
+    p := p + 1;   
   end;
+  result := r;
 end;
 
 function Natural.ToRomano: String;
@@ -613,10 +578,11 @@ begin
   result := r;
 end;
 
+
 //n = 41  mod 10 => 1
 //n = 41  div 10 => 4
 //987451  mil    unidad(987451 mod 100)
-class function Natural.ToUnidad(n : byte): String;
+class function Natural.ToUnidad(n: byte): String;
 const UNI:Array[0..9] of string = ('','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve');
 begin
   result := UNI[n];
@@ -661,6 +627,13 @@ begin
     VerifCapicua := (valor = aux.valor);
   end;
 
+end;
+
+class function Natural.VerifPartFracc(x: extended): boolean;
+var n : extended;
+begin
+  n := trunc(x);
+  result := (not (n=x));
 end;
 
 end.

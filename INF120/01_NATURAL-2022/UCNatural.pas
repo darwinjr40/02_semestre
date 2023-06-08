@@ -14,13 +14,6 @@ uses math, sysutils,Dialogs;
     constructor crear; overload;
     constructor crear(x : cardinal); overload;
     constructor crear(x : Natural);overload;
-    {metodos estaticos, pertenecen a la clase}
-    class function  Pot(b,e: Cardinal):Cardinal; static;
-    class function  ToUnidad(n : byte) : String; static;
-    class function  ToDecenas(n : byte) : String; static;
-    class function  ToCentenas(n : word) : String; static;
-    class function  ToLiteral(n : cardinal) : String; overload; static;
-    class procedure IntercamParteFraccionaria(var n: real); static;
     {function}
     function    GetValor : cardinal;
     function    GetDigito(p : byte) : byte;
@@ -45,7 +38,7 @@ uses math, sysutils,Dialogs;
     procedure   ElimPrimerNumero(e : Cardinal);
     procedure   ElimCantDigIzq(cant : byte);
     procedure   ElimCantDigDer(cant : byte);
-    procedure   ToCardinal(n: real; var cantDigFrac: byte);
+    procedure   ToCardinal(n: extended; var cantDigFrac: byte);
     {opcional}
     procedure   MovDigMayIni();
     procedure   MovDigMayFrcIni();
@@ -54,6 +47,14 @@ uses math, sysutils,Dialogs;
     procedure   ElimDigPrimoTieneVecinoDigPrimo;
     procedure   SegFrcDesc();
     procedure   OrdIzdToDerAsc();
+    {metodos estaticos, pertenecen a la clase}
+    class function  Pot(b,e: Cardinal):Cardinal; static;
+    class function  ToUnidad(n : byte) : String; static;
+    class function  ToDecenas(n : byte) : String; static;
+    class function  ToCentenas(n : word) : String; static;
+    class function  ToLiteral(n : cardinal) : String; overload; static;
+    class function  VerifPartFracc(x:extended):boolean; static;
+    class procedure IntercamParteFraccionaria(var n: extended); static;
 
   end;
 
@@ -321,24 +322,19 @@ begin
   end;
 end;
 
-//falta acabar
-class procedure Natural.IntercamParteFraccionaria(var n: real);
-var b, cantDigEntero : byte;
-    a, copia : cardinal;
-    resultado : real;
+
+class procedure Natural.IntercamParteFraccionaria(var n: extended);
+var c, cantDigEntero : byte;
+    frac : cardinal;
     aux : Natural;
 begin
-  aux := Natural.crear(0);
-  copia := aux.valor;
-  aux.valor := trunc(n);
+  aux := Natural.crear(trunc(n));
   cantDigEntero := aux.GetCantDig();
-  aux.ToCardinal(n, b);
-//  a := GetDigIzq(b);
-//  EliminarDigIzq(b);
-  aux.UnirNumIzquierda(a);
-  resultado := aux.valor;
-  aux.valor := copia;
-  n := resultado;
+  aux.ToCardinal(n, c);
+  frac := aux.valor mod (Natural.Pot(10,c));
+  aux.ElimCantDigDer(c);
+  aux.UnirNumIzquierda(frac);
+  n := aux.valor / (Natural.Pot(10,cantDigEntero));
 end;
 
 procedure Natural.Invertir;
@@ -480,17 +476,18 @@ begin
   result := r
 end;
 
-procedure Natural.ToCardinal(n: real; var cantDigFrac: byte);
+
+
+procedure Natural.ToCardinal(n: extended; var cantDigFrac: byte);
 begin
   cantDigFrac := 0;
-//  while (EsReal(n)) do
-//  begin
-//    n := n * 10;
-//    cantDigFrac := cantDigFrac + 1;
-//  end;
+  while (Natural.VerifPartFracc(n)) do
+  begin
+    n := n * 10;
+    cantDigFrac := cantDigFrac + 1;
+  end;
   valor := trunc(n)
 end;
-
 class function Natural.ToCentenas(n: word): String;
 const  CEN: array[0..9] of string = ('','cien','doscientos','trescientos','cuatrocientos','quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos');
 var r : String;
@@ -628,6 +625,13 @@ begin
     VerifCapicua := (valor = aux.valor);
   end;
 
+end;
+
+class function Natural.VerifPartFracc(x: extended): boolean;
+var n : extended;
+begin
+  n := x - trunc(x);
+  result := ((n > 0.01));    //(not (x = trunc(x)));
 end;
 
 end.
