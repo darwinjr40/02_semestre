@@ -18,7 +18,7 @@ object Form1: TForm1
   object Edit1: TEdit
     Left = 200
     Top = 42
-    Width = 345
+    Width = 585
     Height = 31
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -31,7 +31,7 @@ object Form1: TForm1
   object Edit2: TEdit
     Left = 200
     Top = 79
-    Width = 345
+    Width = 585
     Height = 31
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -62,7 +62,7 @@ object Form1: TForm1
   object Edit3: TEdit
     Left = 200
     Top = 132
-    Width = 345
+    Width = 585
     Height = 31
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -75,7 +75,7 @@ object Form1: TForm1
   object Edit4: TEdit
     Left = 200
     Top = 169
-    Width = 345
+    Width = 585
     Height = 31
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -93,7 +93,7 @@ object Form1: TForm1
         OnClick = invertir1Click
       end
       object unidad1: TMenuItem
-        Caption = 'unidad'
+        Caption = 'funcion: ToLiteral(n)'
         OnClick = unidad1Click
       end
       object toBase1: TMenuItem

@@ -4,29 +4,30 @@ interface
 uses math, sysutils,Dialogs;
   type
   Natural = class
-    private
-    { Private declarations }
+    private  { Private declarations }
        valor : Cardinal;     //0...(2^32)-1
 //       aux : Natural;
     constructor crear(x : Cardinal; o : Natural);overload;
 
-    public
-    { Public declarations }     //ctrl + shift + c
+    public  { Public declarations }     //ctrl + shift + c
+    {constructores}
     constructor crear; overload;
     constructor crear(x : cardinal); overload;
     constructor crear(x : Natural);overload;
-    {function}
-    class function Pot(b,e: Cardinal):Cardinal; static;
+    {metodos estaticos, pertenecen a la clase}
+    class function  Pot(b,e: Cardinal):Cardinal; static;
+    class function  ToUnidad(n : byte) : String; static;
+    class function  ToDecenas(n : byte) : String; static;
+    class function  ToCentenas(n : word) : String; static;
+    class function  ToLiteral(n : cardinal) : String; overload; static;
     class procedure IntercamParteFraccionaria(var n: real); static;
+    {function}
     function    GetValor : cardinal;
     function    GetDigito(p : byte) : byte;
     function    VerficarPrimo : boolean;
     function    GetCantDig : byte;
     function    VerifCapicua : boolean;
     function    ToLiteral() : String;  overload;
-    class function    ToUnidad(n : byte) : String; static;
-    class function    ToDecenas(n : byte) : String; static;
-    class function    ToLiteral(n : cardinal) : String; overload; static;
     function    toBase(b : cardinal) : String;
     function    ToRomano() : String;
     function    GetFrc(e:cardinal): byte;
@@ -55,6 +56,7 @@ uses math, sysutils,Dialogs;
     procedure   OrdIzdToDerAsc();
 
   end;
+
 implementation
 
 { Natural }
@@ -343,8 +345,7 @@ procedure Natural.Invertir;
 var copia : cardinal;
 begin
  copia := 0;
- while valor >= 0 do
- begin
+ while valor >= 0 do begin
    copia := copia *10 + (valor mod 10);
    valor := valor div 10;
  end;
@@ -490,59 +491,34 @@ begin
   valor := trunc(n)
 end;
 
+class function Natural.ToCentenas(n: word): String;
+const  CEN: array[0..9] of string = ('','cien','doscientos','trescientos','cuatrocientos','quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos');
+var r : String;
+begin
+  r := ' ';
+  if n<100 then
+    r := ''
+  else if (n<200) then 
+    r := 'to';
+  Result := (CEN[n div 100] + r + Natural.ToDecenas(n mod 100));
+end;
+
 class function Natural.ToDecenas(n : byte): String;
-const
-  DECENAS: array[1..9] of string = ('diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa');
-  ESPECIALES: array[1..9] of string = ('once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve');
-var
-  r : String;
-begin
-  if (n < 10) then
-    r := Natural.ToUnidad(n)
-  else if((n mod 10) = 0) then   //decena completa
-    r := DECENAS[n div 10]
-  else if ((n div 10) = 2) then  //23= veintitres
-    r := 'veinti' + Natural.ToUnidad(n mod 10)
-  else
-    r := DECENAS[n div 10] + ' y ' + Natural.ToUnidad(n mod 10);
-  Result := r;
-end;
-
-class function Natural.ToLiteral(n: cardinal): String;
-const
-  NUM:Array[1..27] of string =(
-   'uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve',
-   'diez','veinte', 'treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa',
-   'ciento','doscientos','trescientos','cuatrocientos','quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'
+const 
+  DEC: array[1..2, 0..9] of string = (
+     ('','diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'),
+     ('','once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve') 
   );
-  ESPECIALES: array[1..9] of string =
-  ('once', 'doce', 'trece', 'catorce', 'quince', 'dieciseis', 'diecisiete', 'dieciocho', 'diecinueve');
-
-var r, cad : string;
-    c, d, d2  : byte;
-begin
-  r := '';
-  c := 0;
-  while (n > 0) do begin
-    d := n mod 10;
-    n := n div 10;
-    if d > 0 then begin
-      d2 := n mod 10;
-      if ((d2 = 1)and(c mod 3 = 0)) then  begin  // procesar 2 dig
-        cad := ESPECIALES[d];
-        n := n div 10;
-        inc(c);
-      end else begin    //1 dig
-        cad :=  NUM[d + ((c mod 3)*10-(c mod 3))] + ' ';
-        if (c mod 3 = 1) then  cad := cad + 'y ' 
-      end;
-      if c = 3 then cad := cad + 'mil ';
-      r := cad + r;
-    end;
-    inc(c);
-  end;
-  result := r;
+var r : String;
+begin       
+  if(n>10)and(n<20)then //11..19 
+    Result := (DEC[2, n mod 10])
+  else begin        
+    if (n mod 10 = 0)or(n <= 30) then r:='' else r:=' y ';
+    Result := (DEC[1, n div 10] + r + Natural.ToUnidad(n mod 10));
+  end;    
 end;
+
 
 function Natural.ToLiteral: String;
 const UNIDADES:Array[0..19] of string =
@@ -560,8 +536,24 @@ begin
     r := DECENAS[n div 10]
   else if ((n div 10) = 2) then    //23= veintitres
     r := 'veinti'+ unidades[n mod 10]
-  else      //31..99                       //cuarenta y uno
+  else //31..99                       //cuarenta y uno
     r := DECENAS[n div 10] + ' y ' + UNIDADES[n mod 10];
+  result := r;
+end;
+
+class function Natural.ToLiteral(n: cardinal): String;
+const VEC:Array[0..3] of string = ('', ' mil ',' millon ',' billon ');
+var r, cad : string;
+    p, d  : word;
+begin
+  r := '';
+  p := 0;
+  while n > 0 do  begin
+    d := n mod 1000;
+    n := n div 1000;
+    r := Natural.ToCentenas(d) + VEC[p] + r;
+    p := p + 1;   
+  end;
   result := r;
 end;
 
@@ -587,17 +579,14 @@ begin
   result := r;
 end;
 
+
 //n = 41  mod 10 => 1
 //n = 41  div 10 => 4
 //987451  mil    unidad(987451 mod 100)
-class function Natural.ToUnidad(n : byte): String;
-const UNIDADES:Array[0..9] of string =
-('','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve');
+class function Natural.ToUnidad(n: byte): String;
+const UNI:Array[0..9] of string = ('','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve');
 begin
-  if (n > 9) then begin
-    raise Exception.Create('Numero fuera de rango: function ToUnidad')
-  end;
-  result := UNIDADES[n];
+  result := UNI[n];
 end;
 
 procedure Natural.UnirNumDerecha(e: Cardinal);
