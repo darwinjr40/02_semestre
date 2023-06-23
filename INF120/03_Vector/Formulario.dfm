@@ -93,6 +93,10 @@ object Form1: TForm1
         Caption = '2022-2-cargarCadenaNume'
         OnClick = N20222cargarCadenaNume1Click
       end
+      object segfrec1: TMenuItem
+        Caption = 'seg-frec'
+        OnClick = segfrec1Click
+      end
     end
     object EJECICIOS1: TMenuItem
       Caption = 'EJECICIOS'

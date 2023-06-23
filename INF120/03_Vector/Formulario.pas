@@ -28,6 +28,7 @@ type
     segmentarcerosynoceros1: TMenuItem;
     intercalarcerosynoceros1: TMenuItem;
     N20222cargarCadenaNume1: TMenuItem;
+    segfrec1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -43,6 +44,7 @@ type
     procedure segmentarcerosynoceros1Click(Sender: TObject);
     procedure intercalarcerosynoceros1Click(Sender: TObject);
     procedure N20222cargarCadenaNume1Click(Sender: TObject);
+    procedure segfrec1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -149,12 +151,20 @@ begin
   vec.Quicksort();
 end;
 
+procedure TForm1.segfrec1Click(Sender: TObject);
+var a, b :word;
+begin
+  a := StrToInt(InputBox('','a',''));
+  b := StrToInt(InputBox('','b',''));
+  vec.SegmentarFrec(a,b);
+end;
+
 procedure TForm1.segmentarcerosynoceros1Click(Sender: TObject);
 var a, b :word;
 begin
   a := StrToInt(InputBox('','a',''));
   b := StrToInt(InputBox('','b',''));
-  vec.sefmentarCerosNoCeros(a, b);
+  vec.SegmentarCerosNoCerosReal(a, b);
 end;
 
 procedure TForm1.SegmentarPriNoPrimo1Click(Sender: TObject);

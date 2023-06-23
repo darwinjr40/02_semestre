@@ -7,6 +7,7 @@ interface
       private
         Valor: Cardinal;
 
+
       public
         {Constructor}
         constructor crear(x: Cardinal); overload;
@@ -46,6 +47,11 @@ interface
         {examen 1-2021}
         procedure intercalarPrimoYnoPrimo();
         function tieneCero():boolean;
+        {metodos staticos}
+
+        class function ContieneCero(n: extended): boolean; static;
+         class function ContieneCeroFrac(n: extended): boolean;  static;
+         class function VerifPartFracc(x: extended): boolean; static;
     End;
 implementation
 
@@ -79,6 +85,25 @@ begin
  Result:= cen;
 end;
                                 //16
+class function Numero.ContieneCero(n: extended): boolean;
+  var nroObj: Numero;
+begin
+  nroObj := Numero.crear(trunc(n));
+  result:= (nroObj.tieneCero() or Numero.ContieneCeroFrac(n));
+end;
+
+class function Numero.ContieneCeroFrac(n: extended): boolean;
+var sw: boolean;
+begin
+  sw := false;
+  while (Numero.VerifPartFracc(n) AND (not sw)) do  begin
+    n := n * 10;
+    if(trunc(n) mod 10 = 0)then
+      sw := true;
+  end;
+  result := sw;
+end;
+
 function Numero.convertiToBase(b: byte): Cardinal;
 var n,a : cardinal;
     d : byte;
@@ -343,6 +368,13 @@ procedure Numero.setValor(x: Cardinal);
 begin
   valor := x;
 end;
+
+
+
+
+
+
+
 function Numero.tieneCero: boolean;
 var n : cardinal;
 begin
@@ -353,6 +385,7 @@ begin
     end;
     result := n > 0;
 end;
+
 
 function Numero.ToCentenas(n: Cardinal): String;
 Const
@@ -433,6 +466,16 @@ begin  //123     46
         //123 *100 + 46 ===> 12346
   objeto := Numero.crear(x);
   valor := valor * trunc(power(10,objeto.NumDigitos)) + objeto.Valor;
+end;
+
+
+
+
+class function Numero.VerifPartFracc(x: extended): boolean;
+var n : extended;
+begin
+  n := x - trunc(x);
+  result := ((n > 0.01));    //(not (x = trunc(x)));
 end;
 
 function Numero.verifPrimo: boolean;

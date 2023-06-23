@@ -42,6 +42,8 @@ const   MaxE = 3060;
 
        procedure SegmentarPrimoNoPrimo(a, b : word);
        procedure sefmentarCerosNoCeros(a, b : word);
+       procedure SegmentarCerosNoCerosReal(a, b : word);
+       procedure SegmentarFrec(a,b: word);
        procedure IntercalarCerosNoCeros(a, b : word);  overload;
        procedure IntercalarCerosNoCeros(); overload;
        {
@@ -136,7 +138,7 @@ var i:word;
 begin
   Dimension:=StrToInt(InputBox('','cantidad de elementos',''));
   for i:=1 to Dimension do begin
-    Elementos[i]:=StrToInt(InputBox('Elemento','v ['+IntToStr(i)+'] =',''));
+    Elementos[i]:=StrToFloat(InputBox('Elemento','v ['+IntToStr(i)+'] =',''));
   end;
 end;
 
@@ -680,6 +682,41 @@ begin
     end;
   end;
 end;
+
+procedure Vector.SegmentarCerosNoCerosReal(a, b: word);
+var i,j:integer;
+    na, nb :boolean;
+begin
+  for i := a to b-1 do begin  //ord intercambio
+    for j := i+1 to b do begin
+      na := Numero.ContieneCero(elementos[i]);
+      nb := Numero.ContieneCero(elementos[j]);
+      if (NOT na and nb)
+      or ((na and nb) and (elementos[i] > elementos[j]))
+      or ((not na and not nb) and (elementos[i] > elementos[j]))
+      then begin
+          intercambiar(i, j);
+      end;
+    end;
+  end;
+end;
+
+procedure Vector.SegmentarFrec(a, b: word);
+var i,j, x, y:word;
+begin
+   for i := a to b-1 do begin  //intercambio
+    for j := i+1 to b do begin
+        x := self.frecuencia(a,b, elementos[i]);
+        y := self.frecuencia(a,b, elementos[j]);
+        if (x < y) or
+           ((x=y) and (elementos[i] > elementos[j]))then begin
+           self.intercambiar(i, j);
+        end;
+    end;
+  end;
+end;
+
+
 {[1,2,3,4,5] => [2,3,5,1,4]}
 {[2,1,3,4,5]}
 //--------------
