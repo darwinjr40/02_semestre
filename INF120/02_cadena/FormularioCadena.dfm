@@ -30,8 +30,8 @@ object Form1: TForm1
   object Label2: TLabel
     Left = 59
     Top = 264
-    Width = 102
-    Height = 41
+    Width = 31
+    Height = 13
     Caption = 'Label2'
   end
   object StringGrid1: TStringGrid
@@ -214,6 +214,10 @@ object Form1: TForm1
       object N202211: TMenuItem
         Caption = '2022_1 numero con mayor decimal'
         OnClick = N202211Click
+      end
+      object GetSumRomanos1: TMenuItem
+        Caption = 'GetSumRomanos'
+        OnClick = GetSumRomanos1Click
       end
     end
   end

@@ -26,6 +26,7 @@ uses math, sysutils,Dialogs;
     function    GetFrc(e:cardinal): byte;
     function    GetPosDigMenFre(n : Cardinal): byte;
     function    GetPosDigMenor(): byte;
+    function    GetMen3Dig(): Cardinal;
     {procedure}
     procedure   SetValor(x : cardinal);
     procedure   InserDigito(p,d:byte);
@@ -47,6 +48,7 @@ uses math, sysutils,Dialogs;
     procedure   ElimDigPrimoTieneVecinoDigPrimo;
     procedure   SegFrcDesc();
     procedure   OrdIzdToDerAsc();
+
     {metodos estaticos, pertenecen a la clase}
     class function  Pot(b,e: Cardinal):Cardinal; static;
     class function  ToUnidad(n : byte) : String; static;
@@ -227,6 +229,26 @@ begin
   GetFrc := r;
 end;
 
+function Natural.GetMen3Dig: Cardinal;
+var n, d, men : cardinal;
+begin
+  n := valor;
+  men := 0;
+  if self.GetCantDig >= 3 then begin
+    men := valor mod 1000;
+    valor := valor div 10;
+  end;
+  while self.GetCantDig >= 3 do begin
+   d := valor mod 1000;
+   if (trunc(log10(d)+1) >= 3)and(d < men) then begin
+     men := d;
+   end;
+   valor := valor div 10;
+  end;
+  valor:=n;
+  result := men;
+end;
+
 function Natural.GetPosDigMenFre(n : Cardinal): byte;
 var er, p, fr, f, fa, fb, a, b : byte;
     cant : cardinal;
@@ -302,9 +324,8 @@ end;
 function Natural.GetDigito(p: byte): byte;
 begin
   if p = 0 then
-    raise Exception.Create('Posicion fuera de rango: function GetDigito')
-  else
-    GetDigito := (self.valor div pot(10, p-1)) mod 10;
+    raise Exception.Create('Posicion fuera de rango: function GetDigito');
+  GetDigito := (self.valor div pot(10, p-1)) mod 10;
 end;
 
 //N=9876   p=3 d=5   => N= 98576
@@ -313,13 +334,12 @@ procedure Natural.InserDigito(p, d: byte);
 var a, b, k : cardinal;
 begin
   if not((p >= 1) and (p <= self.GetCantDig+1)) then
-    raise Exception.Create('Posicion fuera de rango: function InserDigito')
-  else begin
-     k := pot(10, p-1);
-     a:= (valor div k)*10 + d;
-     b:= valor mod k;
-     valor:= a * k + b;
-  end;
+    raise Exception.Create('Posicion fuera de rango: function InserDigito');
+
+  k := pot(10, p-1);
+  a:= (valor div k)*10 + d;
+  b:= valor mod k;
+  valor:= a * k + b;
 end;
 
 

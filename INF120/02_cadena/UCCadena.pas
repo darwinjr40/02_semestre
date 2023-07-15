@@ -8,6 +8,8 @@ interface
        CONSONANTES = ['B','C','D','F','G','H','J','N', 'P'..'T', 'V'..'Z',
                       'b','c','d','f','g','h','j','n', 'p'..'t', 'v'..'z'];
        DIGITOS = ['1','2','3','4','5','6','7','8','9', '0'];
+       ROM = ['I','V', 'X','L', 'C', 'D', 'M'];
+
  type
    Cadena = class
      private
@@ -51,7 +53,8 @@ interface
        function EsSubCadena(a, b :word; subCadena: String) : boolean;
        function verifRango(a, b :word; mensaje:String) : boolean;
        function EsRepetido(a, b :word; caracter: char ):boolean;
-
+       function GetSumRom():Cardinal;
+       function ConvertirRomanoADecimal(cad: string): Integer;
        {Modelo 2021_1}
        procedure DeleteAllSubPalabra3(subPalabra : String);
        {Modelo 2021_2}
@@ -585,19 +588,19 @@ end;
 
 
 function cadena.nextWord(var i: word): string;
-var p:string;  a:word;
-begin                                 //
-  if (i>=1) and (i<=longitud) then begin //---hola-
+var p:string;
+begin
+  if not ((i>=1) and (i<=longitud)) then
+    raise Exception.Create('error!, fuera de rango "nextWord" ');
+
     while (i<=longitud) and not (caracteres[i] in letras) do
         inc(i);
     p:='';
-    while (i<=longitud) and (caracteres[i] in letras) do
-    begin
+    while (i<=longitud) and (caracteres[i] in letras) do begin
         p := p + caracteres[i];
         inc(i); //i := i + 1;   dec(i)
     end;
     result:=p;
-  end else raise Exception.Create('error!, fuera de rango "nextWord" ')
 end;
 
 //-----------------------------------------------------------------------
@@ -768,6 +771,29 @@ i:=1;
   else raise Exception.Create('Hora no válida');
 end;
 
+function Cadena.ConvertirRomanoADecimal(cad: string): Integer;
+var i, valor, n: Integer;   //vi
+             prevValor: char;
+begin
+  valor := 0;
+  prevValor := ' ';
+  for i := Length(cad) downto 1 do begin //xx = 2  --> 1
+    cad[i] := UpCase(cad[i]);
+    case cad[i] of //valor=1  prevalor = 1
+      'I': n := IfThen(prevValor in ['X','V'],-1, 1);
+      'V': n := 5;
+      'X': n := IfThen(prevValor in ['L'], -10, 10);
+      'L': n := 50;
+      'C': n := IfThen(prevValor in ['M'], -100, 100);
+      'D': n := 500;
+      'M': n := 1000;
+    end;
+    valor := valor + n;
+    prevValor := cad[i];
+  end;
+  Result := valor;
+end;
+
 //----------------------------------------------------------------
 
 
@@ -896,6 +922,21 @@ begin
   end;
    result:=x;
 end else raise Exception.Create('getNumeroDecimal: Fuera de rango')
+end;
+
+function Cadena.GetSumRom: Cardinal;
+var i : word;
+    pal : string;
+    s, n:cardinal;
+begin
+  i:=1;  s:= 0;
+  while i <= self.longitud do begin
+    pal := self.nextWord(i);
+    if pal <> '' then
+      s := s + ConvertirRomanoADecimal(pal);
+//    ShowMessage(IntToStr(ConvertirRomanoADecimal(pal)));
+  end;
+  result := s;
 end;
 
 {var i,k:word;  fecha,r,resultado:string;

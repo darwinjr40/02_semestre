@@ -120,6 +120,10 @@ object Form1: TForm1
         Caption = 'static proceso: interFraccion(n)'
         OnClick = staticprocesointerFraccionn1Click
       end
+      object menor3dig1: TMenuItem
+        Caption = 'menor3dig'
+        OnClick = menor3dig1Click
+      end
     end
   end
 end

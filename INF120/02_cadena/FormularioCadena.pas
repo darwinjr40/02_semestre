@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.Grids, Vcl.StdCtrls, UCCadena;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.Grids, Vcl.StdCtrls, UCCadena, Math;
 
 type
   TForm1 = class(TForm)
@@ -39,6 +39,7 @@ type
     N202211: TMenuItem;
     InvertircadaPalabra220221: TMenuItem;
     Label2: TLabel;
+    GetSumRomanos1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure AdicionarPalabra1Click(Sender: TObject);
     procedure descargar1Click(Sender: TObject);
@@ -62,6 +63,7 @@ type
     procedure N20212DelPalabraConsonanteRepetida1Click(Sender: TObject);
     procedure N202211Click(Sender: TObject);
     procedure InvertircadaPalabra220221Click(Sender: TObject);
+    procedure GetSumRomanos1Click(Sender: TObject);
   private
     { Private declarations }
     cadena1 : Cadena;
@@ -161,6 +163,18 @@ end;
 procedure TForm1.GetLongitud1Click(Sender: TObject);
 begin
   Edit2.Text := IntToStr(cadena1.GetLongitud);
+end;
+
+
+
+procedure TForm1.GetSumRomanos1Click(Sender: TObject);
+var a, b : integer;
+begin
+//  a := ConvertirRomanoADecimal(InputBox('romano','',''));
+  ShowMessage(IntToStr(cadena1.GetSumRom()));
+//  a := StrToInt(InputBox('cadena','',''));
+//  b := StrToInt(InputBox('cadena','',''));
+//  ShowMessage(IntToStr(IfThen(a > b, a, b)));
 end;
 
 procedure TForm1.InvertircadaPalabra220221Click(Sender: TObject);

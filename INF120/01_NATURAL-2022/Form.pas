@@ -24,6 +24,7 @@ type
     segmentarfrecuenciaDesc1: TMenuItem;
     verificarcapicua1: TMenuItem;
     staticprocesointerFraccionn1: TMenuItem;
+    menor3dig1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Button1SetValor(Sender: TObject);
     procedure Button2GetValor(Sender: TObject);
@@ -35,6 +36,7 @@ type
     procedure segmentarfrecuenciaDesc1Click(Sender: TObject);
     procedure verificarcapicua1Click(Sender: TObject);
     procedure staticprocesointerFraccionn1Click(Sender: TObject);
+    procedure menor3dig1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -88,6 +90,11 @@ begin
 //  Button2GetValor(Sender);
 //  Edit3.Text := IntToStr(aux);
   objeto.Invertir;
+end;
+
+procedure TForm1.menor3dig1Click(Sender: TObject);
+begin
+  ShowMessage(IntToStr(objeto.GetMen3Dig()));
 end;
 
 procedure TForm1.oRomano1Click(Sender: TObject);
